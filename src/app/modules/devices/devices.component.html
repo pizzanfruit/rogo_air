@@ -1,3 +1,22 @@
 <div class="devices-wrapper">
-  My name is Devices!
+  <div class="title">
+    Devices
+  </div>
+  <div class="devices">
+    <div [class.even]="i%2 === 0" class="device" *ngFor="let device of devices; let i = index" (click)="selectDevice(device.mac)">
+      <div class="device-name">
+        <img src="../assets/images/devices/beacon-icon.png" class="beacon-icon">
+        <span>{{device.name}}</span>
+      </div>
+      <div class="device-location">
+        {{device.location}}
+      </div>
+      <div class="device-stats">
+        <span style="color: #ee3432; margin-right: 14px">{{device.temp}}°</span> / <span style="color: #50bfa3; margin-left: 14px">{{device.humidity}}%</span>
+      </div>
+      <div class="device-status">
+        {{device.status}}
+      </div>
+    </div>
+  </div>
 </div>
