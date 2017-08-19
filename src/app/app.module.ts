@@ -5,13 +5,23 @@ import { HttpModule } from '@angular/http';
 import { appRoutes } from './app.routing';
 
 import { AppComponent } from './app.component';
+import { TabsComponent } from './modules/tabs/tabs.component'
 import { LoginComponent } from './modules/login/login.component'
+import { LocationsComponent } from './modules/locations/locations.component'
+import { LocationComponent } from './modules/location/location.component'
+import { DevicesComponent } from './modules/devices/devices.component'
+import { DeviceComponent } from './modules/device/device.component'
 import { LoginService } from './services/login.service'
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    TabsComponent,
+    LocationsComponent,
+    LocationComponent,
+    DevicesComponent,
+    DeviceComponent
   ],
   imports: [
     BrowserModule,

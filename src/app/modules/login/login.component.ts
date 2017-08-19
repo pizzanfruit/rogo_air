@@ -11,23 +11,30 @@ declare var classie: any;
 @Component({
   selector: 'login-component',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css', './normalize.css']
 })
 
 export class LoginComponent implements OnInit {
 
   constructor(
-    private loginService: LoginService
+    private loginService: LoginService,
+    private router: Router,
+    private title: Title
   ) { }
 
   ngOnInit() {
+    this.title.setTitle("Login");
   }
 
   ngAfterViewInit() {
-    this.doSomething();
+    this.setUpInput();
   }
 
-  doSomething() {
+  authenticate() {
+    this.router.navigate(["/tabs"]);
+  }
+
+  setUpInput() {
     (function () {
       // trim polyfill : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim
       if (!String.prototype.trim) {

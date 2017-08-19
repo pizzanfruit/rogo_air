@@ -1,0 +1,26 @@
+<div class="loading">
+  <img src="../assets/images/cube-loading.svg" width="50">
+</div>
+<div class="tabs-wrapper">
+  <div class="sidebar">
+    <a routerLink="dashboard" routerLinkActive="active">
+      <img class="tabs-icon active" src="../assets/images/tabs/dashboard-icon-active.png">
+      <img class="tabs-icon" src="../assets/images/tabs/dashboard-icon.png">
+    </a>
+    <a routerLink="devices" routerLinkActive="active">
+      <img class="tabs-icon active" src="../assets/images/tabs/devices-icon-active.png">
+      <img class="tabs-icon" src="../assets/images/tabs/devices-icon.png">
+    </a>
+    <a routerLink="locations" routerLinkActive="active">
+      <img class="tabs-icon active" src="../assets/images/tabs/locations-icon-active.png">
+      <img class="tabs-icon" src="../assets/images/tabs/locations-icon.png">
+    </a>
+    <a routerLink="settings" routerLinkActive="active">
+        <img class="tabs-icon active" src="../assets/images/tabs/settings-icon-active.png">
+      <img class="tabs-icon" src="../assets/images/tabs/settings-icon.png">
+    </a>
+  </div>
+  <div class="tabs-outlet">
+    <router-outlet></router-outlet>
+  </div>
+</div>
