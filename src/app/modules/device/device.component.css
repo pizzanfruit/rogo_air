@@ -19,3 +19,90 @@
   left: 400px;
   right: 0;
 }
+
+.back-title {
+  width: 330px;
+  font-size: 1.2em;
+  font-weight: lighter;
+}
+
+.back-icon {
+  width: 0.55em;
+  margin-bottom: -0.15em;
+  margin-right: 15px;
+}
+
+.location {
+  width: 330px;
+  margin-top: 70px;
+  color: #CCC;
+}
+
+.shop-icon {
+  width: 1.1em;
+  margin-left: 3px;
+  margin-right: 12px;
+  margin-bottom: -0.1em;
+}
+
+.temp {
+  position: relative;
+  margin-top: 60px;
+  font-family: Roboto;
+  font-size: 3em;
+  border-bottom: 2px solid #ffffff;
+  padding: 0 0.2em 20px 0.4em;
+}
+
+.fa-thermometer-empty {
+  position: absolute;
+  top: 0.8em;
+  left: -0.4em;
+  font-size: 0.4em;
+  color: #ee3458;
+}
+
+.humidity {
+  position: relative;
+  font-family: Roboto;
+  font-size: 1.5em;
+  margin-top: 15px;
+  margin-left: 0.3em;
+}
+
+.humidity-icon {
+  position: absolute;
+  top: 0.3em;
+  left: -1.2em;
+  width: 0.7em;
+}
+
+.history, .settings {
+  margin-top: 80px;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px 0 15px 0;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.history-icon {
+  width: 2em;
+  margin-bottom: 15px;
+}
+
+.settings {
+  margin-top: 40px;
+}
+
+.history.active, .settings.active{
+  background-color: #16181d;
+}
+
+.settings-icon {
+  width: 2em;
+  margin-bottom: 15px;
+}
+

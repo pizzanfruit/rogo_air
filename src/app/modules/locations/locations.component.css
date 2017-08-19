@@ -57,6 +57,7 @@
   left: 3px;
   bottom: 0.65em;
   width: 1.1em;
+  cursor: pointer;
 }
 
 .filter {
@@ -69,7 +70,6 @@
   vertical-align: bottom;
   margin-bottom: 3px;
   margin-right: 12px;
-  cursor: pointer;
 }
 
 .rogo-select {

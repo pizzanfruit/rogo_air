@@ -1,6 +1,27 @@
 <div class="device-wrapper">
   <div class="sidebar">
-    Device details
+    <div class="back-title">
+      <img class="back-icon" src="../assets/images/device/back-icon.png"> {{device.name}}
+    </div>
+    <div class="location">
+      <img class="shop-icon" src="../assets/images/device/shop-icon.png"> {{device.location}}
+    </div>
+    <div class="temp">
+      <i class="fa fa-thermometer-empty" aria-hidden="true"></i>
+      <span>29°</span>
+    </div>
+    <div class="humidity">
+      <img class="humidity-icon" src="../assets/images/device/humidity-icon.png">
+      <span>66 %</span>
+    </div>
+    <div class="history active" (click)="switchToHistory()">
+      <img class="history-icon" src="../assets/images/device/history-icon.png">
+      <div>Lịch sử theo dõi</div>
+    </div>
+    <div class="settings" (click)="switchToSettings()">
+      <img class="settings-icon" src="../assets/images/device/settings-icon.png">
+      <div>Thiết lập</div>
+    </div>
   </div>
   <div class="content">
   </div>
