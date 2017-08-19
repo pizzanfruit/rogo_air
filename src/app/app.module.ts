@@ -12,6 +12,9 @@ import { LocationComponent } from './modules/location/location.component'
 import { DevicesComponent } from './modules/devices/devices.component'
 import { DeviceComponent } from './modules/device/device.component'
 import { LoginService } from './services/login.service'
+import { LocationsService } from './services/locations.service'
+
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -27,9 +30,12 @@ import { LoginService } from './services/login.service'
     BrowserModule,
     FormsModule,
     HttpModule,
-    appRoutes
+    appRoutes,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCB3ib4Ez0nEJG61uopvQeFwSdrOYKa28o'
+    })
   ],
-  providers: [LoginService],
+  providers: [LoginService, LocationsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

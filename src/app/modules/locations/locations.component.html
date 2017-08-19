@@ -1,8 +1,41 @@
 <div class="locations-wrapper">
   <div class="sidebar">
-    This is side bar
+    <div style="position: relative">
+      <input type="text" class="search-input" placeholder="Tìm cửa hàng" (focusin)="scale1()" (focusout)="scale0()">
+      <span class="underline"></span>
+      <img class="search-icon" src="../assets/images/locations/search-icon.png">
+    </div>
+    <div class="filter">
+      <div style="margin-bottom: 25px">
+        <img class="map-icon" src="../assets/images/locations/map-icon.png">
+        <span>Lọc theo thành phố</span>
+      </div>
+      <div class="rogo-select">
+        <select style="width: 330px" name="city" [(ngModel)]="selectedCity">
+            <option *ngFor="let city of cities" [value]="city.name">{{city.name}}</option>
+        </select>
+      </div>
+      <div class="rogo-select">
+        <select style="width: 330px" name="district" [(ngModel)]="selectedDistrict">
+              <option *ngFor="let district of districts" [value]="district.name">{{district.name}}</option>
+          </select>
+      </div>
+      <div class="results">
+        <ul style="list-style: none; padding: 0;">
+          <li *ngFor="let result of results" style="margin-bottom: 10px">
+            <img class="shop-icon" src="../assets/images/locations/shop-icon.png">
+            <div style="display: inline-block">
+              <div>{{result.name}}</div>
+              <div class="result-city">{{result.city}}</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
   <div class="content">
-    This is content
+    <agm-map [latitude]="lat" [longitude]="lng">
+      <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+    </agm-map>
   </div>
 </div>

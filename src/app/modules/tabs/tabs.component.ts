@@ -18,14 +18,17 @@ export class TabsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    // Emulate 3s loading time
+    // Emulate 3.5s loading time
     setTimeout(() => {
       this.hideLoading();
-    }, 3000);
+    }, 3500);
   }
 
   hideLoading() {
-    $(".loading").hide();
+    $(".loading").css('opacity', 0);
+    setTimeout(() => {
+      $(".loading").hide();
+    }, 1000);
   }
 
   switchTab(event) {

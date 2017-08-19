@@ -3,7 +3,7 @@
   top: 0;
   bottom: 0;
   left: 0;
-  width: 300px;
+  width: 400px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -16,6 +16,145 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 300px;
+  left: 400px;
   right: 0;
+}
+
+.search-input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #ffffff;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 1.05em;
+  font-family: 'Raleway', Arial, sans-serif;
+  height: 2.3em;
+  width: 330px;
+  outline: none;
+  padding-left: 2em;
+}
+
+.search-input:focus::-webkit-input-placeholder {
+  color: #236eba;
+}
+
+.underline {
+  background-color: dodgerblue;
+  display: inline-block;
+  height: 2px;
+  margin-top: -4px;
+  position: absolute;
+  top: 2.6em;
+  -webkit-transform: scale(0, 1);
+  transform: scale(0);
+  -webkit-transition: all 0.4s linear;
+  transition: all 0.4s linear;
+  width: 330px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 3px;
+  bottom: 0.65em;
+  width: 1.1em;
+}
+
+.filter {
+  margin-top: 60px;
+  width: 330px;
+}
+
+.map-icon {
+  width: 1.5em;
+  vertical-align: bottom;
+  margin-bottom: 3px;
+  margin-right: 12px;
+  cursor: pointer;
+}
+
+.rogo-select {
+  display: block;
+  margin-bottom: 15px;
+  width: 330px;
+  height: 2.5em;
+  position: relative;
+}
+
+.rogo-select select{
+  background-color: #212329;
+  color: #858999;
+  font-size: inherit;
+  padding: .5em;
+  padding-right: 2.5em;
+  border: 1px solid #606060;
+  margin: 0;
+  border-radius: 3px;
+  text-indent: 0.01px;
+  text-overflow: '';
+  /*Hiding the select arrow for firefox*/
+  -moz-appearance: none;
+  /*Hiding the select arrow for chrome*/
+  -webkit-appearance:none;
+  /*Hiding the select arrow default implementation*/
+  appearance: none;
+  outline: none;
+}
+
+/*Hiding the select arrow for IE10*/
+.rogo-select select::-ms-expand {
+  display: none;
+}
+
+.rogo-select::before,
+.rogo-select::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+.rogo-select::after { /*  Custom dropdown arrow */
+  content: "\25BC";
+  height: 1em;
+  font-size: .625em;
+  line-height: 1;
+  right: 1.2em;
+  top: 50%;
+  margin-top: -.5em;
+  display:inline-block;
+  -webkit-transform:scale(2,1); /* Safari and Chrome */
+  -moz-transform:scale(2,1); /* Firefox */
+  -ms-transform:scale(2,1); /* IE 9 */
+  -o-transform:scale(2,1); /* Opera */
+  transform:scale(2,1); /* W3C */
+}
+
+.rogo-select::after {
+  color: #3f466d;
+}
+
+.rogo-select select[disabled] {
+  color: rgba(0,0,0,.25);
+}
+
+.results {
+  width: 330px;
+  margin-top: 50px;
+}
+
+.shop-icon {
+  width: 0.9em;
+  margin-bottom: -3px;
+  margin-left: 3px;
+  margin-right: 12px;
+  vertical-align: top;
+}
+
+.result-city {
+  font-size: 0.8em;
+  font-style: italic;
+  color: #CCC;
+}
+
+agm-map {
+  height: 100%;
+  width: 100%;
 }

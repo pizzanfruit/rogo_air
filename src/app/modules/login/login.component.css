@@ -31,6 +31,10 @@
   border: 0;
 }
 
+.login-button:hover {
+  background-color: #35405b;
+}
+
 .rogo-title {
   font-size: 1.6em;
   color:  #4d4d4d;
