@@ -1,3 +1,39 @@
 <div class="location-wrapper">
-  This is a single location view.
+  <div class="content">
+    <div class="back-title" (click)="backToLocations()">
+      <img class="back-icon" src="../assets/images/device/back-icon.png">
+      <div style="display: inline-block">
+        <div>{{location.name}}</div>
+        <div class="district-city">{{location.district}} - {{location.city}}</div>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="device-count-wrapper">
+        <img class="device-count-icon" src="../assets/images/location/device-count-icon.png">
+        <div class="count">2</div>
+        <div class="subtitle">Số lượng thiết bị</div>
+      </div>
+      <div class="temp-wrapper">
+        <img class="temp-icon" src="../assets/images/location/temp-icon.png">
+        <div class="temp">29°</div>
+        <div class="subtitle">Nhiệt độ cao nhất</div>
+      </div>
+    </div>
+  </div>
+  <div class="device-list">
+    <div class="devices">
+      <div [class.even]="i%2 === 0" class="device" *ngFor="let device of devices; let i = index" (click)="selectDevice(device.mac)">
+        <div class="device-name">
+          <img src="../assets/images/devices/beacon-icon.png" class="beacon-icon">
+          <span>{{device.name}}</span>
+        </div>
+        <div class="device-stats">
+          <span style="color: #ee3432; margin-right: 14px">{{device.temp}}°</span> / <span style="color: #50bfa3; margin-left: 14px">{{device.humidity}}%</span>
+        </div>
+        <div class="device-status">
+          {{device.status}}
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

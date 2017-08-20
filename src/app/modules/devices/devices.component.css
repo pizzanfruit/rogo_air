@@ -1,5 +1,5 @@
 .title {
-  font-size: 1.7em;
+  font-size: 2em;
   color: #3991cc;
   padding: 30px 30px 30px 50px;
 }
@@ -12,6 +12,7 @@
   align-items: center;
   color: #676767;
   cursor: pointer;
+  font-size: 1.4em;
 }
 
 .device.even {
@@ -28,6 +29,10 @@
   display: flex;
   align-items: center;
   font-weight: bold;
+}
+
+.device-name:hover {
+  color: #ee3432;
 }
 
 .beacon-icon {

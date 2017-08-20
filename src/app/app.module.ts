@@ -13,6 +13,7 @@ import { DevicesComponent } from './modules/devices/devices.component'
 import { DeviceComponent } from './modules/device/device.component'
 import { LoginService } from './services/login.service'
 import { LocationsService } from './services/locations.service'
+import { LocationService } from './services/location.service'
 import { DeviceService } from './services/device.service'
 
 import { AgmCoreModule } from '@agm/core';
@@ -43,7 +44,7 @@ import { MdDatepickerModule, MdNativeDateModule } from '@angular/material';
     MdNativeDateModule,
     MaterialModule
   ],
-  providers: [LoginService, LocationsService, DeviceService],
+  providers: [LoginService, LocationsService, DeviceService, LocationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

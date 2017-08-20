@@ -1,21 +1,136 @@
-.sidebar {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 400px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  background-color: #2e3036;
-  color: #ffffff;
-  padding-top: 40px;
-}
-
 .content {
   position: absolute;
+  height: 40em;
   top: 0;
-  bottom: 0;
-  left: 400px;
+  left: 0;
   right: 0;
+  background-color: #2e3036;
+  color: #ffffff;
+  padding: 4em;
+}
+
+.device-list {
+  position: absolute;
+  top: 40em;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.back-title {
+  width: 16em;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.back-icon {
+  vertical-align: top;
+  font-size: 1.5em;
+  width: 0.45em;
+  margin-bottom: -0.05em;
+  margin-right: 0.8em;
+}
+
+.district-city {
+  font-size: 0.8em;
+  margin-top: 0.3em;
+  color: #CCC;
+  font-style: italic;
+}
+
+.device-count-wrapper, .temp-wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 9em;
+  margin-top: 8em;
+}
+
+.temp-wrapper {
+  margin-left: 20em;
+}
+
+.device-count-icon {
+  width: 1.5em;
+}
+
+.count {
+  margin-top: 0.5em;
+  font-size: 4.2em;
+  font-family: 'Helvetica Neue', sans-serif;
+}
+
+.subtitle {
+  color: #778393;
+  font-size: 1.2em;
+  margin-top: 2em;
+}
+
+.temp-icon {
+  width: 2em;
+}
+
+.temp {
+  margin-top: 0.5em;
+  margin-bottom: 0.02em;
+  font-size: 4.2em;
+}
+
+.device {
+  background-color: #e1e2e1;
+  height: 4em;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  color: #676767;
+  cursor: pointer;
+  font-size: 1.4em;
+}
+
+.device.even {
+  background-color: #f2f2f2;
+}
+
+.device:hover {
+  background-color:#e1e2e1;
+}
+
+.device-name {
+  flex-grow: 2;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+}
+
+.device-name:hover {
+  color: #ee3432;
+}
+
+.beacon-icon {
+  width: 1.5em;
+  margin-left: 50px;
+  margin-right: 30px;
+}
+
+.device-location {
+  flex-grow: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.device-stats {
+  flex-grow: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.device-status {
+  flex-grow: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
 }

@@ -16,7 +16,8 @@
 /* */
 
 .login-input {
-  margin-left: 35px;
+	margin-left: 35px;
+	width: 380px;
 }
 
 .login-button {
