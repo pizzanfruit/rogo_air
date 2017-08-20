@@ -3,33 +3,33 @@
   top: 0;
   bottom: 0;
   left: 0;
-  width: 400px;
+  width: 30em;
   display: flex;
   align-items: center;
   flex-direction: column;
   background-color: #2e3036;
   color: #ffffff;
-  padding-top: 40px;
+  padding-top: 2em;
 }
 
 .content {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 400px;
+  left: 30em;
   right: 0;
 }
 
 .search-input {
   background-color: transparent;
   border: none;
-  border-bottom: 1px solid #ffffff;
+  border-bottom: 0.05em solid #ffffff;
   color: #ffffff;
   font-weight: 500;
   font-size: 1.05em;
   font-family: 'Raleway', Arial, sans-serif;
   height: 2.3em;
-  width: 330px;
+  width: 23em;
   outline: none;
   padding-left: 2em;
 }
@@ -41,41 +41,40 @@
 .underline {
   background-color: dodgerblue;
   display: inline-block;
-  height: 2px;
-  margin-top: -4px;
+  height: 0.15em;
   position: absolute;
-  top: 2.6em;
+  top: 2.3em;
   -webkit-transform: scale(0, 1);
   transform: scale(0);
   -webkit-transition: all 0.4s linear;
   transition: all 0.4s linear;
-  width: 330px;
+  width: 24.3em;
 }
 
 .search-icon {
   position: absolute;
-  left: 3px;
+  left: 0.2em;
   bottom: 0.65em;
   width: 1.1em;
   cursor: pointer;
 }
 
 .filter {
-  margin-top: 60px;
-  width: 330px;
+  margin-top: 4em;
+  width: 23em;
 }
 
 .map-icon {
   width: 1.5em;
   vertical-align: bottom;
-  margin-bottom: 3px;
-  margin-right: 12px;
+  margin-bottom: 0.2em;
+  margin-right: 0.6em;
 }
 
 .rogo-select {
   display: block;
-  margin-bottom: 15px;
-  width: 330px;
+  margin-bottom: 1em;
+  width: 23em;
   height: 2.5em;
   position: relative;
 }
@@ -86,10 +85,10 @@
   font-size: inherit;
   padding: .5em;
   padding-right: 2.5em;
-  border: 1px solid #606060;
+  border: 0.05em solid #606060;
   margin: 0;
-  border-radius: 3px;
-  text-indent: 0.01px;
+  border-radius: 0.2em;
+  text-indent: 0.01em;
   text-overflow: '';
   /*Hiding the select arrow for firefox*/
   -moz-appearance: none;
@@ -136,15 +135,15 @@
 }
 
 .results {
-  width: 330px;
-  margin-top: 50px;
+  width: 23em;
+  margin-top: 3.5em;
 }
 
 .shop-icon {
   width: 0.9em;
-  margin-bottom: -3px;
-  margin-left: 3px;
-  margin-right: 12px;
+  margin-bottom: -0.2em;
+  margin-left: 0.2em;
+  margin-right: 0.8em;
   vertical-align: top;
 }
 

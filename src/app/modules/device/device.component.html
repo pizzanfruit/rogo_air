@@ -14,7 +14,7 @@
       <img class="humidity-icon" src="../assets/images/device/humidity-icon.png">
       <span>66 %</span>
     </div>
-    <div class="history active" (click)="switchToHistory()">
+    <div class="history" (click)="switchToHistory()">
       <img class="history-icon" src="../assets/images/device/history-icon.png">
       <div>Lịch sử theo dõi</div>
     </div>
@@ -24,5 +24,60 @@
     </div>
   </div>
   <div class="content">
+    <div class="history-content">
+      History
+    </div>
+    <div class="settings-content">
+      <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> Thiết lập chế độ chạy
+      <ul class="bullet-text">
+        <li>No operation: Thiết bị sẽ dừng điều khiển điều hoà</li>
+        <li>Set point: Cho phép thiết bị điều khiển nhiệt đồ phòng theo target 24/24</li>
+        <li>Schedule: Cho phép thiết bị tự điều khiển nhiệt độ phòng theo lịch</li>
+        <li>Power: Cho phép thiết bị luôn tắt điều hoà</li>
+      </ul>
+      <div class="switch-wrapper">
+        <img class="switch-bg-icon" src="../assets/images/device/switch-icon.png">
+        <!-- <img class="switch-active-icon" src="../assets/images/device/switch-active-icon.png"> -->
+        <img class="switch-icon a" src="../assets/images/device/switch-active-icon.png">
+        <img class="switch-icon b" src="../assets/images/device/switch-active-icon.png">
+        <img class="switch-icon c" src="../assets/images/device/switch-active-icon.png">
+        <img class="switch-icon d" src="../assets/images/device/switch-active-icon.png">
+        <span class="option-1">No operation</span>
+        <span class="option-2">Set point</span>
+        <span class="option-3">Schedule</span>
+        <span class="option-4">Power</span>
+      </div>
+      <div style="margin-top: 4em">
+        <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> Set point
+      </div>
+      <div class="no-select" style="margin-top: 2em;">
+        <div class="minus-icon">-</div>
+        <div class="temp2">{{temp | number:'2.1-1'}}</div>
+        <div class="degree">°</div>
+        <div class="plus-icon" (click)="increaseTemp()">+</div>
+      </div>
+      <div style="margin-top: 2em">
+        <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> Đặt lịch
+      </div>
+      <div class="schedule-wrapper">
+        <div class="add-wrapper">
+          <img class="add-icon" src="../assets/images/device/add-icon.png">
+          <div class="add-text">Thêm lịch</div>
+        </div>
+        <div *ngFor="let schedule of schedules" class="schedule-box">
+          <div class="from-group">
+            From
+            <div style="font-size: 1.4em">06:20</div>
+          </div>
+          <div class="to-group">
+            To
+            <div style="font-size: 1.4em">19:00</div>
+          </div>
+          <div class="target-group">
+            Target: 26.5°
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

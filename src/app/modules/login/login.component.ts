@@ -24,6 +24,11 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.title.setTitle("Login");
+    this.resetBody();
+  }
+
+  resetBody() {
+    $('html').css('font-size', '100%');
   }
 
   ngAfterViewInit() {

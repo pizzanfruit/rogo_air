@@ -24,6 +24,22 @@ export class TabsComponent implements OnInit {
     }, 3500);
   }
 
+  ngAfterViewInit() {
+    this.doResize();
+  }
+
+  doResize() {
+    // FONT SIZE
+    var ww = $('body').width();
+    var maxW = 2560;
+    ww = Math.min(ww, maxW);
+    var fw = ww * (10 / maxW);
+    var fpc = fw * 100 / 16;
+    var fpc = Math.round(fpc * 100) / 100;
+    var fpc = fpc * 2;
+    $('html').css('font-size', fpc + '%');
+  }
+
   hideLoading() {
     $(".loading").css('opacity', 0);
     setTimeout(() => {

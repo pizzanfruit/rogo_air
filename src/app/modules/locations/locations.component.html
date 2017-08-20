@@ -6,23 +6,23 @@
       <img class="search-icon" src="../assets/images/locations/search-icon.png">
     </div>
     <div class="filter">
-      <div style="margin-bottom: 25px">
+      <div style="margin-bottom: 1.5em">
         <img class="map-icon" src="../assets/images/locations/map-icon.png">
         <span>Lọc theo thành phố</span>
       </div>
       <div class="rogo-select">
-        <select style="width: 330px" name="city" [(ngModel)]="selectedCity">
+        <select style="width: 23em" name="city" [(ngModel)]="selectedCity">
             <option *ngFor="let city of cities" [value]="city.name">{{city.name}}</option>
         </select>
       </div>
       <div class="rogo-select">
-        <select style="width: 330px" name="district" [(ngModel)]="selectedDistrict">
+        <select style="width: 23em" name="district" [(ngModel)]="selectedDistrict">
               <option *ngFor="let district of districts" [value]="district.name">{{district.name}}</option>
           </select>
       </div>
       <div class="results">
         <ul style="list-style: none; padding: 0;">
-          <li *ngFor="let result of results" style="margin-bottom: 10px">
+          <li *ngFor="let result of results" style="margin-bottom: 1em">
             <img class="shop-icon" src="../assets/images/locations/shop-icon.png">
             <div style="display: inline-block">
               <div>{{result.name}}</div>
