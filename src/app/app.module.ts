@@ -16,6 +16,9 @@ import { LocationsService } from './services/locations.service'
 import { DeviceService } from './services/device.service'
 
 import { AgmCoreModule } from '@agm/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from "@angular/material";
+import { MdDatepickerModule, MdNativeDateModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,11 @@ import { AgmCoreModule } from '@agm/core';
     appRoutes,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCB3ib4Ez0nEJG61uopvQeFwSdrOYKa28o'
-    })
+    }),
+    BrowserAnimationsModule,
+    MdDatepickerModule,
+    MdNativeDateModule,
+    MaterialModule
   ],
   providers: [LoginService, LocationsService, DeviceService],
   bootstrap: [AppComponent]

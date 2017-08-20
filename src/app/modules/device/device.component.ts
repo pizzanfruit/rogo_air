@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
 import { DeviceService } from '../../services/device.service';
+import { MdDatepicker } from '@angular/material'
+import * as moment from 'moment';
 
 //Jquery
 declare var $: any;
@@ -14,6 +16,8 @@ declare var $: any;
 })
 
 export class DeviceComponent implements OnInit {
+  @ViewChild(MdDatepicker)
+  private mdDatepicker;
 
   //
   device: any;
@@ -23,11 +27,19 @@ export class DeviceComponent implements OnInit {
     { from: "6:00", to: "19:20", target: "29" }
   ]
 
+  // History tab
+  currentDate: Date;
+  currentMonthYear: string;
+
   constructor(
     private title: Title,
+    private router: Router,
     private route: ActivatedRoute,
     private deviceService: DeviceService
-  ) { }
+  ) {
+    this.currentDate = new Date(2017, 6, 28);
+    this.currentMonthYear = moment(this.currentDate).format('MMMM YYYY');
+  }
 
   ngOnInit() {
     this.title.setTitle("Device details");
@@ -36,10 +48,18 @@ export class DeviceComponent implements OnInit {
         this.device = device;
       });
     });
-    this.switchToSettings();
+    this.switchToHistory();
     this.setUpSwitch();
-    this.setUpTempControl();
+    //this.setUpTempControl();
     $(".switch-icon.b").css("opacity", 1);
+  }
+
+  updateMonthYear() {
+    this.currentMonthYear = moment(this.currentDate).format('MMMM YYYY');
+  }
+
+  openDatepicker() {
+    this.mdDatepicker.open();
   }
 
   setUpTempControl() {
@@ -49,7 +69,7 @@ export class DeviceComponent implements OnInit {
       clearInterval(i1);
       i1 = setInterval(() => {
         this.temp = this.temp - 0.1;
-      }, 200);
+      }, 300);
     });
     $(".minus-icon").on("mouseup", () => {
       clearInterval(i1);
@@ -59,7 +79,7 @@ export class DeviceComponent implements OnInit {
       clearInterval(i2);
       i2 = setInterval(() => {
         this.temp = this.temp + 0.1;
-      }, 200);
+      }, 300);
     });
     $(".plus-icon").on("mouseup", () => {
       clearInterval(i2);
@@ -83,7 +103,7 @@ export class DeviceComponent implements OnInit {
 
   switchToHistory() {
     $(".history").addClass("active");
-    $(".history-content").show();
+    $(".history-content").css("display", "flex");
     $(".settings").removeClass("active");
     $(".settings-content").hide();
   }
@@ -93,5 +113,9 @@ export class DeviceComponent implements OnInit {
     $(".settings-content").show();
     $(".history").removeClass("active");
     $(".history-content").hide();
+  }
+
+  backToDevices() {
+    this.router.navigate(["tabs/devices"]);
   }
 }

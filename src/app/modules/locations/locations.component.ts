@@ -22,15 +22,16 @@ export class LocationsComponent implements OnInit {
   selectedDistrict: any;
   //
   results: any[] = [
-    {name: "FPT shop tiểu khu Mỹ lâm", city: "Hà Nội"},
-    {name: "FPT shop Đống Đa", city: "Hồ Chí Minh"}
+    {id: "1", name: "FPT shop tiểu khu Mỹ lâm", city: "Hà Nội"},
+    {id: "2", name: "FPT shop Đống Đa", city: "Hồ Chí Minh"}
   ];
   lat: number = 51.678418;
   lng: number = 7.809007;
 
   constructor(
     private title: Title,
-    private locationsService: LocationsService
+    private locationsService: LocationsService,
+    private router: Router
   ) { }
 
   scale1() {
@@ -58,5 +59,9 @@ export class LocationsComponent implements OnInit {
       this.selectedCity = "Toàn quốc";
       this.selectedDistrict = "Tất cả quận huyện"
     });
+  }
+
+  selectLocation(id) {
+    this.router.navigate(["tabs/locations", id])
   }
 }

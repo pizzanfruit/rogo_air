@@ -1,6 +1,6 @@
 <div class="device-wrapper">
   <div class="sidebar">
-    <div class="back-title">
+    <div class="back-title" (click)="backToDevices()">
       <img class="back-icon" src="../assets/images/device/back-icon.png"> {{device.name}}
     </div>
     <div class="location">
@@ -25,7 +25,27 @@
   </div>
   <div class="content">
     <div class="history-content">
-      History
+      <div class="current-month-year">{{currentMonthYear}}</div>
+      <div class="timeline">
+        <ul class="list-inline" style="list-style: none; padding: 0">
+          <li class="before-today">{{currentDate.getDate() - 3}}</li>
+          <li class="before-today">{{currentDate.getDate() - 2}}</li>
+          <li class="before-today">{{currentDate.getDate() - 1}}</li>
+          <li class="today">{{currentDate.getDate()}}</li>
+          <li class="after-today">{{currentDate.getDate() + 1}}</li>
+          <li class="after-today">{{currentDate.getDate() + 2}}</li>
+          <li class="after-today">{{currentDate.getDate() + 3}}</li>
+        </ul>
+        <img class="calendar-icon" src="../assets/images/device/calendar-icon.png" (click)="openDatepicker()">
+        <input class="datepicker" style="opacity: 0" [mdDatepicker]="myDatepicker" [(ngModel)]="currentDate" (ngModelChange)="updateMonthYear()">
+        <md-datepicker #myDatepicker></md-datepicker>
+      </div>
+      <div class="temp-chart">
+        <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> Nhiệt độ
+      </div>
+      <div class="humidity-chart">
+        <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> Độ ẩm
+      </div>
     </div>
     <div class="settings-content">
       <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> Thiết lập chế độ chạy
@@ -47,11 +67,11 @@
         <span class="option-3">Schedule</span>
         <span class="option-4">Power</span>
       </div>
-      <div style="margin-top: 4em">
+      <div style="margin-top: 6em">
         <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> Set point
       </div>
       <div class="no-select" style="margin-top: 2em;">
-        <div class="minus-icon">-</div>
+        <div class="minus-icon" (click)="decreaseTemp()">-</div>
         <div class="temp2">{{temp | number:'2.1-1'}}</div>
         <div class="degree">°</div>
         <div class="plus-icon" (click)="increaseTemp()">+</div>

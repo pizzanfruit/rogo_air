@@ -10,7 +10,7 @@ declare var $: any;
 @Component({
   selector: 'tabs-component',
   templateUrl: './tabs.component.html',
-  styleUrls: ['./tabs.component.css', './css/bootstrap.min.css']
+  styleUrls: ['./tabs.component.css']
 })
 
 export class TabsComponent implements OnInit {

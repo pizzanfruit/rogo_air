@@ -32,6 +32,7 @@
 .back-title {
   width: 16em;
   font-size: 1.5em;
+  cursor: pointer;
 }
 
 .back-icon {
@@ -65,9 +66,9 @@
 
 .fa-thermometer-empty {
   position: absolute;
-  top: 0.8em;
+  top: 0.45em;
   left: -0.4em;
-  font-size: 0.4em;
+  font-size: 0.6em;
   color: #ee3458;
 }
 
@@ -81,9 +82,9 @@
 
 .humidity-icon {
   position: absolute;
-  top: 0.3em;
-  left: -1.2em;
-  width: 0.7em;
+  top: 0.16em;
+  left: -1.3em;
+  width: 0.85em;
 }
 
 .history, .settings {
@@ -125,8 +126,15 @@
   padding: 3em;
 }
 
+.history-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1em;
+}
+
 .settings-content {
-  font-size: 1.3em;
+  font-size: 1.5em;
 }
 
 .bullet-icon {
@@ -136,6 +144,7 @@
 }
 
 .bullet-text {
+  margin-top: 2em;
   list-style: none;
   line-height: 2em;
   color: #707070;
@@ -150,13 +159,13 @@
 .switch-bg-icon {
   height: 1.2em;
   margin-left: 2em;
-  margin-top: 2em;
+  margin-top: 3em;
 }
 
 .switch-icon {
   position: absolute;
   width: 0.85em;
-  top: 2.15em;
+  top: 3.15em;
   left: 2.18em;
   opacity: 0;
   cursor: pointer;
@@ -223,7 +232,7 @@
   display: inline-block;
   font-size: 2em;
   transform:scale(1.3,1);
-  min-width: 0.8em;
+  min-width: 1.9em;
 }
 
 .degree {
@@ -231,8 +240,8 @@
   font-size: 2.5em;
   font-weight: lighter;
   color: #ee3458;
-  margin-left: 0.5em;
-  margin-bottom: 0.35em;
+  margin-left: 0.3em;
+  margin-top: 0.12em;
   vertical-align: top;
 }
 
@@ -290,4 +299,60 @@
   position: absolute;
   bottom: 1.2em;
   left: 1.2em;
+}
+
+.list-inline li {
+  display: inline-block;
+}
+
+.timeline {
+  position: relative;
+}
+
+.timeline .list-inline li {
+  margin-left: 2.8em;
+  font-size: 1.9em;
+  min-width: 1.3em;
+}
+
+.timeline .list-inline li:first-child {
+  margin-left: 0;
+}
+
+.timeline .list-inline li.today {
+  font-size: 2.5em;
+  color: #447cbf;
+}
+
+.before-today {
+  color: #7e8793;
+}
+
+.after-today {
+  color: #d0d1d0;
+}
+
+.current-month-year {
+  font-size: 2.5em;
+  color: #447cbf;
+}
+
+.calendar-icon {
+  position: absolute;
+  width: 2em;
+  top: -2.6em;
+  right: 0;
+  cursor: pointer;
+}
+
+.datepicker {
+  position: absolute;
+  top: -1em;
+  right: 2.6em;
+}
+
+.temp-chart, .humidity-chart {
+  width: 32em;
+  font-size: 1.5em;
+  margin-top: 4em;
 }

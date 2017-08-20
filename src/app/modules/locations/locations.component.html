@@ -22,7 +22,7 @@
       </div>
       <div class="results">
         <ul style="list-style: none; padding: 0;">
-          <li *ngFor="let result of results" style="margin-bottom: 1em">
+          <li *ngFor="let result of results" style="margin-bottom: 1em; cursor: pointer" (click)="selectLocation(result.id)">
             <img class="shop-icon" src="../assets/images/locations/shop-icon.png">
             <div style="display: inline-block">
               <div>{{result.name}}</div>
