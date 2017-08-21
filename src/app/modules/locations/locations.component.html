@@ -1,14 +1,14 @@
 <div class="locations-wrapper">
   <div class="sidebar">
     <div style="position: relative">
-      <input type="text" class="search-input" placeholder="Tìm cửa hàng" (focusin)="scale1()" (focusout)="scale0()">
+      <input type="text" class="search-input" placeholder="{{'locations-search-hint' | translate}}" (focusin)="scale1()" (focusout)="scale0()">
       <span class="underline"></span>
       <img class="search-icon" src="../assets/images/locations/search-icon.png">
     </div>
     <div class="filter">
       <div style="margin-bottom: 1.5em">
         <img class="map-icon" src="../assets/images/locations/map-icon.png">
-        <span>Lọc theo thành phố</span>
+        <span>{{'locations-filter-by-city' | translate}}</span>
       </div>
       <div class="rogo-select">
         <select style="width: 23em" name="city" [(ngModel)]="selectedCity">

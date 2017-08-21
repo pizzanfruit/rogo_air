@@ -1,0 +1,29 @@
+{
+    "config-change-lang": "Choose your language",
+
+    "locations-filter-by-city": "Filter by city",
+    "locations-search-hint": "Search for a shop",
+
+    "location-device-count": "Number of devices",
+    "location-highest-temp": "Highest temperature",
+
+    "devices-title": "Devices",
+
+    "device-history-tab": "Device history",
+    "device-settings-tab": "Settings",
+    "device-temp": "Temperature",
+    "device-humidity": "Humidity",
+    "device-settings-explain-1": "Operation modes",
+    "device-settings-explain-2": "No operation: Device will stop controlling air conditioners",
+    "device-settings-explain-3": "Set point: Allow device to control room's temperature according to a set target 24/24",
+    "device-settings-explain-4": "Schedule: Allow device to automatically control room's temperature according to schedule",
+    "device-settings-explain-5": "Power: Allow device to always turn off air conditioning",
+    "device-no-operation": "No operation",
+    "device-set-point": "Set point",
+    "device-schedule": "Schedule",
+    "device-power": "Power",
+    "device-add-schedule": "Add schedule",
+    "device-from": "From",
+    "device-to": "To",
+    "device-target": "Target"
+}

@@ -283,22 +283,22 @@
 
 .from-group {
   position: absolute;
-  left: 2em;
-  top: 2em;
+  left: 1.5em;
+  top: 1.5em;
   font-size: 0.5em;
 }
 
 .to-group {
   position: absolute;
-  top: 2em;
-  right: 2em;
+  top: 1.5em;
+  right: 1.5em;
   font-size: 0.5em;
 }
 
 .target-group {
   position: absolute;
-  bottom: 1.2em;
-  left: 1.2em;
+  bottom: 0.7em;
+  left: 0.7em;
 }
 
 .list-inline li {

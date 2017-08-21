@@ -1,6 +1,6 @@
 <div class="devices-wrapper">
   <div class="title">
-    Devices
+    {{'devices-title' | translate}}
   </div>
   <div class="devices">
     <div [class.even]="i%2 === 0" class="device" *ngFor="let device of devices; let i = index" (click)="selectDevice(device.mac)">

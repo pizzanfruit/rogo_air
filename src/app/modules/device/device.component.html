@@ -16,11 +16,11 @@
     </div>
     <div class="history" (click)="switchToHistory()">
       <img class="history-icon" src="../assets/images/device/history-icon.png">
-      <div>Lịch sử theo dõi</div>
+      <div>{{'device-history-tab' | translate}}</div>
     </div>
     <div class="settings" (click)="switchToSettings()">
       <img class="settings-icon" src="../assets/images/device/settings-icon.png">
-      <div>Thiết lập</div>
+      <div>{{'device-settings-tab' | translate}}</div>
     </div>
   </div>
   <div class="content">
@@ -41,19 +41,19 @@
         <md-datepicker #myDatepicker></md-datepicker>
       </div>
       <div class="temp-chart">
-        <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> Nhiệt độ
+        <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-temp' | translate}}
       </div>
       <div class="humidity-chart">
-        <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> Độ ẩm
+        <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-humidity' | translate}}
       </div>
     </div>
     <div class="settings-content">
-      <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> Thiết lập chế độ chạy
+      <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-settings-explain-1' | translate}}
       <ul class="bullet-text">
-        <li>No operation: Thiết bị sẽ dừng điều khiển điều hoà</li>
-        <li>Set point: Cho phép thiết bị điều khiển nhiệt đồ phòng theo target 24/24</li>
-        <li>Schedule: Cho phép thiết bị tự điều khiển nhiệt độ phòng theo lịch</li>
-        <li>Power: Cho phép thiết bị luôn tắt điều hoà</li>
+        <li>{{'device-settings-explain-2' | translate}}</li>
+        <li>{{'device-settings-explain-3' | translate}}</li>
+        <li>{{'device-settings-explain-4' | translate}}</li>
+        <li>{{'device-settings-explain-5' | translate}}</li>
       </ul>
       <div class="switch-wrapper">
         <img class="switch-bg-icon" src="../assets/images/device/switch-icon.png">
@@ -62,13 +62,13 @@
         <img class="switch-icon b" src="../assets/images/device/switch-active-icon.png">
         <img class="switch-icon c" src="../assets/images/device/switch-active-icon.png">
         <img class="switch-icon d" src="../assets/images/device/switch-active-icon.png">
-        <span class="option-1">No operation</span>
-        <span class="option-2">Set point</span>
-        <span class="option-3">Schedule</span>
-        <span class="option-4">Power</span>
+        <span class="option-1">{{'device-no-operation' | translate}}</span>
+        <span class="option-2">{{'device-set-point' | translate}}</span>
+        <span class="option-3">{{'device-schedule' | translate}}</span>
+        <span class="option-4">{{'device-power' | translate}}</span>
       </div>
       <div style="margin-top: 6em">
-        <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> Set point
+        <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-set-point' | translate}}
       </div>
       <div class="no-select" style="margin-top: 2em;">
         <div class="minus-icon" (click)="decreaseTemp()">-</div>
@@ -77,24 +77,24 @@
         <div class="plus-icon" (click)="increaseTemp()">+</div>
       </div>
       <div style="margin-top: 2em">
-        <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> Đặt lịch
+        <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-schedule' | translate}}
       </div>
       <div class="schedule-wrapper">
         <div class="add-wrapper">
           <img class="add-icon" src="../assets/images/device/add-icon.png">
-          <div class="add-text">Thêm lịch</div>
+          <div class="add-text">{{'device-add-schedule' | translate}}</div>
         </div>
         <div *ngFor="let schedule of schedules" class="schedule-box">
           <div class="from-group">
-            From
+            {{'device-from' | translate}}
             <div style="font-size: 1.4em">06:20</div>
           </div>
           <div class="to-group">
-            To
+            {{'device-to' | translate}}
             <div style="font-size: 1.4em">19:00</div>
           </div>
           <div class="target-group">
-            Target: 26.5°
+            {{'device-target' | translate}}: 26.5°
           </div>
         </div>
       </div>

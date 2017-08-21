@@ -7,6 +7,8 @@ import { LocationsComponent } from './modules/locations/locations.component'
 import { LocationComponent } from './modules/location/location.component'
 import { DevicesComponent } from './modules/devices/devices.component'
 import { DeviceComponent } from './modules/device/device.component'
+import { SettingsComponent } from './modules/settings/settings.component'
+
 
 const routing: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -18,7 +20,8 @@ const routing: Routes = [
       { path: 'locations', component: LocationsComponent },
       { path: 'locations/:id', component: LocationComponent },
       { path: 'devices', component: DevicesComponent },
-      { path: 'devices/:id', component: DeviceComponent }
+      { path: 'devices/:id', component: DeviceComponent },
+      { path: 'settings', component: SettingsComponent },
     ]
   },
   { path: '**', redirectTo: 'login', pathMatch: 'full' },

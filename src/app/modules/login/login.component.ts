@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
 import { LoginService } from '../../services/login.service';
+import { TranslateService } from '@ngx-translate/core';
 
 //Jquery
 declare var $: any;
