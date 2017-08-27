@@ -17,6 +17,10 @@ declare var classie: any;
 
 export class LoginComponent implements OnInit {
 
+  //
+  userName: any;
+  password: any;
+
   constructor(
     private loginService: LoginService,
     private router: Router,
@@ -37,7 +41,9 @@ export class LoginComponent implements OnInit {
   }
 
   authenticate() {
-    this.router.navigate(["/tabs"]);
+    if (this.userName === "rogoair" && this.password === "123456") {
+      this.router.navigate(["/tabs"]);
+    }
   }
 
   setUpInput() {
@@ -74,5 +80,12 @@ export class LoginComponent implements OnInit {
         }
       }
     })();
+  }
+
+  keyDownFunction(event) {
+    // Enter key
+    if (event.keyCode == 13) {
+      this.authenticate();
+    }
   }
 }

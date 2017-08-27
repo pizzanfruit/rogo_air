@@ -1,3 +1,7 @@
+.device-wrapper, .content {
+  height: 100%;
+}
+
 .no-select {
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
@@ -7,149 +11,107 @@
           user-select: none; /* Non-prefixed version, currently */
 }
 
-.sidebar {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 30em;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  background-color: #2e3036;
-  color: #ffffff;
-  padding-top: 2em;
+.header {
+  padding: 2em 0em 0 5em;
+  background-color: #ffffff;
+  border-bottom: 0.13em solid #d7d7d7;
 }
 
-.content {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 30em;
-  right: 0;
+.devices-icon {
+  width: 2em;
+  vertical-align: top;
+  margin-top: 0.2em;
+  margin-right: 1em;
 }
 
-.back-title {
-  width: 16em;
-  font-size: 1.5em;
-  cursor: pointer;
+.header-right {
+  display: inline-block;
 }
 
-.back-icon {
-  width: 0.45em;
-  margin-bottom: -0.05em;
-  margin-right: 0.8em;
+.title {
+  font-size: 2em;
+  color: #2e3036;
 }
 
-.location {
-  width: 20em;
-  margin-top: 7em;
-  color: #CCC;
-  font-size: 1.2em;
+.subtitle {
+  margin-top: 0.2em;
+  color: #7f7f7f;
 }
 
-.shop-icon {
-  width: 1.1em;
-  margin-left: 0.3em;
-  margin-right: 0.5em;
+.tabs {
+  margin-top: 1.5em;
+  margin-left: -2em;
   margin-bottom: -0.1em;
 }
 
-.temp {
-  position: relative;
-  margin-top: 2.5em;
-  font-family: Roboto;
-  font-size: 3em;
-  border-bottom: 0.08em solid #ffffff;
-  padding: 0 0.2em 0.7em 0.4em;
-}
-
-.fa-thermometer-empty {
-  position: absolute;
-  top: 0.45em;
-  left: -0.4em;
-  font-size: 0.6em;
-  color: #ee3458;
-}
-
-.humidity {
-  position: relative;
-  font-family: Roboto;
-  font-size: 1.5em;
-  margin-top: 0.9em;
-  margin-left: 0.3em;
-}
-
-.humidity-icon {
-  position: absolute;
-  top: 0.16em;
-  left: -1.3em;
-  width: 0.85em;
-}
-
-.history, .settings {
-  margin-top: 9em;
-  width: 15em;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1em 0 1em 0;
-  border-radius: 0.75em;
+.history-tab, .settings-tab {
+  display: inline-block;
+  padding: 1em 3em 1em 3em;
   cursor: pointer;
 }
 
-.history-icon {
-  width: 2em;
-  margin-bottom: 1em;
-}
-
-.settings {
-  margin-top: 3em;
-}
-
-.history.active, .settings.active{
-  background-color: #16181d;
-}
-
-.settings-icon {
-  width: 2em;
-  margin-bottom: 1em;
-}
-
-.history-content, .settings-content {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: none;
-  padding: 3em;
+.history-tab.active, .settings-tab.active {
+  border-bottom: 0.35em solid #4b66b0;
 }
 
 .history-content {
+  padding-top: 2em;
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 1em;
+  font-size: 0.7em;
+  background-color: #ffffff;
+  height: 100%;
 }
 
 .settings-content {
   font-size: 1.5em;
+  background-color: #ffffff;
+  height: 100%;
+  overflow-y: scroll;
+  padding: 1em 2.5em 10em 2em;
 }
 
 .bullet-icon {
   width: 0.5em;
-  margin-right: 0.7em;
+  margin-right: 0.4em;
   margin-bottom: 0.1em;
 }
 
 .bullet-text {
-  margin-top: 2em;
+  margin-top: 1.4em;
   list-style: none;
   line-height: 2em;
   color: #707070;
   font-style: italic;
   font-size: 0.7em
+}
+
+.air-conditioners {
+  margin-top: 1.2em;
+  margin-left: 2em;
+  margin-bottom: 1.5em;
+}
+
+.ac {
+  display: inline-block;
+  font-size: 0.8em;
+  border: 0.12em dashed #90ceee;
+  border-radius: 1em;
+  padding: 0.25em 0 0.25em 0;
+  width: 8em;
+  text-align: center;
+  margin-right: 1em;
+}
+
+.override-subtitle {
+  font-size: 0.72em;
+  color: #787878;
+  margin-bottom: 0.8em;
+}
+
+.override-settings {
+  padding-left: 1.5em;
 }
 
 .switch-wrapper {
@@ -159,13 +121,13 @@
 .switch-bg-icon {
   height: 1.2em;
   margin-left: 2em;
-  margin-top: 3em;
+  margin-top: 0.5em;
 }
 
 .switch-icon {
   position: absolute;
   width: 0.85em;
-  top: 3.15em;
+  top: 0.66em;
   left: 2.18em;
   opacity: 0;
   cursor: pointer;
@@ -200,12 +162,12 @@
 }
 
 .option-4 {
-  left: 34.8em;
+  left: 34em;
 }
 
 .minus-icon {
   display: inline-block;
-  margin: 0.65em 3em 0 2em;
+  margin: 0.45em 3em 0 2em;
   font-size: 1.2em;
   transform:scale(2,1);
   vertical-align: top;
@@ -214,7 +176,7 @@
 
 .plus-icon {
   display: inline-block;
-  margin-top: 0.03em;
+  margin-top: -0.1em;
   margin-left: 0.65em;
   font-size: 2.5em;
   font-weight: lighter;
@@ -352,7 +314,41 @@
 }
 
 .temp-chart, .humidity-chart {
-  width: 32em;
+  position: relative;
+  width: 38em;
   font-size: 1.5em;
-  margin-top: 4em;
+}
+
+chart {
+  display: block;
+  margin-left: 1em;
+}
+
+.current-temp, .current-humidity {
+  position: absolute;
+  right: 0;
+  top: -0.4em;
+  font-size: 1.6em;
+}
+
+.temp-icon, .humidity-icon {
+  width: 0.65em;
+  vertical-align: top;
+  margin-top: 0.4em;
+}
+
+.chart-loading, .chart-empty {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  display: none;
+}
+
+.chart-loading-icon {
+  width: 2em;
 }

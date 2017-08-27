@@ -62,6 +62,7 @@
 .filter {
   margin-top: 4em;
   width: 23em;
+  height: 100%;
 }
 
 .map-icon {
@@ -137,6 +138,9 @@
 .results {
   width: 23em;
   margin-top: 3.5em;
+  height: 100%;
+  padding-bottom: 20em;
+  overflow-y: scroll;
 }
 
 .shop-icon {
@@ -151,6 +155,7 @@
   font-size: 0.8em;
   font-style: italic;
   color: #CCC;
+  max-width: 23em;
 }
 
 agm-map {

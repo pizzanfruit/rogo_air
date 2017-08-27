@@ -1,7 +1,11 @@
-<div class="locations-wrapper">
+<div *ngIf="isLoading" class="loading">
+  <img src="../assets/images/cube-loading.svg" style="width: 4em">
+</div>
+<div *ngIf="!isLoading" class="locations-wrapper">
   <div class="sidebar">
     <div style="position: relative">
-      <input type="text" class="search-input" placeholder="{{'locations-search-hint' | translate}}" (focusin)="scale1()" (focusout)="scale0()">
+      <input id="search-input" type="text" class="search-input" placeholder="{{'locations-search-hint' | translate}}" (focusin)="scale1()"
+        (focusout)="scale0()" (input)="filter()">
       <span class="underline"></span>
       <img class="search-icon" src="../assets/images/locations/search-icon.png">
     </div>
@@ -11,22 +15,24 @@
         <span>{{'locations-filter-by-city' | translate}}</span>
       </div>
       <div class="rogo-select">
-        <select style="width: 23em" name="city" [(ngModel)]="selectedCity">
+        <select id="city-select" style="width: 23em" name="city" [(ngModel)]="selectedCity" (change)="filter()">
+            <option value="none">Toàn quốc</option>
             <option *ngFor="let city of cities" [value]="city.name">{{city.name}}</option>
         </select>
       </div>
       <div class="rogo-select">
-        <select style="width: 23em" name="district" [(ngModel)]="selectedDistrict">
-              <option *ngFor="let district of districts" [value]="district.name">{{district.name}}</option>
+        <select id="district-select" style="width: 23em" name="district" [(ngModel)]="selectedDistrict" (change)="filter()">
+            <option value="none">Tất cả quận huyện</option>
+              <option *ngFor="let district of districts" [value]="district">{{district}}</option>
           </select>
       </div>
       <div class="results">
         <ul style="list-style: none; padding: 0;">
-          <li *ngFor="let result of results" style="margin-bottom: 1em; cursor: pointer" (click)="selectLocation(result.id)">
+          <li *ngFor="let item of filteredItemsByDistrict" style="margin-bottom: 1em; cursor: pointer" (click)="selectLocation(item.id)">
             <img class="shop-icon" src="../assets/images/locations/shop-icon.png">
             <div style="display: inline-block">
-              <div>{{result.name}}</div>
-              <div class="result-city">{{result.city}}</div>
+              <div style="max-width: 20em">{{item.name}}</div>
+              <div class="result-city">{{item.address}}</div>
             </div>
           </li>
         </ul>
@@ -35,7 +41,9 @@
   </div>
   <div class="content">
     <agm-map [latitude]="lat" [longitude]="lng">
-      <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+      <ng-container *ngFor="let item of filteredItemsByDistrict">
+        <agm-marker [latitude]="window.JSON.parse(item.coordinate)[0]" [longitude]="window.JSON.parse(item.coordinate)[1]"></agm-marker>
+      </ng-container>
     </agm-map>
   </div>
 </div>

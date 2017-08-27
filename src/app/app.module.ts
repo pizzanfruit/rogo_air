@@ -9,6 +9,8 @@ import { TabsComponent } from './modules/tabs/tabs.component'
 import { LoginComponent } from './modules/login/login.component'
 import { LocationsComponent } from './modules/locations/locations.component'
 import { LocationComponent } from './modules/location/location.component'
+import { LocationTabsComponent } from './modules/location-tabs/location-tabs.component'
+import { LocationSettingsComponent } from './modules/location-settings/location-settings.component'
 import { DevicesComponent } from './modules/devices/devices.component'
 import { DeviceComponent } from './modules/device/device.component'
 import { SettingsComponent } from './modules/settings/settings.component'
@@ -17,6 +19,7 @@ import { LoginService } from './services/login.service'
 import { LocationsService } from './services/locations.service'
 import { LocationService } from './services/location.service'
 import { DeviceService } from './services/device.service'
+import { DevicesService } from './services/devices.service'
 
 import { AgmCoreModule } from '@agm/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,10 +28,18 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MdDatepickerModule, MdNativeDateModule } from '@angular/material';
+import { UiSwitchModule } from 'ngx-ui-switch/src'
+import { ChartModule } from 'angular2-highcharts';
+import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
+import * as highcharts from 'highcharts';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
+export function highchartsFactory() {
+  return highcharts;
 }
 
 @NgModule({
@@ -38,6 +49,8 @@ export function createTranslateLoader(http: HttpClient) {
     TabsComponent,
     LocationsComponent,
     LocationComponent,
+    LocationTabsComponent,
+    LocationSettingsComponent,
     DevicesComponent,
     DeviceComponent,
     SettingsComponent
@@ -50,6 +63,7 @@ export function createTranslateLoader(http: HttpClient) {
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCB3ib4Ez0nEJG61uopvQeFwSdrOYKa28o'
     }),
+    UiSwitchModule,
     BrowserAnimationsModule,
     MdDatepickerModule,
     MdNativeDateModule,
@@ -61,9 +75,13 @@ export function createTranslateLoader(http: HttpClient) {
         useFactory: (createTranslateLoader),
         deps: [HttpClient]
       }
-    })
+    }),
+    ChartModule
   ],
-  providers: [LoginService, LocationsService, DeviceService, LocationService],
+  providers: [LoginService, LocationsService, DeviceService, DevicesService, LocationService, {
+    provide: HighchartsStatic,
+    useFactory: highchartsFactory
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

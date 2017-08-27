@@ -12,27 +12,8 @@ export class LocationsService {
   constructor(private _http: Http) { }
 
   // Get all cities
-  getCities(): Observable<any> {
-    let cities = [
-      {name: "Toàn quốc"},
-      {name: "Hà Nội"},
-      {name: "Hồ Chí Minh"},
-      {name: "Đà Nẵng"},
-    ]
-    return Observable.of(cities);
-    // return this._http.get("url").map(this.extractData).catch(this.handleError);
-  }
-
-  // Get all cities
-  getDistricts(): Observable<any> {
-    let districts = [
-      {name: "Tất cả quận huyện"},
-      {name: "Đống Đa"},
-      {name: "Ba Đình"},
-      {name: "Cầu giấy"},
-    ]
-    return Observable.of(districts);
-    // return this._http.get("url").map(this.extractData).catch(this.handleError);
+  getLocations(userId): Observable<any> {
+    return this._http.get("https://tyu7xxj099.execute-api.us-east-1.amazonaws.com/release/user/" + userId + "/locations").catch(this.handleError);
   }
 
   //extract data from returned json

@@ -1,0 +1,101 @@
+.sidebar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 30em;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: #2e3036;
+  color: #ffffff;
+  padding-top: 2em;
+}
+
+.content {
+  background-color: #f2f2f5;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 30em;
+  right: 0;
+}
+
+.back-title {
+  width: 16em;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.back-icon {
+  width: 0.45em;
+  margin-bottom: -0.05em;
+  margin-right: 0.8em;
+}
+
+.location-name {
+  margin-top: 3em;
+  color: #648dc9;
+  font-size: 1.3em;
+}
+
+.location-address {
+  margin-top: 0.5em;
+  color: #a7a7a7;
+  font-style: italic;
+  font-size: 0.9em;
+}
+
+.device-count {
+  margin-top: 0.7em;
+  font-size: 4.2em;
+  color: #58bf90;
+}
+
+.device-count-text {
+  margin-top: 3em;
+  color: #778393;
+}
+
+.devices-tab {
+  margin-top: 6em;
+}
+
+.tab {
+  width: 100%;
+  color: #858589;
+  font-size: 1.2em;
+  padding: 1.3em 2em 1.3em 2em;
+  cursor: pointer;
+  outline: none;
+}
+
+.tabs-icon {
+  width: 1.75em;
+  margin-top: -0.2em;
+  vertical-align: bottom;
+  margin-bottom: -0.2em;
+  margin-right: 1em;
+}
+
+.tabs-icon.active, .dot-icon.active {
+  display: none;
+}
+
+.tab.active  {
+  color: #ffffff;
+  background-color: #25272d;
+}
+
+.dot-icon  {
+  width: 0.5em;
+  margin-right: 1em;
+}
+
+.active > .tabs-icon, .active > .dot-icon {
+  display: none;
+}
+
+.active > .tabs-icon.active, .active > .dot-icon.active  {
+  display: initial;
+}

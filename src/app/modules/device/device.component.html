@@ -1,26 +1,22 @@
-<div class="device-wrapper">
-  <div class="sidebar">
-    <div class="back-title" (click)="backToDevices()">
-      <img class="back-icon" src="../assets/images/device/back-icon.png"> {{device.name}}
-    </div>
-    <div class="location">
-      <img class="shop-icon" src="../assets/images/device/shop-icon.png"> {{device.location}}
-    </div>
-    <div class="temp">
-      <i class="fa fa-thermometer-empty" aria-hidden="true"></i>
-      <span>29°</span>
-    </div>
-    <div class="humidity">
-      <img class="humidity-icon" src="../assets/images/device/humidity-icon.png">
-      <span>66 %</span>
-    </div>
-    <div class="history" (click)="switchToHistory()">
-      <img class="history-icon" src="../assets/images/device/history-icon.png">
-      <div>{{'device-history-tab' | translate}}</div>
-    </div>
-    <div class="settings" (click)="switchToSettings()">
-      <img class="settings-icon" src="../assets/images/device/settings-icon.png">
-      <div>{{'device-settings-tab' | translate}}</div>
+<div *ngIf="isLoading" class="loading">
+  <img src="../assets/images/cube-loading.svg" style="width: 4em">
+</div>
+<div *ngIf="!isLoading" class="device-wrapper">
+  <div class="header">
+    <img src="../assets/images/device/devices-icon.png" class="devices-icon">
+    <div class="header-right">
+      <div class="title">{{device.name}}</div>
+      <div class="subtitle">{{device.type}}</div>
+      <div class="tabs">
+        <div class="history-tab active" (click)="switchToHistory()">
+          HISTORY
+        </div>
+        <!--
+        -->
+        <div class="settings-tab" (click)="switchToSettings()">
+          THIẾT LẬP
+        </div>
+      </div>
     </div>
   </div>
   <div class="content">
@@ -28,73 +24,113 @@
       <div class="current-month-year">{{currentMonthYear}}</div>
       <div class="timeline">
         <ul class="list-inline" style="list-style: none; padding: 0">
-          <li class="before-today">{{currentDate.getDate() - 3}}</li>
-          <li class="before-today">{{currentDate.getDate() - 2}}</li>
-          <li class="before-today">{{currentDate.getDate() - 1}}</li>
+          <li class="before-today">{{currentDateMinus3}}</li>
+          <li class="before-today">{{currentDateMinus2}}</li>
+          <li class="before-today">{{currentDateMinus1}}</li>
           <li class="today">{{currentDate.getDate()}}</li>
-          <li class="after-today">{{currentDate.getDate() + 1}}</li>
-          <li class="after-today">{{currentDate.getDate() + 2}}</li>
-          <li class="after-today">{{currentDate.getDate() + 3}}</li>
+          <li class="after-today">{{currentDatePlus1}}</li>
+          <li class="after-today">{{currentDatePlus2}}</li>
+          <li class="after-today">{{currentDatePlus3}}</li>
         </ul>
         <img class="calendar-icon" src="../assets/images/device/calendar-icon.png" (click)="openDatepicker()">
         <input class="datepicker" style="opacity: 0" [mdDatepicker]="myDatepicker" [(ngModel)]="currentDate" (ngModelChange)="updateMonthYear()">
         <md-datepicker #myDatepicker></md-datepicker>
       </div>
       <div class="temp-chart">
-        <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-temp' | translate}}
+        <div class="chart-loading">
+          <img class="chart-loading-icon" src="../assets/images/device/loading-icon.svg">
+        </div>
+        <div class="chart-empty">
+          <div>Không có dữ liệu</div>
+        </div>
+        <div style="margin-bottom: 1em;">
+          <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-temp' | translate}}
+        </div>
+        <chart [options]="tempOptions" (load)="saveTempInstance($event.context)"></chart>
+        <div class="current-temp">
+          <img class="temp-icon" src="../assets/images/device/temp-icon.png"> {{ currentTemp | number : '2.1-1' }} °
+        </div>
       </div>
       <div class="humidity-chart">
-        <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-humidity' | translate}}
+        <div class="chart-loading">
+          <img class="chart-loading-icon" src="../assets/images/device/loading-icon.svg">
+        </div>
+        <div class="chart-empty">
+          <div>Không có dữ liệu</div>
+        </div>
+        <div style="margin-bottom: 1em;">
+          <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-humidity' | translate}}
+        </div>
+        <chart [options]="humidityOptions" (load)="saveHumidityInstance($event.context)"></chart>
+        <div class="current-humidity">
+          <img class="humidity-icon" src="../assets/images/device/humidity-icon.png"> {{ currentHumidity | number : '2.1-1'
+          }} %
+        </div>
       </div>
     </div>
     <div class="settings-content">
-      <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-settings-explain-1' | translate}}
-      <ul class="bullet-text">
-        <li>{{'device-settings-explain-2' | translate}}</li>
-        <li>{{'device-settings-explain-3' | translate}}</li>
-        <li>{{'device-settings-explain-4' | translate}}</li>
-        <li>{{'device-settings-explain-5' | translate}}</li>
-      </ul>
-      <div class="switch-wrapper">
-        <img class="switch-bg-icon" src="../assets/images/device/switch-icon.png">
-        <!-- <img class="switch-active-icon" src="../assets/images/device/switch-active-icon.png"> -->
-        <img class="switch-icon a" src="../assets/images/device/switch-active-icon.png">
-        <img class="switch-icon b" src="../assets/images/device/switch-active-icon.png">
-        <img class="switch-icon c" src="../assets/images/device/switch-active-icon.png">
-        <img class="switch-icon d" src="../assets/images/device/switch-active-icon.png">
-        <span class="option-1">{{'device-no-operation' | translate}}</span>
-        <span class="option-2">{{'device-set-point' | translate}}</span>
-        <span class="option-3">{{'device-schedule' | translate}}</span>
-        <span class="option-4">{{'device-power' | translate}}</span>
+      <div>
+        <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> AIR CONDITIONER TARGET
       </div>
-      <div style="margin-top: 6em">
-        <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-set-point' | translate}}
+      <div *ngIf="device" class="air-conditioners">
+        <div *ngFor="let ac of device.ac" class="ac">{{ac}}</div>
       </div>
-      <div class="no-select" style="margin-top: 2em;">
-        <div class="minus-icon" (click)="decreaseTemp()">-</div>
-        <div class="temp2">{{temp | number:'2.1-1'}}</div>
-        <div class="degree">°</div>
-        <div class="plus-icon" (click)="increaseTemp()">+</div>
-      </div>
-      <div style="margin-top: 2em">
-        <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-schedule' | translate}}
-      </div>
-      <div class="schedule-wrapper">
-        <div class="add-wrapper">
-          <img class="add-icon" src="../assets/images/device/add-icon.png">
-          <div class="add-text">{{'device-add-schedule' | translate}}</div>
+      <div>
+        <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> OVERRIDE LOCATION SETTINGS
+        <div style="padding-left: 1.2em; margin-bottom: 1em">
+          <div class="override-subtitle">Cho phép thiết bị chạy độc lập với các thiết lập của Location</div>
+          {{device.forcecontrol}}
+          <ui-switch *ngIf="device" size="small" [(ngModel)]="device.forcecontrol" color="#448ccb" (change)="setForcecontrol($event)"></ui-switch>
         </div>
-        <div *ngFor="let schedule of schedules" class="schedule-box">
-          <div class="from-group">
-            {{'device-from' | translate}}
-            <div style="font-size: 1.4em">06:20</div>
+      </div>
+      <div class="override-settings">
+        <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-settings-explain-1' | translate}}
+        <ul class="bullet-text">
+          <li>{{'device-settings-explain-2' | translate}}</li>
+          <li>{{'device-settings-explain-3' | translate}}</li>
+          <li>{{'device-settings-explain-4' | translate}}</li>
+          <li>{{'device-settings-explain-5' | translate}}</li>
+        </ul>
+        <div class="switch-wrapper">
+          <img class="switch-bg-icon" src="../assets/images/device/switch-icon.png">
+          <img class="switch-icon a" src="../assets/images/device/switch-active-icon.png">
+          <img class="switch-icon b" src="../assets/images/device/switch-active-icon.png">
+          <img class="switch-icon c" src="../assets/images/device/switch-active-icon.png">
+          <img class="switch-icon d" src="../assets/images/device/switch-active-icon.png">
+          <span class="option-1">{{'device-no-operation' | translate}}</span>
+          <span class="option-2">{{'device-set-point' | translate}}</span>
+          <span class="option-3">{{'device-schedule' | translate}}</span>
+          <span class="option-4">{{'device-power-off' | translate}}</span>
+        </div>
+        <div style="margin-top: 3em; border-top: 0.08em solid #d9dde7; padding-top: 1em">
+          <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-set-point' | translate}}
+        </div>
+        <div class="no-select" style="margin-top: 2em;">
+          <div class="minus-icon" (click)="decreaseTemp()">-</div>
+          <div class="temp2">{{temp | number:'2.1-1'}}</div>
+          <div class="degree">°</div>
+          <div class="plus-icon" (click)="increaseTemp()">+</div>
+        </div>
+        <div style="margin-top: 3em; border-top: 0.08em solid #d9dde7; padding-top: 1em">
+          <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-schedule' | translate}}
+        </div>
+        <div class="schedule-wrapper">
+          <div class="add-wrapper">
+            <img class="add-icon" src="../assets/images/device/add-icon.png">
+            <div class="add-text">{{'device-add-schedule' | translate}}</div>
           </div>
-          <div class="to-group">
-            {{'device-to' | translate}}
-            <div style="font-size: 1.4em">19:00</div>
-          </div>
-          <div class="target-group">
-            {{'device-target' | translate}}: 26.5°
+          <div *ngFor="let schedule of schedules" class="schedule-box">
+            <div class="from-group">
+              {{'device-from' | translate}}
+              <div style="font-size: 1.4em">06:20</div>
+            </div>
+            <div class="to-group">
+              {{'device-to' | translate}}
+              <div style="font-size: 1.4em">19:00</div>
+            </div>
+            <div class="target-group">
+              {{'device-target' | translate}}: 26.5°
+            </div>
           </div>
         </div>
       </div>

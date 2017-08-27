@@ -1,0 +1,73 @@
+<div class="location-settings-wrapper">
+  <div class="header">
+    <img src="../assets/images/location-settings/settings-icon.png" class="settings-icon">
+    <div class="header-right">
+      <div class="title">Thiết lập chung</div>
+      <div class="subtitle">Thiết lập chung cho các kiểu thiết bị trong một vùng</div>
+      <div class="tabs">
+        <div class="rogo-air-tab active" (click)="switchToRogoAir()">
+          ROGO AIR
+        </div>
+        <div class="rogo-hub-tab disable">
+          ROGO HUB
+        </div>
+        <div class="rogo-sensor-tab disable">
+          ROGO SENSOR
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="content">
+    <div class="rogo-air-conten">
+      <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-settings-explain-1' | translate}}
+      <ul class="bullet-text">
+        <li>{{'device-settings-explain-2' | translate}}</li>
+        <li>{{'device-settings-explain-3' | translate}}</li>
+        <li>{{'device-settings-explain-4' | translate}}</li>
+        <li>{{'device-settings-explain-5' | translate}}</li>
+      </ul>
+      <div class="switch-wrapper">
+        <img class="switch-bg-icon" src="../assets/images/device/switch-icon.png">
+        <img class="switch-icon a" src="../assets/images/device/switch-active-icon.png">
+        <img class="switch-icon b" src="../assets/images/device/switch-active-icon.png">
+        <img class="switch-icon c" src="../assets/images/device/switch-active-icon.png">
+        <img class="switch-icon d" src="../assets/images/device/switch-active-icon.png">
+        <span class="option-1">{{'device-no-operation' | translate}}</span>
+        <span class="option-2">{{'device-set-point' | translate}}</span>
+        <span class="option-3">{{'device-schedule' | translate}}</span>
+        <span class="option-4">{{'device-power-off' | translate}}</span>
+      </div>
+      <div style="margin-top: 3em; border-top: 0.08em solid #d9dde7; padding-top: 1em">
+        <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-set-point' | translate}}
+      </div>
+      <div class="no-select" style="margin-top: 2em;">
+        <div class="minus-icon" (click)="decreaseTemp()">-</div>
+        <div class="temp2">{{temp | number:'2.1-1'}}</div>
+        <div class="degree">°</div>
+        <div class="plus-icon" (click)="increaseTemp()">+</div>
+      </div>
+      <div style="margin-top: 3em; border-top: 0.08em solid #d9dde7; padding-top: 1em">
+        <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-schedule' | translate}}
+      </div>
+      <div class="schedule-wrapper">
+        <div class="add-wrapper">
+          <img class="add-icon" src="../assets/images/device/add-icon.png">
+          <div class="add-text">{{'device-add-schedule' | translate}}</div>
+        </div>
+        <div *ngFor="let schedule of schedules" class="schedule-box">
+          <div class="from-group">
+            {{'device-from' | translate}}
+            <div style="font-size: 1.4em">06:20</div>
+          </div>
+          <div class="to-group">
+            {{'device-to' | translate}}
+            <div style="font-size: 1.4em">19:00</div>
+          </div>
+          <div class="target-group">
+            {{'device-target' | translate}}: 26.5°
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

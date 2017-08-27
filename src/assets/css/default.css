@@ -24,7 +24,7 @@
 .clearfix:before, .clearfix:after { content: ''; display: table; }
 .clearfix:after { clear: both; }
 
-html { font-size: 62.5%; }
+html { font-size: 62.5%; overflow: hidden }
 
 body {
 	color: #404d5b;
@@ -36,3 +36,39 @@ body {
 .mat-calendar-body-selected {
   background-color: #17bdcf !important;
 }
+
+.highcharts-credits {
+	display: none;
+}
+
+.switch-small {
+  width: 3.1em !important;
+	height: 1.3em !important;
+	border-radius: 0 !important;
+}
+
+.switch-small small {
+	width: 1.5em !important;
+	height: 1.55em !important;
+	border-radius: 0 !important;
+}
+
+.switch-small.checked small {
+	left: 2.15em !important;
+}
+
+.loading {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transition: opacity 0.8s;
+}
+
