@@ -27,6 +27,8 @@
     "devices-found-device": "デバイス見つかりました",
     "devices-not-found": "デバイスが見つかりません。もう一度お試しください",
     "devices-add": "追加",
+    "devices-edit": "編集",
+    "devices-remove": "削除",
 
     "device-history-tab": "履歴",
     "device-settings-tab": "設定",

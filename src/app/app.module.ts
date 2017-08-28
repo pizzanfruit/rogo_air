@@ -20,7 +20,6 @@ import { LocationsService } from './services/locations.service'
 import { LocationService } from './services/location.service'
 import { DeviceService } from './services/device.service'
 import { DevicesService } from './services/devices.service'
-import { CookieService } from 'angular2-cookie/services/cookies.service';
 
 import { AgmCoreModule } from '@agm/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -29,7 +28,8 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MdDatepickerModule, MdNativeDateModule } from '@angular/material';
-import { UiSwitchModule } from 'ngx-ui-switch/src'
+import { UiSwitchModule } from 'ngx-ui-switch/src';
+import { CookieModule } from 'ngx-cookie';
 import { ChartModule } from 'angular2-highcharts';
 import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
 import * as highcharts from 'highcharts';
@@ -77,12 +77,13 @@ export function highchartsFactory() {
         deps: [HttpClient]
       }
     }),
-    ChartModule
+    ChartModule,
+    CookieModule.forRoot()
   ],
   providers: [LoginService, LocationsService, DeviceService, DevicesService, LocationService, {
     provide: HighchartsStatic,
     useFactory: highchartsFactory
-  }, CookieService],
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

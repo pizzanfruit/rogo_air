@@ -27,6 +27,8 @@
     "devices-found-device": "Tìm thấy thông tin thiết bị",
     "devices-not-found": "Không tìm thấy thiết bị vui lòng thử lại",
     "devices-add": "Thêm",
+    "devices-edit": "Sửa",
+    "devices-remove": "Xoá",
 
     "device-history-tab": "Lịch sử",
     "device-settings-tab": "Thiết lập",
@@ -46,7 +48,5 @@
     "device-to": "Đến",
     "device-target": "Mục tiêu",
     "device-no-data": "Không có dữ liệu",
-    "device-override-subtitle": "Cho phép thiết bị chạy độc lập với các thiết lập của location",
-    "device-edit": "Sửa",
-    "device-remove": "Xoá"
+    "device-override-subtitle": "Cho phép thiết bị chạy độc lập với các thiết lập của location"
 }

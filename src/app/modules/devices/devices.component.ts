@@ -52,6 +52,17 @@ export class DevicesComponent implements OnInit {
         this.isLoading = false;
       });
     });
+    this.setUpEditPopup();
+  }
+
+  setUpEditPopup() {
+    $(document).mouseup(function (e) {
+      var container = $(".edit-popup");
+      // if the target of the click isn't the container nor a descendant of the container
+      if (!container.is(e.target) && container.has(e.target).length === 0) {
+        container.hide();
+      }
+    });
   }
 
   selectDevice(deviceId: number) {
@@ -61,10 +72,15 @@ export class DevicesComponent implements OnInit {
   openEditPopup(event) {
     $(".edit-popup").hide();
     $(event.target).next().show();
+    $(event.target).next().focus();
   }
 
   closeEditPopup(event) {
     $(event.target).parent().hide();
+  }
+
+  closePopup(event) {
+    $(event.target).hide();
   }
 
   openAddDeviceModal() {
