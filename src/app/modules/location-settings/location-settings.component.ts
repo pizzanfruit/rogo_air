@@ -84,6 +84,7 @@ export class LocationSettingsComponent implements OnInit {
   }
 
   setUpSwitch() {
+    $(".switch-icon").unbind();
     $(".switch-icon").click((event) => {
       $(".switch-icon").css("opacity", 0);
       $(event.target).css("opacity", 1);
