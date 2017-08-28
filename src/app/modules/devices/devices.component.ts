@@ -4,6 +4,8 @@ import { Title } from '@angular/platform-browser';
 
 import { DevicesService } from '../../services/devices.service';
 
+import { Observable } from 'rxjs';
+
 // Jquery
 declare var $: any;
 // JSON5
@@ -19,7 +21,12 @@ export class DevicesComponent implements OnInit {
 
   //
   isLoading: boolean = true;
+  isAddLoading: boolean = false;
+  isRemoveLoading: boolean = false;
   filteredItems: any[] = [];
+
+  //
+  parentId: any;
 
   devices: any[];
 
@@ -37,22 +44,29 @@ export class DevicesComponent implements OnInit {
     private devicesService: DevicesService
   ) {
     this.isLoading = true;
+    this.isAddLoading = false;
   }
 
   ngOnInit() {
     this.title.setTitle("Devices");
+    this.refreshDevices();
+    this.setUpEditPopup();
+  }
+
+  refreshDevices() {
     this.route.parent.params.subscribe((params) => {
-      let id = params['id'];
-      this.devicesService.getDevices(id).subscribe((res) => {
+      this.parentId = params['id'];
+      this.devicesService.getDevices(this.parentId).subscribe((res) => {
         this.devices = JSON5.parse(res._body).body;
         this.assignCopy();
         this.isLoading = false;
+        this.isAddLoading = false;
       }, (err) => {
         console.log(err);
         this.isLoading = false;
+        this.isAddLoading = false;
       });
     });
-    this.setUpEditPopup();
   }
 
   setUpEditPopup() {
@@ -79,11 +93,22 @@ export class DevicesComponent implements OnInit {
     $(event.target).parent().hide();
   }
 
-  closePopup(event) {
-    $(event.target).hide();
+  removeDevice(id, event) {
+    setTimeout(() => {
+      $(".remove-loading-icon[id='" + id + "']").show();
+    })
+    this.devicesService.deleteDevice(this.parentId, id).subscribe((res) => {
+      this.refreshDevices();
+    }, (err) => {
+      console.log(err);
+    })
+    this.closeEditPopup(event);
   }
 
   openAddDeviceModal() {
+    $(".device-found").hide();
+    $(".device-found-add").hide();
+    $(".device-not-found").hide();
     $("#add-device-modal").modal("show");
   }
 
@@ -126,5 +151,42 @@ export class DevicesComponent implements OnInit {
         )
         break;
     }
+  }
+
+  addDevice() {
+    this.isAddLoading = true;
+    let deviceId = $("#device-search-input").val();
+    this.devicesService.registerDeviceToLocation(this.parentId, deviceId).subscribe((res) => {
+      this.refreshDevices();
+      $("#add-device-modal").modal("hide");
+    }, (err) => {
+      console.log(err);
+      this.isAddLoading = false;
+    });
+  }
+
+  searchDevice() {
+    $(".device-found").hide();
+    $(".device-found-add").hide();
+    $(".device-not-found").hide();
+    let deviceId = $("#device-search-input").val();
+    this.devicesService.searchDevice(deviceId).catch((error) => {
+      console.log($(".device-not-found"));
+      $(".device-not-found").show();
+      console.error(error.message || error);
+      return Observable.throw(error.message || error);
+    }).subscribe((res) => {
+      let device = JSON5.parse(res._body).body;
+      if (device) {
+        $(".device-found").css("display", "flex");
+        $(".device-found-add").show();
+      } else {
+        console.log("asjdlka");
+        console.log($(".device-not-found"));
+        $(".device-not-found").show();
+      }
+    }, (err) => {
+      console.log(err);
+    });
   }
 }

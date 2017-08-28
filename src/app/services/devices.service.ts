@@ -50,6 +50,31 @@ export class DevicesService {
     return this._http.get("https://tyu7xxj099.execute-api.us-east-1.amazonaws.com/release/location/" + id + "/devices").catch(this.handleError);
   }
 
+  searchDevice(id): Observable<any> {
+    return this._http.get("https://tyu7xxj099.execute-api.us-east-1.amazonaws.com/release/device/" + id);
+  }
+
+  registerDeviceToLocation(locationId, userId): Observable<any> {
+    let data = {
+      "userid": "9dc9496c7bf111e7bb31be2e44b06b34"
+    }
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers });
+    return this._http.post("https://tyu7xxj099.execute-api.us-east-1.amazonaws.com/release/location/" + locationId + "/mapdevicewithlocaiton/" + userId, data, options).catch(this.handleError);
+  }
+
+  deleteDevice(locationId, userId): Observable<any> {
+    let data = {
+      "userid": "9dc9496c7bf111e7bb31be2e44b06b34"
+    }
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let requestOptions = new RequestOptions({
+      headers: headers,
+      body: data
+    })
+    return this._http.delete("https://tyu7xxj099.execute-api.us-east-1.amazonaws.com/release/location/" + locationId + "/mapdevicewithlocaiton/" + userId, requestOptions).catch(this.handleError);
+  }
+
   //extract data from returned json
   private extractData(res: Response) {
     let body = res.json();

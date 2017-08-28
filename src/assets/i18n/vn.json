@@ -29,6 +29,7 @@
     "devices-add": "Thêm",
     "devices-edit": "Sửa",
     "devices-remove": "Xoá",
+    "devices-search-hint": "Tìm ID thiết bị",
 
     "device-history-tab": "Lịch sử",
     "device-settings-tab": "Thiết lập",

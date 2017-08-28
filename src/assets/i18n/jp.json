@@ -29,6 +29,7 @@
     "devices-add": "追加",
     "devices-edit": "編集",
     "devices-remove": "削除",
+    "devices-search-hint": "デバイスのIDで検索",
 
     "device-history-tab": "履歴",
     "device-settings-tab": "設定",
