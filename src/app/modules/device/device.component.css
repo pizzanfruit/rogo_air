@@ -212,16 +212,18 @@
 }
 
 .add-wrapper {
-  display: inline-block;
+  display: inline-flex;
   margin-top: 2em;
   margin-left: 3em;
+  margin-right: 2em;
+  flex-direction: column;
   vertical-align: top;
+  align-items: center;
 }
 
 .add-icon {
   width: 3em;
-  margin-right: 2em;
-  margin-bottom: 0.3em;
+  margin-bottom: 0.5em;
   cursor: pointer;
 }
 
