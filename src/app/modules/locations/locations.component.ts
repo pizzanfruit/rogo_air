@@ -157,8 +157,8 @@ export class LocationsComponent implements OnInit {
     if (length <= 0) return;
     for (let i = 0; i < length; i++) {
       let coordinates = JSON.parse(this.filteredItemsByDistrict[i].coordinate);
-      latSum += parseInt(coordinates[0], 10);
-      longSum += parseInt(coordinates[1], 10);
+      latSum += parseFloat(coordinates[0]);
+      longSum += parseFloat(coordinates[1]);
     }
     this.lat = latSum / length;
     this.lng = longSum / length;
