@@ -20,10 +20,12 @@
     "devices-title": "デバイス",
     "devices-subtitle": "お店に追加されたデバイス一覧",
     "devices-filter": "フィルタ",
+    "devices-filter-all": "全部",
     "devices-add-device": "デバイス追加",
     "devices-add-device-title": "デバイス追加",
     "devices-add-device-subtitle": "IDはデバイスまたはデバイスのパッケージに記載されています",
-    "devices-found-device": "デバイス見つけました",
+    "devices-found-device": "デバイス見つかりました",
+    "devices-not-found": "デバイスが見つかりません。もう一度お試しください",
     "devices-add": "追加",
 
     "device-history-tab": "履歴",

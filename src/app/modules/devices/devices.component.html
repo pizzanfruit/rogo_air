@@ -11,6 +11,7 @@
         {{'devices-filter' | translate}}:
         <div class="filter-select">
           <select id="filter-select" style="width: 9.5em" name="city" [(ngModel)]="selectedFilter" (change)="filterItem()">
+            <option [value]="0">{{'devices-filter-all' | translate}}</option>
             <option *ngFor="let filter of filters" [value]="filter.value">{{filter.name}}</option>
           </select>
         </div>
@@ -38,8 +39,8 @@
       </div>
       <img class="action-button-icon" src="../assets/images/devices/action-button-icon.png" (click)="openEditPopup($event)">
       <div class="edit-popup">
-        <div class="edit-button" (click)="closeEditPopup($event)">Sửa</div>
-        <div class="remove-button" (click)="closeEditPopup($event)">Xoá</div>
+        <div class="edit-button" (click)="closeEditPopup($event)">{{'devices-edit' | translate}}</div>
+        <div class="remove-button" (click)="closeEditPopup($event)">{{'devices-remove' | translate}}</div>
       </div>
     </div>
   </div>
@@ -61,7 +62,7 @@
           <img class="search-icon" src="../assets/images/devices/search-icon.png">
         </div>
         <div class="device-not-found">
-          Không tìm thấy thiết bị vui lòng thử lại
+            {{'devices-not-found' | translate}}
         </div>
         <div class="device-found">
           <div class="device-found-text">{{'devices-found-device' | translate}}</div>

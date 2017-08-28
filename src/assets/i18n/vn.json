@@ -20,10 +20,12 @@
     "devices-title": "Thiết bị",
     "devices-subtitle": "Các thiết bị đã được thêm vào một location",
     "devices-filter": "Lọc",
+    "devices-filter-all": "Tất cả",
     "devices-add-device": "Thêm thiết bị",
     "devices-add-device-title": "THÊM THIẾT BỊ",
     "devices-add-device-subtitle": "ID được tìm thấy trên vỏ hay bao bì của thiết bị",
     "devices-found-device": "Tìm thấy thông tin thiết bị",
+    "devices-not-found": "Không tìm thấy thiết bị vui lòng thử lại",
     "devices-add": "Thêm",
 
     "device-history-tab": "Lịch sử",
@@ -44,5 +46,7 @@
     "device-to": "Đến",
     "device-target": "Mục tiêu",
     "device-no-data": "Không có dữ liệu",
-    "device-override-subtitle": "Cho phép thiết bị chạy độc lập với các thiết lập của location"
+    "device-override-subtitle": "Cho phép thiết bị chạy độc lập với các thiết lập của location",
+    "device-edit": "Sửa",
+    "device-remove": "Xoá"
 }

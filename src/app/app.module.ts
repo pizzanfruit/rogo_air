@@ -20,6 +20,7 @@ import { LocationsService } from './services/locations.service'
 import { LocationService } from './services/location.service'
 import { DeviceService } from './services/device.service'
 import { DevicesService } from './services/devices.service'
+import { CookieService } from 'angular2-cookie/services/cookies.service';
 
 import { AgmCoreModule } from '@agm/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -81,7 +82,7 @@ export function highchartsFactory() {
   providers: [LoginService, LocationsService, DeviceService, DevicesService, LocationService, {
     provide: HighchartsStatic,
     useFactory: highchartsFactory
-  }],
+  }, CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

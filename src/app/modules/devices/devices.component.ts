@@ -24,7 +24,6 @@ export class DevicesComponent implements OnInit {
   devices: any[];
 
   filters: any[] = [
-    { name: "Tất cả", value: 0 },
     { name: "Rogo Air", value: 1 },
     { name: "Rogo Salon", value: 2 }
   ]
