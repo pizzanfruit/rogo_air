@@ -3,13 +3,30 @@
 
     "locations-filter-by-city": "Lọc theo thành phố",
     "locations-search-hint": "Tìm cửa hàng",
+    "locations-all-cities": "Toàn quốc",
+    "locations-all-districts": "Tất cả quận huyện",
+
+    "locations-tabs-back": "Quay lại",
+    "locations-tabs-device-count": "Số lượng thiết bị",
+    "locations-tabs-device": "Thiết bị",
+    "locations-tabs-common-settings": "Thiết lập chung",
+    "locations-tabs-share": "Chia sẻ quyền sử dụng",
+
+    "locations-settings-common-settings-subtitle": "Thiết lập chung cho các kiểu thiết bị trong một vùng",
 
     "location-device-count": "Số lượng thiết bị",
     "location-highest-temp": "Nhiệt độ cao nhất",
 
     "devices-title": "Thiết bị",
+    "devices-subtitle": "Các thiết bị đã được thêm vào một location",
+    "devices-filter": "Lọc",
+    "devices-add-device": "Thêm thiết bị",
+    "devices-add-device-title": "THÊM THIẾT BỊ",
+    "devices-add-device-subtitle": "ID được tìm thấy trên vỏ hay bao bì của thiết bị",
+    "devices-found-device": "Tìm thấy thông tin thiết bị",
+    "devices-add": "Thêm",
 
-    "device-history-tab": "Lịch sử theo dõi",
+    "device-history-tab": "Lịch sử",
     "device-settings-tab": "Thiết lập",
     "device-temp": "Nhiệt độ",
     "device-humidity": "Độ ẩm",
@@ -25,5 +42,7 @@
     "device-add-schedule": "Thêm lịch",
     "device-from": "Từ",
     "device-to": "Đến",
-    "device-target": "Mục tiêu"
+    "device-target": "Mục tiêu",
+    "device-no-data": "Không có dữ liệu",
+    "device-override-subtitle": "Cho phép thiết bị chạy độc lập với các thiết lập của location"
 }

@@ -1,0 +1,48 @@
+{
+    "config-change-lang": "言語を選択してください",
+
+    "locations-filter-by-city": "都市別フィルタ",
+    "locations-search-hint": "お店を検索します",
+    "locations-all-cities": "全国",
+    "locations-all-districts": "全地区",
+
+    "locations-tabs-back": "戻る",
+    "locations-tabs-device-count": "デバイス数",
+    "locations-tabs-device": "デバイス",
+    "locations-tabs-common-settings": "共通設定",
+    "locations-tabs-share": "操作権利共有",
+
+    "locations-settings-common-settings-subtitle": "範囲内のデバイスの共通設定",
+
+    "location-device-count": "デバイス数",
+    "location-highest-temp": "最大の温度",
+
+    "devices-title": "デバイス",
+    "devices-subtitle": "お店に追加されたデバイス一覧",
+    "devices-filter": "フィルタ",
+    "devices-add-device": "デバイス追加",
+    "devices-add-device-title": "デバイス追加",
+    "devices-add-device-subtitle": "IDはデバイスまたはデバイスのパッケージに記載されています",
+    "devices-found-device": "デバイス見つけました",
+    "devices-add": "追加",
+
+    "device-history-tab": "履歴",
+    "device-settings-tab": "設定",
+    "device-temp": "温度",
+    "device-humidity": "湿度",
+    "device-settings-explain-1": "操作モード",
+    "device-settings-explain-2": "No operation: Device will stop controlling air conditioners",
+    "device-settings-explain-3": "Set point: Allow device to control room's temperature according to a set target 24/24",
+    "device-settings-explain-4": "Schedule: Allow device to automatically control room's temperature according to schedule",
+    "device-settings-explain-5": "Power: Allow device to always turn off air conditioning",
+    "device-no-operation": "No operation",
+    "device-set-point": "Set point",
+    "device-schedule": "Schedule",
+    "device-power-off": "Power Off",
+    "device-add-schedule": "Add schedule",
+    "device-from": "から",
+    "device-to": "まで",
+    "device-target": "目標",
+    "device-no-data": "データがありません",
+    "device-override-subtitle": "デバイスがお店の設定とは独立して実行できるようにします"
+}

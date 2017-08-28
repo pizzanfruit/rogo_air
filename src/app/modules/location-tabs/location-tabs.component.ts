@@ -8,6 +8,8 @@ import { LocationService } from '../../services/location.service';
 
 //Jquery
 declare var $: any;
+// JSON5
+var JSON5 = require('json5');
 
 @Component({
   selector: 'location-tabs-component',
@@ -19,13 +21,18 @@ export class LocationTabsComponent implements OnInit {
   // This location
   location: any;
 
+  //
+  isLoading: boolean = true;
+
   constructor(
     private title: Title,
     private router: Router,
     private route: ActivatedRoute,
     private deviceService: LocationService,
     private translate: TranslateService
-  ) { }
+  ) {
+    this.isLoading = true;
+  }
 
   changeLang(lang: string) {
     this.translate.use(lang);
@@ -34,8 +41,11 @@ export class LocationTabsComponent implements OnInit {
   ngOnInit() {
     this.title.setTitle("Device details");
     this.route.params.subscribe((params) => {
-      this.deviceService.getLocation(params.id).subscribe((location) => {
-        this.location = location;
+      this.deviceService.getLocation(params.id).subscribe((res) => {
+        this.location = JSON5.parse(res._body).body;
+        this.isLoading = false;
+      }, (err) => {
+        this.isLoading = false;
       });
     });
   }

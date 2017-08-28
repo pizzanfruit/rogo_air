@@ -16,13 +16,13 @@
       </div>
       <div class="rogo-select">
         <select id="city-select" style="width: 23em" name="city" [(ngModel)]="selectedCity" (change)="filter()">
-            <option value="none">Toàn quốc</option>
+            <option value="none">{{'locations-all-cities' | translate}}</option>
             <option *ngFor="let city of cities" [value]="city.name">{{city.name}}</option>
         </select>
       </div>
       <div class="rogo-select">
         <select id="district-select" style="width: 23em" name="district" [(ngModel)]="selectedDistrict" (change)="filter()">
-            <option value="none">Tất cả quận huyện</option>
+            <option value="none">{{'locations-all-districts' | translate}}</option>
               <option *ngFor="let district of districts" [value]="district">{{district}}</option>
           </select>
       </div>

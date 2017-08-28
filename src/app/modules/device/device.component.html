@@ -9,12 +9,12 @@
       <div class="subtitle">{{device.type}}</div>
       <div class="tabs">
         <div class="history-tab active" (click)="switchToHistory()">
-          HISTORY
+            {{'device-history-tab' | translate}}
         </div>
         <!--
         -->
         <div class="settings-tab" (click)="switchToSettings()">
-          THIẾT LẬP
+            {{'device-settings-tab' | translate}}
         </div>
       </div>
     </div>
@@ -41,7 +41,7 @@
           <img class="chart-loading-icon" src="../assets/images/device/loading-icon.svg">
         </div>
         <div class="chart-empty">
-          <div>Không có dữ liệu</div>
+          <div>{{'device-no-data' | translate}}</div>
         </div>
         <div style="margin-bottom: 1em;">
           <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-temp' | translate}}
@@ -78,8 +78,7 @@
       <div>
         <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> OVERRIDE LOCATION SETTINGS
         <div style="padding-left: 1.2em; margin-bottom: 1em">
-          <div class="override-subtitle">Cho phép thiết bị chạy độc lập với các thiết lập của Location</div>
-          {{device.forcecontrol}}
+          <div class="override-subtitle">{{'device-override-subtitle' | translate}}</div>
           <ui-switch *ngIf="device" size="small" [(ngModel)]="device.forcecontrol" color="#448ccb" (change)="setForcecontrol($event)"></ui-switch>
         </div>
       </div>
@@ -104,6 +103,7 @@
         </div>
         <div style="margin-top: 3em; border-top: 0.08em solid #d9dde7; padding-top: 1em">
           <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-set-point' | translate}}
+          <img *ngIf="isSetpointLoading" class="setpoint-loading-icon" src="../assets/images/device/loading-icon.svg">
         </div>
         <div class="no-select" style="margin-top: 2em;">
           <div class="minus-icon" (click)="decreaseTemp()">-</div>

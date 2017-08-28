@@ -352,3 +352,9 @@ chart {
 .chart-loading-icon {
   width: 2em;
 }
+
+.setpoint-loading-icon {
+  width: 1em;
+  margin-left: 0.3em;
+  margin-bottom: 0.15em;
+}

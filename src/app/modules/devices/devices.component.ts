@@ -19,6 +19,7 @@ export class DevicesComponent implements OnInit {
 
   //
   isLoading: boolean = true;
+  filteredItems: any[] = [];
 
   devices: any[];
 
@@ -45,6 +46,7 @@ export class DevicesComponent implements OnInit {
       let id = params['id'];
       this.devicesService.getDevices(id).subscribe((res) => {
         this.devices = JSON5.parse(res._body).body;
+        this.assignCopy();
         this.isLoading = false;
       }, (err) => {
         console.log(err);
@@ -86,4 +88,28 @@ export class DevicesComponent implements OnInit {
     $("input+.underline.two").css("transform", "scale(0)");
   }
 
+  assignCopy() {
+    this.filteredItems = Object.assign([], this.devices);
+  }
+
+  filterItem() {
+    let value = $("#filter-select").val();
+    console.log(value);
+    switch (value) {
+      case "0":
+        this.filteredItems = Object.assign([], this.devices);
+        break;
+      case "1":
+        this.filteredItems = Object.assign([], this.devices).filter(
+          item => item.type.toLowerCase().indexOf("rogoair") > -1
+        )
+        break;
+      case "2":
+        console.log("JJKLJLKJKL");
+        this.filteredItems = Object.assign([], this.devices).filter(
+          item => item.type.toLowerCase().indexOf("rogosalon") > -1
+        )
+        break;
+    }
+  }
 }

@@ -5,23 +5,23 @@
   <div class="header">
     <img src="../assets/images/devices/devices-icon.png" class="devices-icon">
     <div class="header-right">
-      <div class="title">Thiết bị</div>
-      <div class="subtitle">Các thiết bị đã được add vào một location</div>
+      <div class="title">{{'locations-tabs-device' | translate}}</div>
+      <div class="subtitle">{{'devices-subtitle' | translate}}</div>
       <div class=filter>
-        Lọc:
+        {{'devices-filter' | translate}}:
         <div class="filter-select">
-          <select style="width: 9.5em" name="city" [(ngModel)]="selectedFilter">
+          <select id="filter-select" style="width: 9.5em" name="city" [(ngModel)]="selectedFilter" (change)="filterItem()">
             <option *ngFor="let filter of filters" [value]="filter.value">{{filter.name}}</option>
           </select>
         </div>
       </div>
       <div class="device-add">
-        <div class="add-icon" (click)="openAddDeviceModal()">+</div>Thêm thiết bị
+        <div class="add-icon" (click)="openAddDeviceModal()">+</div>{{'devices-add-device' | translate}}
       </div>
     </div>
   </div>
   <div class="devices">
-    <div class="device" *ngFor="let device of devices">
+    <div class="device" *ngFor="let device of filteredItems">
       <img src="../assets/images/devices/beacon-icon.png" class="beacon-icon">
       <div class="device-info" (click)="selectDevice(device.id)">
         <div class="device-name">
@@ -50,10 +50,10 @@
     <div class="modal-content">
       <div class="modal-body">
         <div class="add-modal-title">
-          THÊM THIẾT BỊ
+          {{'devices-add-device-title' | translate}}
         </div>
         <div class="add-modal-subtitle">
-          ID được tìm thấy trên vỏ hay bao bì của thiết bị
+          {{'devices-add-device-subtitle' | translate}}
         </div>
         <div style="position: relative">
           <input type="text" class="search-input" placeholder="Tìm ID thiết bị" (focusin)="scale1()" (focusout)="scale0()">
@@ -64,14 +64,14 @@
           Không tìm thấy thiết bị vui lòng thử lại
         </div>
         <div class="device-found">
-          <div class="device-found-text">Tìm thấy thông tin thiết bị</div>
+          <div class="device-found-text">{{'devices-found-device' | translate}}</div>
           <img class="rogo-air-icon" src="../assets/images/devices/rogo-air-icon.png">
           <div class="rogo-air-text">ROGO AIR</div>
         </div>
         <div style="position: relative">
           <input type="text" class="label-input" placeholder="Label Device" (focusin)="scale1Two()" (focusout)="scale0Two()">
           <span class="underline two"></span>
-          <button type="button" class="add-label-button">Thêm</button>
+          <button type="button" class="add-label-button">{{'devices-add' | translate}}</button>
         </div>
       </div>
     </div>

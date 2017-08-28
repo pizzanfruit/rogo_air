@@ -22,6 +22,10 @@ export class DeviceComponent implements OnInit {
   private mdDatepicker;
 
   isLoading: boolean = true;
+  isSetpointLoading: boolean = false;
+
+  // Variables to unsubscribe
+  setForcecontrolSub: any;
 
   //
   parentId: any;
@@ -31,6 +35,7 @@ export class DeviceComponent implements OnInit {
   device: any;
 
   temp: number = 26.5;
+  temp2: number;
   schedules: any[] = [
     { from: "6:00", to: "19:20", target: "29" },
     { from: "6:00", to: "19:20", target: "29" }
@@ -66,6 +71,7 @@ export class DeviceComponent implements OnInit {
     private cdRef: ChangeDetectorRef
   ) {
     this.isLoading = true;
+    this.isSetpointLoading = false;
     this.currentDate = moment().toDate();
     this.currentDate.setHours(0, 0, 0, 0);
     this.currentDateMinus1 = moment(this.currentDate).subtract(1, 'days').date();
@@ -154,15 +160,42 @@ export class DeviceComponent implements OnInit {
           this.parentId = parentParams.id;
           this.childId = childParams.id;
           this.device = JSON5.parse(res._body).body;
-          console.log(this.device);
+          this.setUpMode();
           this.cdRef.detectChanges();
-          if (this.device.setpoint && this.device.setpoint != "NaN") this.temp = this.device.setpoint;
+          if (this.device.setpoint && this.device.setpoint != "NaN") this.temp = parseFloat(this.device.setpoint);
           this.isLoading = false;
+          this.isSetpointLoading = false;
         }, (err) => {
           console.log(err);
           this.isLoading = false;
+          this.isSetpointLoading = false;
         });
       });
+    });
+  }
+
+  setUpMode() {
+    $(".switch-icon").css("opacity", 0);
+    setTimeout(() => {
+      if (this.device && this.device.mode) {
+        switch (this.device.mode.toUpperCase()) {
+          case "NOOPERATION":
+            $(".switch-icon.a").css("opacity", 1);
+            break;
+          case "SETPOINT":
+            $(".switch-icon.b").css("opacity", 1);
+            break;
+          case "SCHEDULE":
+            $(".switch-icon.c").css("opacity", 1);
+            break;
+          case "OFF":
+            $(".switch-icon.d").css("opacity", 1);
+            break;
+          default:
+            $(".switch-icon.a").css("opacity", 1);
+            break;
+        }
+      }
     });
   }
 
@@ -185,6 +218,8 @@ export class DeviceComponent implements OnInit {
         $(".chart-empty").css("display", "flex");
         $(".chart-loading").hide();
         $("chart").css("opacity", 0);
+        this.currentTemp = timeArr[0].temperature;
+        this.currentHumidity = timeArr[0].humidity;
         return;
       }
       for (let i = timeArr.length - 1; i >= 0; i--) {
@@ -237,22 +272,29 @@ export class DeviceComponent implements OnInit {
   }
 
   decreaseTemp() {
-    this.temp = this.temp - 0.5;
+    this.temp2 = this.temp - 0.5;
     this.setPoint();
   }
 
   increaseTemp() {
-    this.temp = this.temp + 0.5;
+    this.temp2 = this.temp + 0.5;
     this.setPoint();
   }
 
   setUpSwitch() {
     $(".switch-icon").click((event) => {
-      console.log(event);
       $(".switch-icon").css("opacity", 0);
       $(event.target).css("opacity", 1);
-      let img = $(event.value);
-      // if (img.hasClass("a")) this.device.serivce
+      let img = $(event.target);
+      let data = {};
+      if (img.hasClass("a")) data = { mode: "NOOPERATION" };
+      else if (img.hasClass("b")) data = { mode: "SETPOINT" };
+      else if (img.hasClass("c")) data = { mode: "SCHEDULE" };
+      else if (img.hasClass("d")) data = { mode: "OFF" };
+      this.deviceService.setMode(this.childId, data).subscribe((res) => {
+        console.log(res);
+        this.refreshDevice();
+      });
     });
   }
 
@@ -276,12 +318,15 @@ export class DeviceComponent implements OnInit {
   }
 
   setPoint() {
+    this.isSetpointLoading = true;
     let data = {
-      "setpoint": this.temp.toFixed(1)
+      "setpoint": this.temp2.toFixed(1)
     }
     this.deviceService.setPoint(this.childId, data).subscribe((res) => {
-      console.log(res);
       this.refreshDevice();
+    }, (err) => {
+      console.log(err);
+      this.isSetpointLoading = false;
     });
   }
 
@@ -289,8 +334,11 @@ export class DeviceComponent implements OnInit {
     let data = {
       "forcecontrol": event
     }
-    this.deviceService.setForcecontrol(this.childId, data).subscribe((res) => {
+    if (this.setForcecontrolSub) this.setForcecontrolSub.unsubscribe();
+    this.setForcecontrolSub = this.deviceService.setForcecontrol(this.childId, data).subscribe((res) => {
       this.refreshDevice();
+    }, (err) => {
+      console.log(err);
     });
   }
 }

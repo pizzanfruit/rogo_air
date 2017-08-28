@@ -49,6 +49,12 @@ export class DeviceService {
     return this._http.post("https://tyu7xxj099.execute-api.us-east-1.amazonaws.com/release/device/" + id + "/forcecontrol", data, options).map(this.dataSuccess).catch(this.handleError);
   }
 
+  setMode(id, data: any): Observable<any> {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers });
+    return this._http.post("https://tyu7xxj099.execute-api.us-east-1.amazonaws.com/release/device/" + id + "/modecontrol", data, options).map(this.dataSuccess).catch(this.handleError);
+  }
+
   private dataSuccess(res: Response) {
     return res;
   }

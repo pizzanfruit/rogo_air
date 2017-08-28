@@ -37,6 +37,7 @@
   margin-top: 3em;
   color: #648dc9;
   font-size: 1.3em;
+  max-width: 26em;
 }
 
 .location-address {
@@ -44,6 +45,7 @@
   color: #a7a7a7;
   font-style: italic;
   font-size: 0.9em;
+  max-width: 26em;
 }
 
 .device-count {

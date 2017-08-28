@@ -1,9 +1,12 @@
-<div class="location-settings-wrapper">
+<div *ngIf="isLoading" class="loading">
+  <img src="../assets/images/cube-loading.svg" style="width: 4em">
+</div>
+<div *ngIf="!isLoading" class="location-settings-wrapper">
   <div class="header">
     <img src="../assets/images/location-settings/settings-icon.png" class="settings-icon">
     <div class="header-right">
-      <div class="title">Thiết lập chung</div>
-      <div class="subtitle">Thiết lập chung cho các kiểu thiết bị trong một vùng</div>
+      <div class="title">{{'locations-tabs-common-settings' | translate}}</div>
+      <div class="subtitle">{{'locations-settings-common-settings-subtitle' | translate}}</div>
       <div class="tabs">
         <div class="rogo-air-tab active" (click)="switchToRogoAir()">
           ROGO AIR
@@ -39,6 +42,7 @@
       </div>
       <div style="margin-top: 3em; border-top: 0.08em solid #d9dde7; padding-top: 1em">
         <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-set-point' | translate}}
+        <img *ngIf="isSetpointLoading" class="setpoint-loading-icon" src="../assets/images/location-settings/loading-icon.svg">
       </div>
       <div class="no-select" style="margin-top: 2em;">
         <div class="minus-icon" (click)="decreaseTemp()">-</div>
