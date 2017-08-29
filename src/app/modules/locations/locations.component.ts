@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
@@ -23,6 +23,7 @@ export class LocationsComponent implements OnInit {
   //
   isLoading: boolean = true;
   // Master data
+  oldCityValue: any;
   locations: any[];
   cities: any[] = [
     {
@@ -59,6 +60,7 @@ export class LocationsComponent implements OnInit {
   constructor(
     private title: Title,
     private locationsService: LocationsService,
+    private cdRef: ChangeDetectorRef,
     private router: Router
   ) {
     this.isLoading = true;
@@ -122,10 +124,14 @@ export class LocationsComponent implements OnInit {
 
   filterItemCity() {
     let value = $("#city-select").val();
-    if (value == "none") {
-      this.districts = [];
-    } else {
-      this.districts = this.cities.find(it => it.name == value).districts;
+    if (value != this.oldCityValue) {
+      this.oldCityValue = value;
+      this.selectedDistrict = "none";
+      if (value == "none") {
+        this.districts = [];
+      } else {
+        this.districts = this.cities.find(it => it.name == value).districts;
+      }
     }
     if (!value || value == "none") {
       this.filteredItemsByCity = Object.assign([], this.filteredItemsByName);
@@ -150,17 +156,21 @@ export class LocationsComponent implements OnInit {
   filter() {
     this.filterItemName();
     this.filterItemCity();
-    this.filterItemDistrict();
-    let latSum = 0;
-    let longSum = 0;
-    let length = this.filteredItemsByDistrict.length;
-    if (length <= 0) return;
-    for (let i = 0; i < length; i++) {
-      let coordinates = JSON.parse(this.filteredItemsByDistrict[i].coordinate);
-      latSum += parseFloat(coordinates[0]);
-      longSum += parseFloat(coordinates[1]);
-    }
-    this.lat = latSum / length;
-    this.lng = longSum / length;
+    setTimeout(() => {
+      this.filterItemDistrict();
+      let latSum = 0;
+      let longSum = 0;
+      let length = this.filteredItemsByDistrict.length;
+      if (length <= 0) return;
+      for (let i = 0; i < length; i++) {
+        let coordinates = JSON.parse(this.filteredItemsByDistrict[i].coordinate);
+        latSum += parseFloat(coordinates[0]);
+        longSum += parseFloat(coordinates[1]);
+      }
+      this.lat = latSum / length;
+      this.lng = longSum / length;
+    })
   }
+
+  // END OF CODE
 }
