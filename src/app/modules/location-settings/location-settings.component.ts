@@ -28,6 +28,8 @@ export class LocationSettingsComponent implements OnInit {
   isLoading: boolean = true;
   isSetpointLoading: boolean = false;
   parentId: any;
+  setModeSub: any;
+  refreshLocationSub: any;
 
   constructor(
     private locationService: LocationService,
@@ -53,7 +55,7 @@ export class LocationSettingsComponent implements OnInit {
   }
 
   refreshLocation() {
-    this.route.parent.params.subscribe((params) => {
+    this.refreshLocationSub = this.route.parent.params.subscribe((params) => {
       this.parentId = params.id;
       this.locationService.getLocation(this.parentId).subscribe((res) => {
         this.location = JSON5.parse(res._body).body;
@@ -86,6 +88,7 @@ export class LocationSettingsComponent implements OnInit {
   setUpSwitch() {
     $(".switch-icon").unbind();
     $(".switch-icon").click((event) => {
+      if (this.setModeSub) this.setModeSub.unsubscribe();
       $(".switch-icon").css("opacity", 0);
       $(event.target).css("opacity", 1);
       let img = $(event.target);
@@ -94,7 +97,7 @@ export class LocationSettingsComponent implements OnInit {
       else if (img.hasClass("b")) data = { mode: "SETPOINT" };
       else if (img.hasClass("c")) data = { mode: "SCHEDULE" };
       else if (img.hasClass("d")) data = { mode: "OFF" };
-      this.locationService.setMode(this.parentId, data).subscribe((res) => {
+      this.setModeSub = this.locationService.setMode(this.parentId, data).subscribe((res) => {
         this.refreshLocation();
       });
     });

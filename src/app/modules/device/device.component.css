@@ -323,6 +323,7 @@
 
 chart {
   display: block;
+  opacity: 0;
   margin-left: 1em;
 }
 

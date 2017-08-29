@@ -23,6 +23,7 @@ export class DeviceComponent implements OnInit {
 
   isLoading: boolean = true;
   isSetpointLoading: boolean = false;
+  interval: any;
 
   // Variables to unsubscribe
   setForcecontrolSub: any;
@@ -146,11 +147,21 @@ export class DeviceComponent implements OnInit {
     this.title.setTitle("Device details");
     this.refreshDevice();
     this.switchToHistory();
-    this.updateCharts();
-    setInterval(() => {
+    setTimeout(() => {
+      this.updateCharts();
+    }, 1000);
+    this.interval = setInterval(() => {
       if (this.lastChartUpdate) this.lastChartUpdate.unsubscribe();
       this.autoUpdateCharts();
-    }, 10000);
+    }, 5000);
+  }
+
+  ngAfterViewInit() {
+  }
+
+
+  ngOnDestroy() {
+    clearInterval(this.interval);
   }
 
   refreshDevice() {
@@ -200,6 +211,7 @@ export class DeviceComponent implements OnInit {
   }
 
   updateCharts() {
+    console.log($(".chart-loading"));
     $(".chart-loading").css("display", "flex");
     $(".chart-empty").hide();
     $("chart").css("opacity", 0);
@@ -244,6 +256,7 @@ export class DeviceComponent implements OnInit {
       this.currentHumidity = timeArr[0].humidity;
       this.tempChart.series[0].setData(tempData, true);
       this.humidityChart.series[0].setData(humidityData, true);
+      console.log("updated chart");
     });
   }
 
