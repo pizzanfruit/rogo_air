@@ -211,7 +211,6 @@ export class DeviceComponent implements OnInit {
   }
 
   updateCharts() {
-    console.log($(".chart-loading"));
     $(".chart-loading").css("display", "flex");
     $(".chart-empty").hide();
     $("chart").css("opacity", 0);
@@ -224,6 +223,7 @@ export class DeviceComponent implements OnInit {
       let humidityData = [];
       let timeArr = JSON5.parse(res._body).body;
       let maxIndex = -1;
+      let minIndex = 0;
       let currentUnix = moment(this.currentDate).unix();
       let endUnix = currentUnix + 86399;
       if (timeArr[0].timestamp < currentUnix || timeArr[timeArr.length - 1].timestamp > endUnix) {
@@ -242,11 +242,19 @@ export class DeviceComponent implements OnInit {
       }
       for (let i = maxIndex; i >= 0; i--) {
         if (timeArr[i].timestamp > endUnix) {
+          minIndex = i + 1;
           break;
         }
+      }
+      let interval = (timeArr[minIndex].timestamp - timeArr[maxIndex].timestamp) / 20.0;
+      let lastTimestamp = 0;
+      for (let i = maxIndex; i >= minIndex; i--) {
+        if (timeArr[i].timestamp - lastTimestamp < interval) continue;
+        lastTimestamp = timeArr[i].timestamp;
         tempData.push([timeArr[i].timestamp * 1000 + moment().utcOffset() * 60000, timeArr[i].temperature]);
         humidityData.push([timeArr[i].timestamp * 1000 + moment().utcOffset() * 60000, timeArr[i].humidity]);
       }
+
       if (tempData.length > 0 || humidityData.length > 0) {
         $(".chart-empty").hide();
         $("chart").css("opacity", 1);

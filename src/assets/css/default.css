@@ -54,7 +54,25 @@ body {
 }
 
 .switch-small.checked small {
-	left: 2.15em !important;
+	left: 2.2em !important;
+}
+
+.all-week-switch .switch {
+	border-color: #1b1e25 !important;
+	vertical-align: bottom;
+	background-color: #1b1e25 !important;
+	height: 1em !important;
+}
+
+.all-week-switch .switch small {
+	height: 1.3em !important;
+	margin-top: -0.1em;
+}
+
+
+.all-week-switch .switch.checked {
+	border-color: #4CAF50 !important;
+	background-color: #4CAF50 !important;
 }
 
 .loading {
