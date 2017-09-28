@@ -2,7 +2,7 @@
     "config-change-lang": "Chọn ngôn ngữ",
 
     "locations-filter-by-city": "Lọc theo thành phố",
-    "locations-search-hint": "Tìm cửa hàng",
+    "locations-search-hint": "Tên địa điểm",
     "locations-all-cities": "Toàn quốc",
     "locations-all-districts": "Tất cả quận huyện",
 
@@ -10,7 +10,7 @@
     "locations-tabs-device-count": "Số lượng thiết bị",
     "locations-tabs-device": "Thiết bị",
     "locations-tabs-common-settings": "Thiết lập chung",
-    "locations-tabs-share": "Chia sẻ quyền sử dụng",
+    "locations-tabs-shared-access": "Chia sẻ quyền",
 
     "locations-settings-common-settings-subtitle": "Thiết lập chung cho các kiểu thiết bị trong một vùng",
 
@@ -19,7 +19,7 @@
 
     "devices-title": "Thiết bị",
     "devices-subtitle": "Các thiết bị đã được thêm vào một location",
-    "devices-filter": "Lọc",
+    "devices-filter": "Loại thiết bị",
     "devices-filter-all": "Tất cả",
     "devices-add-device": "Thêm thiết bị",
     "devices-add-device-title": "THÊM THIẾT BỊ",

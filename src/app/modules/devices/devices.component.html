@@ -2,69 +2,60 @@
   <img src="../assets/images/cube-loading.svg" style="width: 4em">
 </div>
 <div *ngIf="!isLoading" class="devices-wrapper">
-  <div class="header">
-    <img src="../assets/images/devices/devices-icon.png" class="devices-icon">
-    <div class="header-right">
-      <div class="title">{{'locations-tabs-device' | translate}}</div>
-      <div class="subtitle">{{'devices-subtitle' | translate}}</div>
-      <div class=filter>
-        {{'devices-filter' | translate}}:
-        <div class="filter-select">
-          <select id="filter-select" style="width: 9.5em" name="city" [(ngModel)]="selectedFilter" (change)="filterItem()">
-            <option [value]="0">{{'devices-filter-all' | translate}}</option>
-            <option *ngFor="let filter of filters" [value]="filter.value">{{filter.name}}</option>
-          </select>
-        </div>
+  <div class="left-bar">
+    <div class="header">
+      <span class="weak-text">{{'devices-filter' | translate}}:</span>
+      <div class="filter-select">
+        <select id="filter-select" name="city" [(ngModel)]="selectedFilter" (change)="filterItem()">
+                  <option [value]="0">{{'devices-filter-all' | translate}}</option>
+                  <option *ngFor="let filter of filters" [value]="filter.value">{{filter.name}}</option>
+                </select>
       </div>
-      <div class="device-add" (click)="openAddDeviceModal()">
-        <div class="add-icon">+</div>{{'devices-add-device' | translate}}
+      <div class="add-device-button" (click)="openAddDeviceModal()">
+        {{'devices-add-device' | translate}}
+      </div>
+    </div>
+    <div class="devices">
+      <div class="device" *ngFor="let device of filteredItems" [routerLink]="['devices', device.id]" routerLinkActive="active">
+        <img src="../assets/images/location-tabs/beacon-icon.png" class="rogo-type-icon">
+        <div class="device-info">
+          <div class="device-name">
+            {{device.name}}
+            <img [id]="device.id" class="remove-loading-icon" src="../assets/images/devices/loading-icon.svg">
+          </div>
+          <div class="device-id">
+            <span class="id-header">ID: </span> {{device.id}}
+          </div>
+        </div>
+        <span class="rogo-type-text" [ngSwitch]="device.type">
+          <span *ngSwitchCase="'RogoAir'">AIR</span>
+          <span *ngSwitchCase="'RogoSalon'">SALON</span>
+        </span>
       </div>
     </div>
   </div>
-  <div class="devices">
-    <div class="device" *ngFor="let device of filteredItems">
-      <img src="../assets/images/devices/beacon-icon.png" class="beacon-icon">
-      <div class="device-info" (click)="selectDevice(device.id)">
-        <div class="device-name">
-          {{device.name}}
-          <span class="device-type">( {{device.type}} )</span>
-          <img [id]="device.id" class="remove-loading-icon" src="../assets/images/devices/loading-icon.svg">
-        </div>
-        <div class="device-id">
-          <span class="id-header">ID: </span> {{device.id}}
-        </div>
-        <div class="device-status">
-          <div *ngIf="device.status == true"><img class="active-icon" src="../assets/images/devices/active-icon.png"> Active</div>
-          <div *ngIf="device.status == false"><img class="disconnected-icon" src="../assets/images/devices/disconnected-icon.png"> Disconnected</div>
-        </div>
-      </div>
-      <img class="action-button-icon" src="../assets/images/devices/action-button-icon.png" (click)="openEditPopup($event)">
-      <div class="edit-popup">
-        <div class="edit-button" (click)="closeEditPopup($event)">{{'devices-edit' | translate}}</div>
-        <div [id]="device.id" class="remove-button" (click)="removeDevice(device.id, $event)">{{'devices-remove' | translate}}</div>
-      </div>
-    </div>
+  <div class="content">
+    <router-outlet></router-outlet>
   </div>
 </div>
-
 <div class="modal fade" id="add-device-modal" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
         <div class="add-modal-title">
           {{'devices-add-device-title' | translate}}
-          <img *ngIf="isAddLoading"  class="add-loading-icon" src="../assets/images/devices/loading-icon.svg">
+          <img *ngIf="isAddLoading" class="add-loading-icon" src="../assets/images/devices/loading-icon.svg">
         </div>
         <div class="add-modal-subtitle">
           {{'devices-add-device-subtitle' | translate}}
         </div>
         <div style="position: relative">
-          <input id="device-search-input" type="text" class="search-input" placeholder="{{'locations-search-hint' | translate}}" (focusin)="scale1()" (focusout)="scale0()">
-          <span class="underline one"></span>
+          <input id="device-search-input" type="text" class="search-input" placeholder="{{'locations-search-hint' | translate}}">
+          <span class="underline"></span>
           <img class="search-icon" src="../assets/images/devices/search-icon.png" (click)="searchDevice()">
         </div>
         <div class="device-not-found">
-            {{'devices-not-found' | translate}}
+          {{'devices-not-found' | translate}}
         </div>
         <div class="device-found">
           <div class="device-found-text">{{'devices-found-device' | translate}}</div>
@@ -72,8 +63,8 @@
           <div class="rogo-air-text">ROGO AIR</div>
         </div>
         <div class="device-found-add">
-          <input type="text" class="label-input" placeholder="Label Device" (focusin)="scale1Two()" (focusout)="scale0Two()">
-          <span class="underline two"></span>
+          <input type="text" class="search-input" style="width: 17em" placeholder="Label Device">
+          <span class="underline" style="width: 18em"></span>
           <button type="button" class="add-label-button" (click)="addDevice()">{{'devices-add' | translate}}</button>
         </div>
       </div>

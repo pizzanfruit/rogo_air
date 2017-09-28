@@ -21,6 +21,10 @@ export class DeviceComponent implements OnInit {
   @ViewChild(MdDatepicker)
   private mdDatepicker;
 
+  // Run once
+  ranOnce: boolean = false;
+
+  //
   isLoading: boolean = true;
   isSetpointLoading: boolean = false;
   interval: any;
@@ -145,15 +149,17 @@ export class DeviceComponent implements OnInit {
 
   ngOnInit() {
     this.title.setTitle("Device details");
-    this.refreshDevice();
-    this.switchToHistory();
-    setTimeout(() => {
-      this.updateCharts();
-    }, 1000);
+    this.refreshDevice(this.init.bind(this));
     this.interval = setInterval(() => {
       if (this.lastChartUpdate) this.lastChartUpdate.unsubscribe();
       this.autoUpdateCharts();
     }, 5000);
+  }
+
+  init() {
+    this.switchToHistory();
+    this.updateCharts();
+    this.setUpEditPopup();
   }
 
   ngAfterViewInit() {
@@ -164,7 +170,7 @@ export class DeviceComponent implements OnInit {
     clearInterval(this.interval);
   }
 
-  refreshDevice() {
+  refreshDevice(onComplete?: any) {
     this.route.parent.params.subscribe((parentParams) => {
       this.route.params.subscribe((childParams) => {
         this.deviceService.getDevice(parentParams.id, childParams.id).subscribe((res) => {
@@ -176,6 +182,7 @@ export class DeviceComponent implements OnInit {
           if (this.device.setpoint && this.device.setpoint != "NaN") this.temp = parseFloat(this.device.setpoint);
           this.isLoading = false;
           this.isSetpointLoading = false;
+          if (onComplete) setTimeout(() => onComplete());
         }, (err) => {
           console.log(err);
           this.isLoading = false;
@@ -314,7 +321,6 @@ export class DeviceComponent implements OnInit {
       else if (img.hasClass("c")) data = { mode: "SCHEDULE" };
       else if (img.hasClass("d")) data = { mode: "OFF" };
       this.deviceService.setMode(this.childId, data).subscribe((res) => {
-        console.log(res);
         this.refreshDevice();
       });
     });
@@ -362,5 +368,29 @@ export class DeviceComponent implements OnInit {
     }, (err) => {
       console.log(err);
     });
+  }
+
+  /** Edit popup */
+  setUpEditPopup() {
+    $(document).mouseup(function (e) {
+      var container = $(".edit-popup, .action-button-icon");
+      // if the target of the click isn't the container nor a descendant of the container
+      if (!container.is(e.target) && container.has(e.target).length === 0) {
+        $(".edit-popup").hide();
+      }
+    });
+  }
+
+  toggleEditPopup(event) {
+    let display = $(event.target).next().css("display");
+    $(".edit-popup").hide();
+    if (display == "none") {
+      $(event.target).next().show();
+      $(event.target).next().focus();
+    }
+  }
+
+  closeEditPopup(event) {
+    $(event.target).parent().hide();
   }
 }

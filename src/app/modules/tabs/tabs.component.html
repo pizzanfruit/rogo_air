@@ -1,16 +1,22 @@
 <div class="tabs-wrapper">
   <div class="sidebar">
     <a routerLinkActive="active">
-      <img class="tabs-icon active" src="../assets/images/tabs/dashboard-icon-active.png">
-      <img class="tabs-icon" src="../assets/images/tabs/dashboard-icon.png">
+      <div class="tab-group" style="padding-left: 1em">
+        <img class="tabs-icon active" src="../assets/images/tabs/dashboard-icon-active.png">
+        <img class="tabs-icon" src="../assets/images/tabs/dashboard-icon.png"> Dashboard
+      </div>
     </a>
     <a routerLink="locations" routerLinkActive="active">
-      <img class="tabs-icon active" src="../assets/images/tabs/locations-icon-active.png">
-      <img class="tabs-icon" src="../assets/images/tabs/locations-icon.png">
+      <div class="tab-group">
+        <img class="tabs-icon active" src="../assets/images/tabs/locations-icon-active.png">
+        <img class="tabs-icon" src="../assets/images/tabs/locations-icon.png"> Location
+      </div>
     </a>
     <a routerLink="settings" routerLinkActive="active">
-      <img class="tabs-icon active" src="../assets/images/tabs/settings-icon-active.png">
-      <img class="tabs-icon" src="../assets/images/tabs/settings-icon.png">
+      <div class="tab-group">
+        <img class="tabs-icon active" src="../assets/images/tabs/settings-icon-active.png">
+        <img class="tabs-icon" src="../assets/images/tabs/settings-icon.png"> Settings
+      </div>
     </a>
   </div>
   <div class="tabs-outlet">

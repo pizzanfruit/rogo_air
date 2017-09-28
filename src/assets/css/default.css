@@ -33,6 +33,10 @@ body {
 	font-family: 'Raleway', Arial, sans-serif;
 }
 
+.content {
+	position: relative;
+}
+
 .mat-calendar-body-selected {
   background-color: #17bdcf !important;
 }

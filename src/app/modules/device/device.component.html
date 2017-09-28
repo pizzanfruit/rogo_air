@@ -3,19 +3,40 @@
 </div>
 <div *ngIf="!isLoading" class="device-wrapper">
   <div class="header">
-    <img src="../assets/images/device/devices-icon.png" class="devices-icon">
-    <div class="header-right">
-      <div class="title">{{device.name}}</div>
-      <div class="subtitle">{{device.type}}</div>
-      <div class="tabs">
-        <div class="history-tab active" (click)="switchToHistory()">
-            {{'device-history-tab' | translate}}
+    <div class="left-side">
+      <!-- <img src="../assets/images/devices/beacon-icon.png" class="rogo-type-icon"> -->
+      <div class="rogo-type-icon">
+        <span *ngIf="currentTemp" class="rogo-type-text">{{ currentTemp | number : '2.1-1' }}°</span>
+      </div>
+      <div class="device-info">
+        <div class="device-name">
+          AC Salon
+          <div class="rogo-type">AIR</div>
         </div>
-        <!--
-        -->
-        <div class="settings-tab" (click)="switchToSettings()">
-            {{'device-settings-tab' | translate}}
+        <div class="device-id">
+          <span class="id-header">ID: </span> 1CED0000B1AC0000CAFE000000C405AC
         </div>
+        <div class="device-status">
+          <div *ngIf="true == true" style="color: #3eb54a"><img class="active-icon" src="../assets/images/devices/active-icon.png"> Active</div>
+          <div *ngIf="device.status == false"><img class="disconnected-icon" src="../assets/images/devices/disconnected-icon.png"> Disconnected</div>
+        </div>
+      </div>
+      <span class="rogo-type-text" [ngSwitch]="device.type">
+          <span *ngSwitchCase="'RogoAir'">AIR</span>
+      <span *ngSwitchCase="'RogoSalon'">SALON</span>
+      </span>
+    </div>
+    <div class="tabs">
+      <div class="history-tab active" (click)="switchToHistory()">
+        {{'device-history-tab' | translate}}
+      </div>
+      <div class="settings-tab" (click)="switchToSettings()">
+        {{'device-settings-tab' | translate}}
+      </div>
+      <img class="action-button-icon" src="../assets/images/device/action-button-icon.png" (click)="toggleEditPopup($event)">
+      <div class="edit-popup">
+        <div class="edit-button" (click)="closeEditPopup($event)">{{'devices-edit' | translate}}</div>
+        <div class="remove-button">{{'devices-remove' | translate}}</div>
       </div>
     </div>
   </div>

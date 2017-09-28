@@ -2,39 +2,39 @@
   <img src="../assets/images/cube-loading.svg" style="width: 4em">
 </div>
 <div *ngIf="!isLoading" class="location-tabs-wrapper">
-  <div class="sidebar">
+  <div class="topbar">
     <div class="back-title" (click)="backToLocations()">
       <img class="back-icon" src="../assets/images/location-tabs/back-icon.png"> {{'locations-tabs-back' | translate}}
     </div>
-    <div class="location-name">
-      {{location.name}}
+    <img class="logo-icon" src="../assets/images/locations/logo-icon.png">
+    <div class="profile">
+      <img class="avatar-icon" src="../assets/images/locations/avatar-icon.png">
+      <span class="hello-text">Hello Lucas</span>
     </div>
-    <div class="location-address">
-      {{location.address}}
+    <div class="address-group">
+      <img class="gps-icon" src="../assets/images/location-tabs/gps-icon.png">
+      <div class="location-group">
+        <div class="location-name">
+          {{location.name}}
+        </div>
+        <div class="location-address">
+          {{location.address}}
+        </div>
+      </div>
     </div>
-    <div class="device-count">
-      {{location.devices.length}}
-    </div>
-    <div class="device-count-text">
-      {{'locations-tabs-device-count' | translate}}
-    </div>
-    <div class="tab devices-tab" routerLink="devices" routerLinkActive="active">
-      <img class="dot-icon active" src="../assets/images/location-tabs/dot-icon-active.png">
-      <img class="dot-icon" src="../assets/images/location-tabs/dot-icon.png">
-      <img class="tabs-icon active" src="../assets/images/location-tabs/devices-icon-active.png">
-      <img class="tabs-icon" src="../assets/images/location-tabs/devices-icon.png"> {{'locations-tabs-device' | translate}}
-    </div>
-    <div class="tab location-settings-tab" routerLink="settings" routerLinkActive="active">
-      <img class="dot-icon active" src="../assets/images/location-tabs/dot-icon-active.png">
-      <img class="dot-icon" src="../assets/images/location-tabs/dot-icon.png">
-      <img class="tabs-icon active" src="../assets/images/location-tabs/settings-icon-active.png">
-      <img class="tabs-icon" src="../assets/images/location-tabs/settings-icon.png"> {{'locations-tabs-common-settings' | translate}}
-    </div>
-    <div class="tab share-tab">
-      <img class="dot-icon active" src="../assets/images/location-tabs/dot-icon-active.png">
-      <img class="dot-icon" src="../assets/images/location-tabs/dot-icon.png">
-      <img class="tabs-icon active" src="../assets/images/location-tabs/share-icon-active.png">
-      <img class="tabs-icon" src="../assets/images/location-tabs/share-icon.png"> {{'locations-tabs-share' | translate}}
+    <div class="tabs">
+      <div class="tab" routerLink="devices" routerLinkActive="active">
+        <img class="devices-icon" src="../assets/images/location-tabs/devices-icon.png">
+        <img class="devices-icon active" src="../assets/images/location-tabs/devices-icon-active.png"> {{'locations-tabs-device' | translate}}
+      </div>
+      <div class="tab" routerLink="settings" routerLinkActive="active">
+        <img class="settings-icon" src="../assets/images/location-tabs/settings-icon.png">
+        <img class="settings-icon active" src="../assets/images/location-tabs/settings-icon-active.png"> {{'locations-tabs-common-settings' | translate}}
+      </div>
+      <div class="tab" routerLink="shared-access" routerLinkActive="active">
+        <img class="share-icon" src="../assets/images/location-tabs/share-icon.png">
+        <img class="share-icon active" src="../assets/images/location-tabs/share-icon-active.png"> {{'locations-tabs-shared-access' | translate}}
+      </div>
     </div>
   </div>
   <div class="content">

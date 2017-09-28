@@ -2,7 +2,7 @@
     "config-change-lang": "言語を選択してください",
 
     "locations-filter-by-city": "都市別フィルタ",
-    "locations-search-hint": "お店を検索します",
+    "locations-search-hint": "店舗の検索",
     "locations-all-cities": "全国",
     "locations-all-districts": "全地区",
 
@@ -10,7 +10,7 @@
     "locations-tabs-device-count": "デバイス数",
     "locations-tabs-device": "デバイス",
     "locations-tabs-common-settings": "共通設定",
-    "locations-tabs-share": "操作権利共有",
+    "locations-tabs-shared-access": "操作権利共有",
 
     "locations-settings-common-settings-subtitle": "範囲内のデバイスの共通設定",
 
@@ -19,7 +19,7 @@
 
     "devices-title": "デバイス",
     "devices-subtitle": "お店に追加されたデバイス一覧",
-    "devices-filter": "フィルタ",
+    "devices-filter": "デバイス種類",
     "devices-filter-all": "全部",
     "devices-add-device": "デバイス追加",
     "devices-add-device-title": "デバイス追加",

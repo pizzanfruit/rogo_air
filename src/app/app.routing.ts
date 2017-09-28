@@ -24,9 +24,14 @@ const routing: Routes = [
         path: 'locations/:id', component: LocationTabsComponent,
         children: [
           { path: '', redirectTo: 'devices', pathMatch: 'full' },
-          { path: 'devices', component: DevicesComponent },
-          { path: 'devices/:id', component: DeviceComponent },
-          { path: 'settings', component: LocationSettingsComponent }
+          {
+            path: 'devices', component: DevicesComponent,
+            children: [
+              { path: 'devices/:id', component: DeviceComponent },
+            ]
+          },
+          { path: 'settings', component: LocationSettingsComponent },
+          { path: 'shared-access', component: LocationSettingsComponent }
         ]
       },
       { path: 'settings', component: SettingsComponent },

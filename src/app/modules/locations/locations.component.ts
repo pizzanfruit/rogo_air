@@ -22,6 +22,7 @@ export class LocationsComponent implements OnInit {
   window = window;
   //
   isLoading: boolean = true;
+  isListMode: boolean = true;
   // Master data
   oldCityValue: any;
   locations: any[];
@@ -56,6 +57,11 @@ export class LocationsComponent implements OnInit {
   // ];
   lat: number = 20.98401;
   lng: number = 105.846282;
+  // Add location modal
+  newLocationName: string;
+  selectedNewCity: any = "none";
+  selectedNewDistrict: any = "none";
+  newDistricts: string[];
 
   constructor(
     private title: Title,
@@ -66,17 +72,10 @@ export class LocationsComponent implements OnInit {
     this.isLoading = true;
   }
 
-  scale1() {
-    $("input+.underline").css("transform", "scale(1)");
-  }
-
-  scale0() {
-    $("input+.underline").css("transform", "scale(0)");
-  }
-
   ngOnInit() {
     this.title.setTitle("Locations");
     this.getMasterData();
+    this.setUpEditPopup();
   }
 
   getMasterData() {
@@ -170,6 +169,64 @@ export class LocationsComponent implements OnInit {
       this.lat = latSum / length;
       this.lng = longSum / length;
     })
+  }
+
+  switchToListMode() {
+    this.isListMode = true;
+    $(".list-type-icon").addClass("active");
+    $(".map-type-icon").removeClass("active");
+  }
+
+  switchToMapMode() {
+    this.isListMode = false;
+    $(".list-type-icon").removeClass("active");
+    $(".map-type-icon").addClass("active");
+  }
+
+  setUpEditPopup() {
+    $(document).mouseup(function (e) {
+      var container = $(".edit-popup, .action-button-icon");
+      // if the target of the click isn't the container nor a descendant of the container
+      if (!container.is(e.target) && container.has(e.target).length === 0) {
+        $(".edit-popup").hide();
+      }
+    });
+  }
+
+  toggleEditPopup(event) {
+    let display = $(event.target).next().css("display");
+    $(".edit-popup").hide();
+    if (display == "none") {
+      $(event.target).next().show();
+      $(event.target).next().focus();
+    }
+  }
+
+  closeEditPopup(event) {
+    $(event.target).parent().hide();
+  }
+
+  // Add schedul modal
+
+  openAddLocationModal() {
+    $("#add-location-modal").modal("show");
+  }
+
+  closeAddLocationModal() {
+    $("#add-location-modal").modal("hide");
+  }
+
+  updateDistricts() {
+    if (this.selectedNewCity == "none") {
+      this.newDistricts = [];
+    } else {
+      this.newDistricts = this.cities.find(it => it.name == this.selectedNewCity).districts;
+    }
+    this.selectedNewDistrict = "none";
+  }
+
+  addLocation() {
+    console.log("add location!! yay");
   }
 
   // END OF CODE

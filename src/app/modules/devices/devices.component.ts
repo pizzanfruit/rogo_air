@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { NgSwitch } from '@angular/common';
 
 import { DevicesService } from '../../services/devices.service';
 
@@ -79,10 +80,6 @@ export class DevicesComponent implements OnInit {
     });
   }
 
-  selectDevice(deviceId: number) {
-    this.router.navigate(["../devices", deviceId], { relativeTo: this.route });
-  }
-
   openEditPopup(event) {
     $(".edit-popup").hide();
     $(event.target).next().show();
@@ -129,7 +126,7 @@ export class DevicesComponent implements OnInit {
   }
 
   assignCopy() {
-    this.filteredItems = Object.assign([], this.devices);
+    this.filteredItems = Object.assign([], this.devices, this.devices.slice());
   }
 
   filterItem() {

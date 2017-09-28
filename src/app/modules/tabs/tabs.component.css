@@ -4,39 +4,55 @@
   top: 0;
   bottom: 0;
   left: 0;
-  width: 5em;
+  width: 12em;
   display: flex;
   align-items: center;
   flex-direction: column;
   background-color: #2e343c;
-  padding-top: 2.5em;
+  padding-top: 5.5em;
+}
+
+.sidebar a:hover, .sidebar a {
+  text-decoration: none;
 }
 
 .tabs-outlet {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 5em;
+  left: 12em;
   right: 0;
+}
+
+.tab-group {
+  margin-bottom: 3.5em;
+  color: #939393;
+  cursor: pointer;
+  margin-left: -1em;
+}
+
+.active .tab-group {
+  color: #e42b71;
 }
 
 .tabs-icon {
   color: #939393;
-  margin-bottom: 3.5em;
   width: 1.6em;
   cursor: pointer;
+  margin-right: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 .tabs-icon.active {
   display: none;
 }
 
-.active > .tabs-icon {
+.active .tabs-icon {
   display: none;
 }
 
-.active > .tabs-icon.active {
-  display: inherit;
+.active .tabs-icon.active {
+  display: inline-block;
 }
 
 .tabs-outlet {

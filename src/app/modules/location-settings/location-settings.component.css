@@ -179,7 +179,7 @@
 .schedule-wrapper {
   position: relative;
 }
-
+/* Add schedule modal begin */
 .add-schedule {
   position: absolute;
   top: -1.5em;
@@ -345,6 +345,8 @@ ui-switch {
   text-align: center;
   cursor: pointer;
 }
+
+/* Add schedule modal end */
 
 
 
