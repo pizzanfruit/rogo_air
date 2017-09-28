@@ -64,6 +64,17 @@ export class DeviceComponent implements OnInit {
   // Override settings
   overrideEnable: boolean = false;
 
+  // Schedule
+  startHour: number = 12;
+  startMinute: number = 0;
+  startPeriod: string = "AM";
+  endHour: number = 12;
+  endMinute: number = 0;
+  endPeriod: string = "AM";
+  allWeekSwitch: boolean = false;
+  weekday: string = "THU";
+  scheduleTemp: number = 26.5;
+
   constructor(
     private title: Title,
     private router: Router,
@@ -154,6 +165,8 @@ export class DeviceComponent implements OnInit {
       if (this.lastChartUpdate) this.lastChartUpdate.unsubscribe();
       this.autoUpdateCharts();
     }, 5000);
+    // Add schedule
+    this.setUpWeekday();
   }
 
   ngAfterViewInit() {
@@ -218,7 +231,7 @@ export class DeviceComponent implements OnInit {
   }
 
   autoUpdateCharts() {
-    this.lastChartUpdate = this.deviceService.getDeviceDatalog("1CED0000B1AC0000CAFE000000C405AC").subscribe((res) => {
+    this.lastChartUpdate = this.deviceService.getDeviceDatalog(this.childId).subscribe((res) => {
       let tempData = [];
       let humidityData = [];
       let timeArr = JSON5.parse(res._body).body;
@@ -363,4 +376,83 @@ export class DeviceComponent implements OnInit {
       console.log(err);
     });
   }
+
+  // Add schedul modal
+
+  openAddScheduleModal() {
+    $("#add-schedule-modal").modal("show");
+  }
+
+  closeAddScheduleModal() {
+    $("#add-schedule-modal").modal("hide");
+  }
+
+  plusStartHour() {
+    this.startHour = ++this.startHour % 13;
+  }
+
+  minusStartHour() {
+    this.startHour = --this.startHour % 13;
+    if (this.startHour === -1) this.startHour = 12;
+  }
+
+  plusStartMinute() {
+    this.startMinute = ++this.startMinute % 60;
+  }
+
+  minusStartMinute() {
+    this.startMinute = --this.startMinute % 60;
+    if (this.startMinute === -1) this.startMinute = 59;
+  }
+
+  toggleStartPeriod() {
+    if (this.startPeriod === "AM") this.startPeriod = "PM";
+    else this.startPeriod = "AM";
+  }
+
+  plusEndHour() {
+    this.endHour = ++this.endHour % 13;
+  }
+
+  minusEndHour() {
+    this.endHour = --this.endHour % 13;
+    if (this.endHour === -1) this.endHour = 12;
+  }
+
+  plusEndMinute() {
+    this.endMinute = ++this.endMinute % 60;
+  }
+
+  minusEndMinute() {
+    this.endMinute = --this.endMinute % 60;
+    if (this.endMinute === -1) this.endMinute = 59;
+  }
+
+  toggleEndPeriod() {
+    if (this.endPeriod === "AM") this.endPeriod = "PM";
+    else this.endPeriod = "AM";
+  }
+
+  setUpWeekday() {
+    $(".weekday").click((event) => {
+      let weekday = $(event.target);
+      weekday.siblings().removeClass("active");
+      weekday.addClass("active");
+      this.weekday = weekday.html();
+    })
+  }
+
+  decreaseScheduleTemp() {
+    this.scheduleTemp = this.scheduleTemp - 0.5;
+  }
+
+  increaseScheduleTemp() {
+    this.scheduleTemp = this.scheduleTemp + 0.5;
+  }
+
+  addSchedule() {
+    console.log("ADD SCHEDULE");
+  }
+
+  // End add schedule modal
 }
