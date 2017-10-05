@@ -1,21 +1,23 @@
 <div class="rogo-wrap" (keydown)="keyDownFunction($event)">
+  <div *ngIf="isLoading" class="loader"></div>
   <div class="rogo-title">
-    ROGO <span style="color: #49c6e3">AIR</span>
+    ROGO
+    <span style="color: #49c6e3">AIR</span>
   </div>
   <div class="login-input">
     <span class="input input--hoshi">
-        <input class="input__field input__field--hoshi" type="text" id="input-4" [(ngModel)]="userName"/>
-        <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
-          <span class="input__label-content input__label-content--hoshi">Tài khoản</span>
-    </label>
+      <input class="input__field input__field--hoshi" type="text" id="input-4" [(ngModel)]="userName" />
+      <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
+        <span class="input__label-content input__label-content--hoshi">{{'login-username' | translate}}</span>
+      </label>
     </span>
     <span class="input input--hoshi">
-        <input class="input__field input__field--hoshi" type="password" id="input-5" [(ngModel)]="password"/>
-        <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-5">
-          <span class="input__label-content input__label-content--hoshi">Mật khẩu</span>
-    </label>
+      <input class="input__field input__field--hoshi" type="password" id="input-5" [(ngModel)]="password" />
+      <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-5">
+        <span class="input__label-content input__label-content--hoshi">{{'login-password' | translate}}</span>
+      </label>
     </span>
   </div>
-  <button type="button" class="login-button" (click)="authenticate()"> Đăng nhập </button>
-  <a class="recover-password" href="#">Quên mật khẩu</a>
+  <button type="button" class="login-button" (click)="authenticate()"> {{'login-button' | translate}} </button>
+  <a class="recover-password" href="#">{{'login-forgot' | translate}}</a>
 </div>

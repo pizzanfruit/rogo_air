@@ -1,15 +1,44 @@
 {
+    "common-sign-out": "Đăng xuất",
+    
+    "login-username": "Tài khoản",
+    "login-password": "Mật khẩu",
+    "login-forgot": "Quên mật khẩu",
+    "login-button": "Đăng nhập",
+
+    "tab-dashboard": "Dashboard",
+    "tab-location": "Địa điểm",
+    "tab-settings": "Cài đặt",
+
     "config-change-lang": "Chọn ngôn ngữ",
 
+    "locations-location": "ĐỊA ĐIẺM",
+    "locations-add-location": "Thêm địa điểm",
+    "locations-new-location": "ĐỊA ĐIỂM MỚI",
+    "locations-location-name": "Tên địa điểm",
+    "locations-location-name-hint": "Hãy nhập tên địa điểm",
+    "locations-latitude": "Vĩ tuyến",
+    "locations-latitude-hint": "Hãy nhập vĩ tuyến",
+    "locations-longtitude": "Kinh tuyến",
+    "locations-longtitude-hint": "Hãy nhập kinh tuyến",
+    "locations-location-address": "Địa chỉ",
+    "locations-location-address-hint": "Hãy nhập địa chỉ",
+    "locations-hello": "Xin chào, ",
+    "locations-created-by": "Tạo bởi",
+    "locations-view-select": "CHỌN VIEW",
     "locations-filter-by-city": "Lọc theo thành phố",
     "locations-search-hint": "Tên địa điểm",
     "locations-all-cities": "Toàn quốc",
     "locations-all-districts": "Tất cả quận huyện",
+    "location-required-error": "Xin hãy nhập tất cả các trường trước khi thêm mới",
+    "locations-new-button": "Thêm mới",
 
     "locations-tabs-back": "Quay lại",
     "locations-tabs-device-count": "Số lượng thiết bị",
+    "locations-tabs-dashboard": "Dashboard",
     "locations-tabs-device": "Thiết bị",
     "locations-tabs-common-settings": "Thiết lập chung",
+    "locations-tabs-common-settings-rogo-air": "THIẾT LẬP CHUNG CHO ROGO AIR",
     "locations-tabs-shared-access": "Chia sẻ quyền",
 
     "locations-settings-common-settings-subtitle": "Thiết lập chung cho các kiểu thiết bị trong một vùng",
@@ -30,6 +59,7 @@
     "devices-edit": "Sửa",
     "devices-remove": "Xoá",
     "devices-search-hint": "Tìm ID thiết bị",
+    "devices-device-label": "Tên device",
 
     "device-history-tab": "Lịch sử",
     "device-settings-tab": "Thiết lập",
@@ -44,10 +74,23 @@
     "device-set-point": "Set point",
     "device-schedule": "Schedule",
     "device-power-off": "Power Off",
-    "device-add-schedule": "Thêm lịch",
     "device-from": "Từ",
     "device-to": "Đến",
     "device-target": "Mục tiêu",
     "device-no-data": "Không có dữ liệu",
-    "device-override-subtitle": "Cho phép thiết bị chạy độc lập với các thiết lập của location"
+    "device-override-subtitle": "Cho phép thiết bị chạy độc lập với các thiết lập của location",
+
+    "schedule-modal-add-button": "Thêm lịch",
+    "schedule-modal-title": "Đặt lịch",
+    "schedule-modal-cancel": "Huỷ",
+    "schedule-modal-set-time": "Đặt lịch giờ",
+    "schedule-modal-start": "TỪ",
+    "schedule-modal-end": "ĐẾN",
+    "schedule-modal-set-day": "Đặt lịch trong tuần",
+    "schedule-modal-every-day": "Tất cả các ngày trong tuần",
+    "schedule-modal-set": "Đặt lịch",
+
+    "shared-access-user": "NGƯỜI DÙNG",
+    "shared-access-email": "EMAIL",
+    "shared-access-roles": "QUYỀN"
 }

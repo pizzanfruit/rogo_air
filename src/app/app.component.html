@@ -1,3 +1,23 @@
 <div class="rogo-wrapper">
   <router-outlet></router-outlet>
 </div>
+
+<div class="modal fade" id="message-modal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-xs-2">
+            <i class="fa fa-exclamation-triangle" aria-hidden="true" style="color: #FFEB3B;font-size: 2.5em;"></i>
+          </div>
+          <div class="col-xs-9 message-content">
+            Session đã time out. Xin hãy đăng nhập lại.
+          </div>
+        </div>
+        <div class="message-modal-button" data-dismiss="modal" (click)="handleModalButtonClick()">
+          Xác nhận
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

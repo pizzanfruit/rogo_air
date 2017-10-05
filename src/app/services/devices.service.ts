@@ -6,11 +6,18 @@ import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs';
 
+import { AuthService } from './auth.service'
+
+//Jquery
+declare var $: any;
 
 @Injectable()
 export class DevicesService {
   //use @angular HTTP
-  constructor(private _http: Http) { }
+  constructor(
+    private _http: Http,
+    private authService: AuthService
+  ) { }
 
   // Get all cities
   getDevices(id): Observable<any> {
@@ -47,32 +54,32 @@ export class DevicesService {
     //   }
     // ];
     // return Observable.of(devices);
-    return this._http.get("https://tyu7xxj099.execute-api.us-east-1.amazonaws.com/release/location/" + id + "/devices").catch(this.handleError);
+    let headers = new Headers({ 'Authorization': this.authService.idToken });
+    let options = new RequestOptions({ headers });
+    return this._http.get("https://tyu7xxj099.execute-api.us-east-1.amazonaws.com/release/location/" + id + "/devices", options).catch(this.handleError);
   }
 
   searchDevice(id): Observable<any> {
-    return this._http.get("https://tyu7xxj099.execute-api.us-east-1.amazonaws.com/release/device/" + id);
+    let headers = new Headers({ 'Authorization': this.authService.idToken });
+    let options = new RequestOptions({ headers });
+    return this._http.get("https://tyu7xxj099.execute-api.us-east-1.amazonaws.com/release/device/" + id, options);
   }
 
   registerDeviceToLocation(locationId, userId): Observable<any> {
     let data = {
       "userid": "9dc9496c7bf111e7bb31be2e44b06b34"
     }
-    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': this.authService.idToken });
     let options = new RequestOptions({ headers });
     return this._http.post("https://tyu7xxj099.execute-api.us-east-1.amazonaws.com/release/location/" + locationId + "/mapdevicewithlocaiton/" + userId, data, options).catch(this.handleError);
   }
 
-  deleteDevice(locationId, userId): Observable<any> {
-    let data = {
-      "userid": "9dc9496c7bf111e7bb31be2e44b06b34"
-    }
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let requestOptions = new RequestOptions({
-      headers: headers,
-      body: data
-    })
-    return this._http.delete("https://tyu7xxj099.execute-api.us-east-1.amazonaws.com/release/location/" + locationId + "/mapdevicewithlocaiton/" + userId, requestOptions).catch(this.handleError);
+  getCurrentDeviceDatalog(id): Observable<any> {
+    let headers = new Headers({ 'Authorization': this.authService.idToken });
+    let options = new RequestOptions({ headers });
+    let tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+    let localISOTime = (new Date(Date.now() - tzoffset)).toISOString().split("T")[0];
+    return this._http.get("https://tyu7xxj099.execute-api.us-east-1.amazonaws.com/release/device/" + id + "/datalog?time=" + encodeURIComponent(localISOTime + "ZZ+07:00"), options).catch(this.handleError);
   }
 
   //extract data from returned json
@@ -84,6 +91,9 @@ export class DevicesService {
   //log error
   private handleError(error: Response | any) {
     console.error(error.message || error);
+    if (error && error.status == 401) {
+      $("#message-modal").modal("show");
+    }
     return Observable.throw(error.message || error);
   }
 }

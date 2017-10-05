@@ -51,6 +51,11 @@
 .hello-text {
   font-weight: bold;
   margin-left: 1em;
+  cursor: pointer;
+}
+
+.hello-text:hover {
+  text-decoration: underline;
 }
 
 
@@ -96,12 +101,16 @@
   outline: none;
 }
 
+.tab.inactive {
+  cursor: not-allowed;
+}
+
 .tab.active {
   border-bottom: 0.35em solid #e42b71;
   color: #e42b71;
 }
 
-.devices-icon, .settings-icon, .share-icon {
+.devices-icon, .settings-icon, .share-icon, .dashboard-icon {
   width: 1.3em;
   margin-right: 0.2em;
   margin-bottom: 0.3em;
@@ -117,4 +126,52 @@
 
 .tab.active > :not(active) {
   display: none;
+}
+
+/** Profile popup */
+
+.profile-popup {
+  position: absolute;
+  white-space: nowrap;
+  right: -2em;
+  top: 3.1em;
+  background-color: #ffffff;
+  z-index: 1;
+  box-shadow: 0 0.2em 1em 0 rgba(0, 0, 0, 0.3);
+  display: none;
+}
+
+.profile-popup:before {
+  border: 0.6em solid;
+  border-color: transparent transparent white;
+  content: "";
+  right: 2em;
+  margin-left: -10px;
+  position: absolute;
+  bottom: 100%;
+  filter: drop-shadow(rgba(0, 0, 0, 0.3) 0 -0.2em 0.5em);
+  z-index: -1;
+}
+
+#triangle {
+  position: absolute;
+  top: 0;
+  margin-top: -1px;
+  right: 2em;
+}
+
+.edit-button {
+  padding: 1em 6em 1em 6em;
+  border-bottom: 0.1em solid #ebebeb;
+  cursor: pointer;
+  background-color: #ffffff;
+}
+
+.remove-button {
+  padding: 1em 6em 1em 6em;
+  cursor: pointer;
+}
+
+.edit-button:hover, .remove-button:hover {
+  color: #f2727e;
 }

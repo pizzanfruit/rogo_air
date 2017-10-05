@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
+import { AuthService } from '../../services/auth.service';
 import { LocationsService } from '../../services/locations.service';
 import { Observable } from 'rxjs';
 
@@ -10,6 +11,7 @@ import { AgmMap } from "@agm/core"
 declare var $: any;
 // JSON5
 var JSON5 = require('json5');
+var md5 = require('md5');
 
 @Component({
   selector: 'locations-component',
@@ -21,7 +23,11 @@ export class LocationsComponent implements OnInit {
   @ViewChild(AgmMap) myMap: any;
   window = window;
   //
+  lastTempUpdate: any;
+  //
+  id: string;
   isLoading: boolean = true;
+  isAddLocationLoading: boolean = false;
   isListMode: boolean = true;
   // Master data
   oldCityValue: any;
@@ -58,7 +64,11 @@ export class LocationsComponent implements OnInit {
   lat: number = 20.98401;
   lng: number = 105.846282;
   // Add location modal
-  newLocationName: string;
+  addLocationFormError: boolean = false;
+  newLocationName: string = "";
+  newLocationAddress: string = "";
+  newLongtitude: string = "";
+  newLatitude: string = "";
   selectedNewCity: any = "none";
   selectedNewDistrict: any = "none";
   newDistricts: string[];
@@ -67,7 +77,8 @@ export class LocationsComponent implements OnInit {
     private title: Title,
     private locationsService: LocationsService,
     private cdRef: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     this.isLoading = true;
   }
@@ -78,14 +89,13 @@ export class LocationsComponent implements OnInit {
     this.setUpEditPopup();
   }
 
-  getMasterData() {
+  getMasterData(onComplete?) {
     this.locationsService.getLocations("9dc9496c7bf111e7bb31be2e44b06b34").subscribe((res) => {
       this.locations = JSON5.parse(res._body).body;
       this.assignCopy();
       let latSum = 0;
       let longSum = 0;
       let length = this.filteredItemsByDistrict.length;
-      this.isLoading = false;
       if (length <= 0) return;
       for (let i = 0; i < length; i++) {
         let coordinates = JSON.parse(this.filteredItemsByDistrict[i].coordinate);
@@ -94,9 +104,13 @@ export class LocationsComponent implements OnInit {
       }
       this.lat = latSum / length;
       this.lng = longSum / length;
+      this.isLoading = false;
+      this.isAddLocationLoading = false;
+      $("#add-location-modal").modal("hide");
     }, (err) => {
       console.log(err);
       this.isLoading = false;
+      this.isAddLocationLoading = false;
     })
   }
 
@@ -183,12 +197,15 @@ export class LocationsComponent implements OnInit {
     $(".map-type-icon").addClass("active");
   }
 
+  /** Edit popup */
+
   setUpEditPopup() {
     $(document).mouseup(function (e) {
-      var container = $(".edit-popup, .action-button-icon");
+      var container = $(".edit-popup, .action-button-icon, .profile-popup");
       // if the target of the click isn't the container nor a descendant of the container
       if (!container.is(e.target) && container.has(e.target).length === 0) {
         $(".edit-popup").hide();
+        $(".profile-popup").hide();
       }
     });
   }
@@ -206,7 +223,7 @@ export class LocationsComponent implements OnInit {
     $(event.target).parent().hide();
   }
 
-  // Add schedul modal
+  // Add location modal
 
   openAddLocationModal() {
     $("#add-location-modal").modal("show");
@@ -226,7 +243,42 @@ export class LocationsComponent implements OnInit {
   }
 
   addLocation() {
-    console.log("add location!! yay");
+    this.validateAddLocationForm();
+    // Return if form is invalid
+    if (this.addLocationFormError) return;
+    // Begin adding
+    this.isAddLocationLoading = true;
+    let data: any = {
+      address: this.newLocationAddress + ", " + this.selectedNewDistrict + ", " + this.selectedNewCity,
+      coordinate: "[" + this.newLatitude + "," + this.newLongtitude + "]",
+      name: this.newLocationName,
+      setpoint: 25,
+      mode: "OFF"
+    };
+    let hash = md5(JSON.stringify(data))
+    data.id = hash;
+    this.locationsService.addLocation(data).subscribe(res => {
+      this.getMasterData();
+    }, err => {
+      this.isAddLocationLoading = false;
+      console.log(err);
+    });
+  }
+
+  validateAddLocationForm() {
+    this.addLocationFormError = false;
+    if (!this.newLocationName || !this.newLocationName.trim()
+      || !this.newLatitude || !this.newLatitude.trim()
+      || !this.newLongtitude || !this.newLongtitude.trim()
+      || this.selectedNewDistrict == "none"
+      || this.selectedNewCity == "none") {
+      this.addLocationFormError = true;
+    }
+  }
+
+  // User session
+  logout() {
+    this.authService.logout();
   }
 
   // END OF CODE

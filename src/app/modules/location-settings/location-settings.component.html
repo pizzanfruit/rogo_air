@@ -2,80 +2,82 @@
   <img src="../assets/images/cube-loading.svg" style="width: 4em">
 </div>
 <div *ngIf="!isLoading" class="location-settings-wrapper">
-  <div class="header">
-    <img src="../assets/images/location-settings/settings-icon.png" class="settings-icon">
-    <div class="header-right">
-      <div class="title">{{'locations-tabs-common-settings' | translate}}</div>
-      <div class="subtitle">{{'locations-settings-common-settings-subtitle' | translate}}</div>
-      <div class="tabs">
-        <div class="rogo-air-tab active" (click)="switchToRogoAir()">
-          ROGO AIR
-        </div>
-        <div class="rogo-hub-tab disable">
-          ROGO HUB
-        </div>
-        <div class="rogo-sensor-tab disable">
-          ROGO SENSOR
-        </div>
-      </div>
+  <div class="sidebar">
+    <div class="tab active">
+      <img class="rogo-air-icon" src="../assets/images/location-settings/rogo-air-icon.png"> Rogo Air
+    </div>
+    <div class="tab">
+      <img class="rogo-sensor-icon" src="../assets/images/location-settings/rogo-sensor-icon.png"> Rogo Sensor
+    </div>
+    <div class="tab">
+      <img class="rogo-hub-icon" src="../assets/images/location-settings/rogo-hub-icon.png"> Rogo Alfa
     </div>
   </div>
-  <div class="content">
-    <div class="rogo-air-conten">
-      <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-settings-explain-1' | translate}}
-      <ul class="bullet-text">
-        <li>{{'device-settings-explain-2' | translate}}</li>
-        <li>{{'device-settings-explain-3' | translate}}</li>
-        <li>{{'device-settings-explain-4' | translate}}</li>
-        <li>{{'device-settings-explain-5' | translate}}</li>
-      </ul>
-      <div class="switch-wrapper">
-        <img class="switch-bg-icon" src="../assets/images/device/switch-icon.png">
-        <img class="switch-icon a" src="../assets/images/device/switch-active-icon.png">
-        <img class="switch-icon b" src="../assets/images/device/switch-active-icon.png">
-        <img class="switch-icon c" src="../assets/images/device/switch-active-icon.png">
-        <img class="switch-icon d" src="../assets/images/device/switch-active-icon.png">
-        <span class="option-1">{{'device-no-operation' | translate}}</span>
-        <span class="option-2">{{'device-set-point' | translate}}</span>
-        <span class="option-3">{{'device-schedule' | translate}}</span>
-        <span class="option-4">{{'device-power-off' | translate}}</span>
-      </div>
-      <div style="margin-top: 3em; border-top: 0.08em solid #d9dde7; padding-top: 1em">
-        <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-set-point' | translate}}
-        <img *ngIf="isSetpointLoading" class="setpoint-loading-icon" src="../assets/images/location-settings/loading-icon.svg">
-      </div>
-      <div class="no-select" style="margin-top: 2em;">
-        <div class="minus-icon" (click)="decreaseTemp()">-</div>
-        <div class="temp2">{{temp | number:'2.1-1'}}</div>
-        <div class="degree">°</div>
-        <div class="plus-icon" (click)="increaseTemp()">+</div>
-      </div>
-      <div style="margin-top: 3em; border-top: 0.08em solid #d9dde7; padding-top: 1em">
-        <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-schedule' | translate}}
-      </div>
-      <div class="schedule-wrapper">
-        <div class="add-schedule" (click)="openAddScheduleModal()">
-          <div class="add-schedule-icon">+</div>
-          Thêm lịch
+  <div class="location-settings-content">
+    <div class="header">
+      <div class="title">{{'locations-tabs-common-settings-rogo-air' | translate}}</div>
+    </div>
+    <div class="content">
+      <div class="rogo-air-content">
+        <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-settings-explain-1' | translate}}
+        <ul class="bullet-text">
+          <li>{{'device-settings-explain-2' | translate}}</li>
+          <li>{{'device-settings-explain-3' | translate}}</li>
+          <li>{{'device-settings-explain-4' | translate}}</li>
+          <li>{{'device-settings-explain-5' | translate}}</li>
+        </ul>
+        <div class="switch-wrapper">
+          <img class="switch-bg-icon" src="../assets/images/device/switch-icon.png">
+          <img class="switch-icon a" src="../assets/images/device/switch-active-icon.png">
+          <img class="switch-icon b" src="../assets/images/device/switch-active-icon.png">
+          <img class="switch-icon c" src="../assets/images/device/switch-active-icon.png">
+          <img class="switch-icon d" src="../assets/images/device/switch-active-icon.png">
+          <span class="option-1">{{'device-no-operation' | translate}}</span>
+          <span class="option-2">{{'device-set-point' | translate}}</span>
+          <span class="option-3">{{'device-schedule' | translate}}</span>
+          <span class="option-4">{{'device-power-off' | translate}}</span>
         </div>
-        <!-- <div class="add-wrapper">
-          <img class="add-icon" src="../assets/images/device/add-icon.png">
-          <div class="add-text">{{'device-add-schedule' | translate}}</div>
+        <div style="margin-top: 3em; border-top: 0.08em solid #d9dde7; padding-top: 1em">
+          <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-set-point' | translate}}
+          <img *ngIf="isSetpointLoading" class="setpoint-loading-icon" src="../assets/images/location-settings/loading-icon.svg">
         </div>
-        <div *ngFor="let schedule of schedules" class="schedule-box">
-          <div class="from-group">
-            {{'device-from' | translate}}
-            <div style="font-size: 1.4em">06:20</div>
+        <div class="no-select" style="margin-top: 2em;">
+          <div class="minus-icon" (click)="decreaseTemp()">-</div>
+          <div class="temp2">{{temp | number:'2.1-1'}}</div>
+          <div class="degree">°</div>
+          <div class="plus-icon" (click)="increaseTemp()">+</div>
+        </div>
+        <div [class.opaque]="location.mode != 'SCHEDULE'" style="margin-top: 3em; border-top: 0.08em solid #d9dde7; padding-top: 1em">
+          <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-schedule' | translate}}
+        </div>
+        <div [class.opaque]="location.mode != 'SCHEDULE'" class="schedule-wrapper">
+          <div class="day-header-wrapper">
+            <div class="day-header" *ngFor="let day of daysOfWeek" [class.red]="day == 'SUN'">
+              {{day}}
+            </div>
           </div>
-          <div class="to-group">
-            {{'device-to' | translate}}
-            <div style="font-size: 1.4em">19:00</div>
+          <table class="schedule-table" cellpadding="0">
+            <tr>
+              <th *ngFor="let hour of hoursOfDay">
+                <div class="hour-header">{{hour}}</div>
+              </th>
+            </tr>
+            <tr *ngFor="let day of daysOfWeek">
+              <td *ngFor="let hour of hoursOfDay">
+                <div class="hour-cell">
+                  <div class="hour-content-group">
+                    <div class="target"></div>
+                    <div class="time"></div>
+                  </div>
+                </div>
+              </td>
+              <tr>
+          </table>
+          <div class="add-schedule" (click)="openAddScheduleModal()">
+            <div class="add-schedule-icon">+</div>
+            {{'schedule-modal-add-button' | translate}}
           </div>
-          <div class="target-group">
-            {{'device-target' | translate}}: 26.5°
-          </div>
-        </div> -->
-
+        </div>
       </div>
     </div>
   </div>
@@ -86,15 +88,16 @@
     <div class="modal-content">
       <div class="modal-body">
         <div class="add-modal-title">
-          ĐẶT LỊCH
+          {{'schedule-modal-title' | translate}}
+          <img *ngIf="isAddScheduleLoading" class="add-schedule-loading-icon" src="../assets/images/devices/loading-icon.svg">
           <div class="add-schedule-cancel" (click)="closeAddScheduleModal()">
-            Cancel
+            {{'schedule-modal-cancel' | translate}}
           </div>
         </div>
-        <img class="white-bullet-icon" src="../assets/images/location-settings/white-bullet-icon.png"> Đặt lịch giờ
+        <img class="white-bullet-icon" src="../assets/images/location-settings/white-bullet-icon.png"> {{'schedule-modal-set-time' | translate}}
         <div class="time-picker-group">
           <div class="start-time">
-            <div class="time-title">START</div>
+            <div class="time-title">{{'schedule-modal-start' | translate}}</div>
             <div class="time-dial">
               <img class="dial-up" src="../assets/images/location-settings/dial-up.png" (click)="plusStartHour()">
               <div class="dial-content">{{startHour | number : '2.0-0'}}</div>
@@ -114,7 +117,7 @@
             </div>
           </div>
           <div class="end-time">
-            <div class="time-title">END</div>
+            <div class="time-title">{{'schedule-modal-end' | translate}}</div>
             <div class="time-dial">
               <img class="dial-up" src="../assets/images/location-settings/dial-up.png" (click)="plusEndHour()">
               <div class="dial-content">{{endHour | number : '2.0-0'}}</div>
@@ -134,20 +137,14 @@
             </div>
           </div>
         </div>
-        <img class="white-bullet-icon" src="../assets/images/location-settings/white-bullet-icon.png"> Đặt lịch trong tuần
+        <img class="white-bullet-icon" src="../assets/images/location-settings/white-bullet-icon.png"> {{'schedule-modal-set-day' | translate}}
         <div class="all-week-switch">
-          Tất cả các ngày trong tuần
+          {{'schedule-modal-every-day' | translate}}
           <ui-switch size="small" [(ngModel)]="allWeekSwitch"></ui-switch>
         </div>
         <div class="weekday-group">
           <div class="weekday-wrapper">
-            <div class="weekday">MON</div>
-            <div class="weekday">TUE</div>
-            <div class="weekday">WED</div>
-            <div class="weekday active">THU</div>
-            <div class="weekday">FRI</div>
-            <div class="weekday">SAT</div>
-            <div class="weekday">SUN</div>
+            <div class="weekday" *ngFor="let day of daysOfWeek" [class.active]="day == scheduleDay" (click)="setScheduleDay(day)">{{day}}</div>
           </div>
         </div>
         <img class="white-bullet-icon" src="../assets/images/location-settings/white-bullet-icon.png"> Setpoint
@@ -157,8 +154,8 @@
           <div class="degree">°</div>
           <div class="plus-icon" (click)="increaseScheduleTemp()">+</div>
         </div>
-        <div class="set-schedule-button" (click)="addSchedule()">
-          Đặt lịch
+        <div class="set-schedule-button" (click)="setSchedule()">
+          {{'schedule-modal-set' | translate}}
         </div>
       </div>
     </div>

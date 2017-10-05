@@ -4,7 +4,7 @@ import { Title } from '@angular/platform-browser';
 
 import { TranslateService } from '@ngx-translate/core';
 
-import { LocationService } from '../../services/location.service';
+import { LocationsService } from '../../services/locations.service';
 
 //Jquery
 declare var $: any;
@@ -24,10 +24,12 @@ export class LocationSettingsComponent implements OnInit {
   temp2: number;
   schedules: any[] = [];
   location: any;
+  // ID
+  parentId: any;
   //
   isLoading: boolean = true;
+  isAddScheduleLoading: boolean = false;
   isSetpointLoading: boolean = false;
-  parentId: any;
   setModeSub: any;
   refreshLocationSub: any;
   // Schedule
@@ -40,9 +42,33 @@ export class LocationSettingsComponent implements OnInit {
   allWeekSwitch: boolean = false;
   weekday: string = "THU";
   scheduleTemp: number = 26.5;
+  // Gantt chart
+  scheduleDay: string = "THU";
+  daysOfWeek = [
+    "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"
+  ]
+  hoursOfDay = [
+    "0 AM", "1 AM", "2 AM", "3 AM",
+    "4 AM", "5 AM", "6 AM", "7 AM",
+    "8 AM", "9 AM", "10 AM", "11 AM",
+    "12 AM", "1 PM", "2 PM", "3 PM",
+    "4 PM", "5 PM", "6 PM", "7 PM",
+    "8 PM", "9 PM", "10 PM", "11 PM"
+  ]
+  json = {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": [],
+    }
+  }
 
   constructor(
-    private locationService: LocationService,
+    private locationsService: LocationsService,
     private cdRef: ChangeDetectorRef,
     private route: ActivatedRoute,
     private translate: TranslateService
@@ -56,35 +82,94 @@ export class LocationSettingsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.setUpParentId();
     this.refreshLocation();
     this.switchToRogoAir();
-    $(".switch-icon.b").css("opacity", 1);
-    this.setUpWeekday();
   }
 
   ngAfterViewInit() {
   }
 
-  refreshLocation() {
+  setUpParentId() {
     this.refreshLocationSub = this.route.parent.params.subscribe((params) => {
       this.parentId = params.id;
-      this.locationService.getLocation(this.parentId).subscribe((res) => {
-        this.location = JSON5.parse(res._body).body;
-        this.setUpMode();
-        this.isLoading = false;
-        setTimeout(() => {
-          this.setUpSwitch();
-        })
-        this.cdRef.detectChanges();
-        if (this.location.setpoint && this.location.setpoint != "NaN") this.temp = parseFloat(this.location.setpoint);
-        this.isSetpointLoading = false;
-      }, (err) => {
-        console.log(err);
-        this.isLoading = false;
-        this.isSetpointLoading = false;
-      });
     });
   }
+
+  refreshLocation() {
+    this.locationsService.getLocation(this.parentId).subscribe((res) => {
+      this.location = JSON5.parse(res._body).body;
+      this.setUpMode();
+      this.isLoading = false;
+      this.isSetpointLoading = false;
+      this.isAddScheduleLoading = false;
+      setTimeout(() => {
+        this.setUpSwitch();
+        this.setUpGanttChart();
+      })
+      // this.cdRef.detectChanges();
+      if (this.location.setpoint && this.location.setpoint != "NaN") this.temp = parseFloat(this.location.setpoint);
+    }, (err) => {
+      console.log(err);
+      this.isLoading = false;
+      this.isSetpointLoading = false;
+      this.isAddScheduleLoading = false;
+    });
+  }
+
+  /** Gantt chart */
+
+  setUpGanttChart() {
+    this.clearGanttChart();
+    let schedule = this.location.schedule;
+    let row = null;
+    let col = null;
+    for (let day in schedule) {
+      if (schedule.hasOwnProperty(day)) {
+        switch (day.toUpperCase()) {
+          case "MON":
+            row = 2;
+            break;
+          case "TUE":
+            row = 3;
+            break;
+          case "WED":
+            row = 4;
+            break;
+          case "THU":
+            row = 5;
+            break;
+          case "FRI":
+            row = 6;
+            break;
+          case "SAT":
+            row = 7;
+            break;
+          case "SUN":
+            row = 8;
+            break;
+        }
+      }
+      if (schedule[day]) {
+        for (let i = 0; i < schedule[day].length; i++) {
+          let current = schedule[day][i];
+          let start = +current.start.split(":")[0] + 1;
+          let end = +current.end.split(":")[0] - 1;
+          let cells = $(".schedule-table tr:nth-child(" + row + ") > td:nth-child(n + " + start + "):nth-last-child(n + " + (24 - end) + ") > .hour-cell");
+          cells.addClass("active");
+          cells.eq(0).find(".target").html("TARGET: " + current.temperature + "°");
+          cells.eq(0).find(".time").html(current.start + " - " + current.end);
+        }
+      }
+    }
+  }
+
+  clearGanttChart() {
+    $(".schedule-table .hour-cell").removeClass("active");
+    $(".schedule-table .target, .schedule-table .time").html("");
+  }
+
+  //
 
   decreaseTemp() {
     this.temp2 = this.temp - 0.5;
@@ -108,7 +193,7 @@ export class LocationSettingsComponent implements OnInit {
       else if (img.hasClass("b")) data = { mode: "SETPOINT" };
       else if (img.hasClass("c")) data = { mode: "SCHEDULE" };
       else if (img.hasClass("d")) data = { mode: "OFF" };
-      this.setModeSub = this.locationService.setMode(this.parentId, data).subscribe((res) => {
+      this.setModeSub = this.locationsService.setMode(this.parentId, data).subscribe((res) => {
         this.refreshLocation();
       });
     });
@@ -138,7 +223,6 @@ export class LocationSettingsComponent implements OnInit {
             break;
           default:
             $(".switch-icon.a").css("opacity", 1);
-            console.log($(".switch-icon.a").css("opacity"));
             break;
         }
       }
@@ -150,7 +234,7 @@ export class LocationSettingsComponent implements OnInit {
     let data = {
       "setpoint": this.temp2.toFixed(1)
     }
-    this.locationService.setPoint(this.parentId, data).subscribe((res) => {
+    this.locationsService.setPoint(this.parentId, data).subscribe((res) => {
       this.refreshLocation();
     }, (err) => {
       console.log(err);
@@ -214,13 +298,8 @@ export class LocationSettingsComponent implements OnInit {
     else this.endPeriod = "AM";
   }
 
-  setUpWeekday() {
-    $(".weekday").click((event) => {
-      let weekday = $(event.target);
-      weekday.siblings().removeClass("active");
-      weekday.addClass("active");
-      this.weekday = weekday.html();
-    })
+  setScheduleDay(day: string) {
+    this.scheduleDay = day;
   }
 
   decreaseScheduleTemp() {
@@ -231,8 +310,33 @@ export class LocationSettingsComponent implements OnInit {
     this.scheduleTemp = this.scheduleTemp + 0.5;
   }
 
-  addSchedule() {
-    console.log("ADD SCHEDULE");
+  setSchedule() {
+    this.isAddScheduleLoading = true;
+    let data = JSON.parse(JSON.stringify(this.json));
+    if (this.allWeekSwitch) {
+      for (let day of this.daysOfWeek) {
+        let newDay = data.schedule[day.toLowerCase()];
+        newDay.push({
+          start: (this.startPeriod == "AM" ? this.startHour : +this.startHour + 12) + ":" + ("0" + this.startMinute).slice(-2),
+          end: (this.endPeriod == "AM" ? this.endHour : +this.endHour + 12) + ":" + ("0" + this.endMinute).slice(-2),
+          temperature: this.scheduleTemp.toFixed(2)
+        })
+      }
+    } else {
+      let newDay = data.schedule[this.scheduleDay.toLowerCase()];
+      newDay.push({
+        start: (this.startPeriod == "AM" ? this.startHour : +this.startHour + 12) + ":" + ("0" + this.startMinute).slice(-2),
+        end: (this.endPeriod == "AM" ? this.endHour : +this.endHour + 12) + ":" + ("0" + this.endMinute).slice(-2),
+        temperature: this.scheduleTemp.toFixed(2)
+      })
+    }
+    this.locationsService.setSchedule(this.parentId, data).subscribe(() => {
+      this.refreshLocation();
+      $("#add-schedule-modal").modal("hide");
+    }, err => {
+      console.log(err);
+      this.isAddScheduleLoading = false;
+    });
   }
 
   // End add schedule modal

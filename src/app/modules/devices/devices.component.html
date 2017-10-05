@@ -16,8 +16,11 @@
       </div>
     </div>
     <div class="devices">
-      <div class="device" *ngFor="let device of filteredItems" [routerLink]="['devices', device.id]" routerLinkActive="active">
-        <img src="../assets/images/location-tabs/beacon-icon.png" class="rogo-type-icon">
+      <div class="device" *ngFor="let device of filteredItems" [routerLink]="[device.id]" routerLinkActive="active">
+        <!-- <img src="../assets/images/location-tabs/beacon-icon.png" class="rogo-type-icon"> -->
+        <div class="rogo-type-icon">
+          <span *ngIf="device.currentStats" class="rogo-temp-text">{{device.currentStats| number : '2.1-1' }} °</span>
+        </div>
         <div class="device-info">
           <div class="device-name">
             {{device.name}}
@@ -27,10 +30,11 @@
             <span class="id-header">ID: </span> {{device.id}}
           </div>
         </div>
-        <span class="rogo-type-text" [ngSwitch]="device.type">
-          <span *ngSwitchCase="'RogoAir'">AIR</span>
-          <span *ngSwitchCase="'RogoSalon'">SALON</span>
-        </span>
+        <div class="rogo-type-text" [ngSwitch]="device.type">
+          <span *ngSwitchCase="'Air'">AIR</span>
+          <span *ngSwitchCase="'Sensor'">SENSOR</span>
+          <span *ngSwitchCase="'Alfa'">ALFA</span>
+        </div>
       </div>
     </div>
   </div>
@@ -50,7 +54,7 @@
           {{'devices-add-device-subtitle' | translate}}
         </div>
         <div style="position: relative">
-          <input id="device-search-input" type="text" class="search-input" placeholder="{{'locations-search-hint' | translate}}">
+          <input id="device-search-input" type="text" class="search-input" placeholder="{{'devices-search-hint' | translate}}">
           <span class="underline"></span>
           <img class="search-icon" src="../assets/images/devices/search-icon.png" (click)="searchDevice()">
         </div>
@@ -63,7 +67,7 @@
           <div class="rogo-air-text">ROGO AIR</div>
         </div>
         <div class="device-found-add">
-          <input type="text" class="search-input" style="width: 17em" placeholder="Label Device">
+          <input type="text" class="search-input" style="width: 17em" placeholder="{{'devices-device-label' | translate}}">
           <span class="underline" style="width: 18em"></span>
           <button type="button" class="add-label-button" (click)="addDevice()">{{'devices-add' | translate}}</button>
         </div>

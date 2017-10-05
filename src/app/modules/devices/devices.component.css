@@ -32,7 +32,7 @@
   display: inline-block;
   vertical-align: bottom;
   margin-left: 1em;
-  width: 9.5em;
+  width: 10em;
   height: 2.5em;
   position: relative;
   font-weight: bold;
@@ -102,7 +102,7 @@
   color: #ffffff;
   text-align: center;
   cursor: pointer;
-  margin-left: 4.9em;
+  margin-left: 4em;
 }
 
 /** Device list */
@@ -153,7 +153,18 @@
 
 .rogo-type-icon {
   width: 3em;
+  height: 3em;
   margin-right: 1.5em;
+  border-radius: 50%;
+  background-color: #5a6a7c;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rogo-temp-text {
+  font-size: 0.9em;
 }
 
 .device-name {
@@ -178,6 +189,8 @@
 
 .rogo-type-text {
   color: #778bc6;
+  position: absolute;
+  right: 2em;
 }
 
 /** Add device modal */

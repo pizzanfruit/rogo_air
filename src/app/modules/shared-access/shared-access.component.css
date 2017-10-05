@@ -1,0 +1,188 @@
+.shared-access-wrapper, .content {
+  height: 100%;
+}
+
+.content {
+  overflow-y: auto;
+}
+
+.user-wrapper {
+  padding-left: 7em;
+  padding-right: 7em;
+}
+
+.user-header {
+  width: 100%;
+  height: 6em;
+  padding-left: 20.4em;
+  background-color: #ebebeb;
+  border-bottom: 0.1em solid #d2d2d2;
+  display: flex;
+  align-items: center;
+  position: relative;
+  color: #8891a7;
+  font-weight: bold;
+}
+
+.user {
+  width: 100%;
+  height: 7em;
+  border-bottom: 0.1em solid #d2d2d2;
+  display: flex;
+  align-items: center;
+  position: relative;
+  font-weight: bold;
+}
+
+.circle-bullet {
+  width: 0.8em;
+  height: 0.8em;
+  margin-right: 2em;
+  border-radius: 50%;
+  background-color: #e1e1e1;
+}
+
+.avatar {
+  width: 3em;
+  height: 3em;
+  border-radius: 3em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: purple;
+  color: #ffffff;
+  margin-right: 6em;
+}
+
+.full-name {
+  width: 21em;
+}
+
+.email {
+  width: 28em;
+}
+
+.options {
+  position: absolute;
+  right: 1em;
+}
+
+/** Edit popupp */
+
+.action-button-icon {
+  width: 1.5em;
+  cursor: pointer;
+}
+
+.edit-popup {
+  position: absolute;
+  right: -2em;
+  top: 2em;
+  background-color: #ffffff;
+  z-index: 1;
+  box-shadow: 0 0.2em 1em 0 rgba(0, 0, 0, 0.3);
+  display: none;
+}
+
+.edit-popup:before {
+  border: 0.6em solid;
+  border-color: transparent transparent white;
+  content: "";
+  right: 2em;
+  margin-left: -10px;
+  position: absolute;
+  bottom: 100%;
+  filter: drop-shadow(rgba(0, 0, 0, 0.3) 0 -0.2em 0.5em);
+  z-index: -1;
+}
+
+#triangle {
+  position: absolute;
+  top: 0;
+  margin-top: -1px;
+  right: 2em;
+}
+
+.edit-button {
+  padding: 1em 6em 1em 6em;
+  border-bottom: 0.1em solid #ebebeb;
+  cursor: pointer;
+  background-color: #ffffff;
+}
+
+.remove-button {
+  padding: 1em 6em 1em 6em;
+  cursor: pointer;
+}
+
+.edit-button:hover, .remove-button:hover {
+  color: #f2727e;
+}
+
+/** Role select */
+
+.role-select {
+  display: inline-block;
+  vertical-align: bottom;
+  width: 9.5em;
+  height: 2.5em;
+  position: relative;
+  font-weight: bold;
+}
+
+.role-select select {
+  width: 100%;
+  background-color: #ffffff;
+  color: #6a6a6a;
+  font-size: 1.1em;
+  padding: .5em;
+  padding-right: 2.5em;
+  border: 0;
+  margin: 0;
+  text-indent: 0.01em;
+  text-overflow: '';
+  /*Hiding the select arrow for firefox*/
+  -moz-appearance: none;
+  /*Hiding the select arrow for chrome*/
+  -webkit-appearance:none;
+  /*Hiding the select arrow default implementation*/
+  appearance: none;
+  outline: none;
+}
+
+/*Hiding the select arrow for IE10*/
+.role-select select::-ms-expand {
+  display: none;
+}
+
+.role-select::before,
+.role-select::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+.role-select::after { /*  Custom dropdown arrow */
+  content: "\25BC";
+  height: 1em;
+  font-size: .625em;
+  line-height: 1;
+  right: 1.2em;
+  top: 50%;
+  margin-top: -.5em;
+  display:inline-block;
+  -webkit-transform:scale(2,1); /* Safari and Chrome */
+  -moz-transform:scale(2,1); /* Firefox */
+  -ms-transform:scale(2,1); /* IE 9 */
+  -o-transform:scale(2,1); /* Opera */
+  transform:scale(2,1); /* W3C */
+}
+
+.role-select::after {
+  color: #4d515a;
+}
+
+.role-select select[disabled] {
+  color: rgba(0,0,0,.25);
+}
+
+/** */

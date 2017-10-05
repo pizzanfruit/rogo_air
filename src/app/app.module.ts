@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { TabsComponent } from './modules/tabs/tabs.component'
 import { LoginComponent } from './modules/login/login.component'
 import { LocationsComponent } from './modules/locations/locations.component'
-import { LocationComponent } from './modules/location/location.component'
+import { SharedAccessComponent } from './modules/shared-access/shared-access.component'
 import { LocationTabsComponent } from './modules/location-tabs/location-tabs.component'
 import { LocationSettingsComponent } from './modules/location-settings/location-settings.component'
 import { DevicesComponent } from './modules/devices/devices.component'
@@ -17,9 +17,11 @@ import { SettingsComponent } from './modules/settings/settings.component'
 
 import { LoginService } from './services/login.service'
 import { LocationsService } from './services/locations.service'
-import { LocationService } from './services/location.service'
+import { SharedAccessService } from './services/shared-access.service'
 import { DeviceService } from './services/device.service'
 import { DevicesService } from './services/devices.service'
+import { AuthGuard } from './services/auth-guard.service'
+import { AuthService } from './services/auth.service'
 
 import { AgmCoreModule } from '@agm/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -49,7 +51,7 @@ export function highchartsFactory() {
     LoginComponent,
     TabsComponent,
     LocationsComponent,
-    LocationComponent,
+    SharedAccessComponent,
     LocationTabsComponent,
     LocationSettingsComponent,
     DevicesComponent,
@@ -80,7 +82,7 @@ export function highchartsFactory() {
     ChartModule,
     CookieModule.forRoot()
   ],
-  providers: [LoginService, LocationsService, DeviceService, DevicesService, LocationService, {
+  providers: [AuthGuard, AuthService, LoginService, LocationsService, DeviceService, DevicesService, SharedAccessService, {
     provide: HighchartsStatic,
     useFactory: highchartsFactory
   }],

@@ -1,7 +1,7 @@
 <div *ngIf="isLoading" class="loading">
   <img src="../assets/images/cube-loading.svg" style="width: 4em">
 </div>
-<div *ngIf="!isLoading" class="location-tabs-wrapper">
+<div *ngIf="!isLoading && location" class="location-tabs-wrapper">
   <div class="topbar">
     <div class="back-title" (click)="backToLocations()">
       <img class="back-icon" src="../assets/images/location-tabs/back-icon.png"> {{'locations-tabs-back' | translate}}
@@ -9,7 +9,10 @@
     <img class="logo-icon" src="../assets/images/locations/logo-icon.png">
     <div class="profile">
       <img class="avatar-icon" src="../assets/images/locations/avatar-icon.png">
-      <span class="hello-text">Hello Lucas</span>
+      <span class="hello-text" (click)="toggleEditPopup($event)">{{'locations-hello' | translate}}Lucas</span>
+      <div class="profile-popup">
+        <div class="edit-button" (click)="logout()">{{'common-sign-out' | translate}}</div>
+      </div>
     </div>
     <div class="address-group">
       <img class="gps-icon" src="../assets/images/location-tabs/gps-icon.png">
@@ -23,6 +26,10 @@
       </div>
     </div>
     <div class="tabs">
+      <div class="tab inactive" routerLinkActive="active">
+        <img class="dashboard-icon" src="../assets/images/location-tabs/dashboard-icon.png">
+        <img class="dashboard-icon active" src="../assets/images/location-tabs/dashboard-icon-active.png"> {{'locations-tabs-dashboard' | translate}}
+      </div>
       <div class="tab" routerLink="devices" routerLinkActive="active">
         <img class="devices-icon" src="../assets/images/location-tabs/devices-icon.png">
         <img class="devices-icon active" src="../assets/images/location-tabs/devices-icon-active.png"> {{'locations-tabs-device' | translate}}

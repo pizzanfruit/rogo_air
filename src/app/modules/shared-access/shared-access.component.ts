@@ -2,73 +2,75 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
-import { TranslateService } from '@ngx-translate/core';
-
-import { AuthService } from '../../services/auth.service';
-import { LocationsService } from '../../services/locations.service';
+import { SharedAccessService } from '../../services/shared-access.service'
 
 //Jquery
 declare var $: any;
-// JSON5
-var JSON5 = require('json5');
 
 @Component({
-  selector: 'location-tabs-component',
-  templateUrl: './location-tabs.component.html',
-  styleUrls: ['./location-tabs.component.css']
+  selector: 'shared-access-component',
+  templateUrl: './shared-access.component.html',
+  styleUrls: ['./shared-access.component.css']
 })
 
-export class LocationTabsComponent implements OnInit {
-  // This location
-  location: any;
+export class SharedAccessComponent implements OnInit {
 
   //
   isLoading: boolean = true;
+  // Master data
+  users: any;
+  roles: string[] = ["READ", "CONTROL", "MANAGE", "ADMIN"];
 
   constructor(
     private title: Title,
     private router: Router,
     private route: ActivatedRoute,
-    private locationsService: LocationsService,
-    private translate: TranslateService,
-    private authService: AuthService
-  ) {
-    this.isLoading = true;
-  }
-
-  changeLang(lang: string) {
-    this.translate.use(lang);
-  }
+    private sharedAccessService: SharedAccessService
+  ) { }
 
   ngOnInit() {
-    this.title.setTitle("Device details");
-    this.setUpEditPopup();
+    this.title.setTitle("Shared access");
+    this.getMasterData(this.setUpEditPopup.bind(this));
+  }
+
+  getMasterData(onComplete?) {
     this.route.params.subscribe((params) => {
-      this.locationsService.getLocation(params.id).subscribe((res) => {
-        this.location = JSON5.parse(res._body).body;
+      this.sharedAccessService.getUsers(params.id).subscribe(users => {
+        this.users = users;
         this.isLoading = false;
-      }, (err) => {
+        if (onComplete) onComplete();
+      }, err => {
         this.isLoading = false;
       });
     });
-  }
-
-  ngAfterViewInit() {
   }
 
   backToLocations() {
     this.router.navigate(["tabs/locations"]);
   }
 
+  selectDevice(mac: number) {
+    this.router.navigate(["tabs/devices", mac]);
+  }
+
+  getRandomColor() {
+    var hex = Math.floor(Math.random() * 0xFFFFFF);
+    return "#" + ("000000" + hex.toString(16)).substr(-6);
+  }
+
+  /** Role select */
+  selectRole() {
+    console.log("ROLE !!!");
+  }
+
   /** Edit popup */
 
   setUpEditPopup() {
     $(document).mouseup(function (e) {
-      var container = $(".edit-popup, .action-button-icon, .profile-popup");
+      var container = $(".edit-popup, .action-button-icon");
       // if the target of the click isn't the container nor a descendant of the container
       if (!container.is(e.target) && container.has(e.target).length === 0) {
         $(".edit-popup").hide();
-        $(".profile-popup").hide();
       }
     });
   }
@@ -86,9 +88,5 @@ export class LocationTabsComponent implements OnInit {
     $(event.target).parent().hide();
   }
 
-  // User session
-  logout() {
-    this.authService.logout();
-  }
 
 }

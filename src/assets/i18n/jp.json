@@ -1,16 +1,45 @@
 {
+    "common-sign-out": "ログアウト",
+
+    "login-username": "ユーザー名",
+    "login-password": "パスワード",
+    "login-forgot": "パスワードを忘れた",
+    "login-button": "ログイン",
+
+    "tab-dashboard": "ダッシュボード",
+    "tab-location": "店舗",
+    "tab-settings": "設定",
+
     "config-change-lang": "言語を選択してください",
 
+    "locations-location": "店舗",
+    "locations-add-location": "店舗追加",
+    "locations-new-location": "新規店舗",
+    "locations-location-name": "店舗名",
+    "locations-location-name-hint": "店舗名をご入力ください",
+    "locations-latitude": "緯度",
+    "locations-latitude-hint": "緯度をご入力ください",
+    "locations-longtitude": "経度",
+    "locations-longtitude-hint": "経度をご入力ください",
+    "locations-location-address": "住所",
+    "locations-location-address-hint": "住所をご入力ください",
+    "locations-hello": "こんにちは、",
+    "locations-created-by": "作成者",
+    "locations-view-select": "閲覧モード",
     "locations-filter-by-city": "都市別フィルタ",
     "locations-search-hint": "店舗の検索",
     "locations-all-cities": "全国",
     "locations-all-districts": "全地区",
+    "location-required-error": "全項目をご入力ください",
+    "locations-new-button": "追加",
 
     "locations-tabs-back": "戻る",
     "locations-tabs-device-count": "デバイス数",
+    "locations-tabs-dashboard": "ダッシュボード",
     "locations-tabs-device": "デバイス",
     "locations-tabs-common-settings": "共通設定",
-    "locations-tabs-shared-access": "操作権利共有",
+    "locations-tabs-common-settings-rogo-air": "ROGO AIRの共通設定",
+    "locations-tabs-shared-access": "操作権限共有",
 
     "locations-settings-common-settings-subtitle": "範囲内のデバイスの共通設定",
 
@@ -30,6 +59,7 @@
     "devices-edit": "編集",
     "devices-remove": "削除",
     "devices-search-hint": "デバイスのIDで検索",
+    "devices-device-label": "デバイスのラベル",
 
     "device-history-tab": "履歴",
     "device-settings-tab": "設定",
@@ -44,10 +74,23 @@
     "device-set-point": "Set point",
     "device-schedule": "Schedule",
     "device-power-off": "Power Off",
-    "device-add-schedule": "スケジュール追加",
     "device-from": "から",
     "device-to": "まで",
     "device-target": "目標",
     "device-no-data": "データがありません",
-    "device-override-subtitle": "デバイスがお店の設定とは独立して実行できるようにします"
+    "device-override-subtitle": "デバイスがお店の設定とは独立して実行できるようにします",
+
+    "schedule-modal-add-button": "スケジュール設定",
+    "schedule-modal-title": "スケジュール設定",
+    "schedule-modal-cancel": "キャンセル",
+    "schedule-modal-set-time": "時刻",
+    "schedule-modal-start": "から",
+    "schedule-modal-end": "まで",
+    "schedule-modal-set-day": "曜日",
+    "schedule-modal-every-day": "週毎日",
+    "schedule-modal-set": "追加",
+
+    "shared-access-user": "ユーザー",
+    "shared-access-email": "Eメール",
+    "shared-access-roles": "権限"
 }

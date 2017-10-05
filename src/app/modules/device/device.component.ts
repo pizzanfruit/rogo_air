@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
 import { DeviceService } from '../../services/device.service';
+import { DevicesService } from '../../services/devices.service';
 import { MdDatepicker } from '@angular/material'
 import * as moment from 'moment';
 
@@ -27,6 +28,8 @@ export class DeviceComponent implements OnInit {
   //
   isLoading: boolean = true;
   isSetpointLoading: boolean = false;
+  isAddScheduleLoading: boolean = false;
+  isDeletingDevice: boolean = false;
   interval: any;
 
   // Variables to unsubscribe
@@ -79,11 +82,37 @@ export class DeviceComponent implements OnInit {
   weekday: string = "THU";
   scheduleTemp: number = 26.5;
 
+  // Gantt chart
+  scheduleDay: string = "THU";
+  daysOfWeek = [
+    "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"
+  ]
+  hoursOfDay = [
+    "0 AM", "1 AM", "2 AM", "3 AM",
+    "4 AM", "5 AM", "6 AM", "7 AM",
+    "8 AM", "9 AM", "10 AM", "11 AM",
+    "12 AM", "1 PM", "2 PM", "3 PM",
+    "4 PM", "5 PM", "6 PM", "7 PM",
+    "8 PM", "9 PM", "10 PM", "11 PM"
+  ]
+  json = {
+    "schedule": {
+      "mon": [],
+      "tue": [],
+      "wed": [],
+      "thu": [],
+      "fri": [],
+      "sat": [],
+      "sun": [],
+    }
+  }
+
   constructor(
     private title: Title,
     private router: Router,
     private route: ActivatedRoute,
     private deviceService: DeviceService,
+    private devicesService: DevicesService,
     private cdRef: ChangeDetectorRef
   ) {
     this.isLoading = true;
@@ -159,20 +188,32 @@ export class DeviceComponent implements OnInit {
 
 
   ngOnInit() {
+    this.setUpChildAndParentId();
     this.title.setTitle("Device details");
-    this.refreshDevice(this.init.bind(this));
     this.interval = setInterval(() => {
       if (this.lastChartUpdate) this.lastChartUpdate.unsubscribe();
       this.autoUpdateCharts();
-    }, 5000);
-    // Add schedule
-    this.setUpWeekday();
+      this.autoUpdateCurrentTemp();
+    }, 5 * 60 * 1000);
+    this.ranOnce = true;
+  }
+
+  setUpChildAndParentId() {
+    this.route.parent.parent.params.subscribe(parentParams => {
+      this.parentId = parentParams.id;
+      this.route.params.subscribe(childParams => {
+        this.childId = childParams.id;
+        this.isLoading = true;
+        this.refreshDevice(this.init.bind(this));
+      });
+    });
   }
 
   init() {
     this.switchToHistory();
-    this.updateCharts();
+    this.updateChartsAndCurrentTemp();
     this.setUpEditPopup();
+    this.isLoading = false;
   }
 
   ngAfterViewInit() {
@@ -184,25 +225,34 @@ export class DeviceComponent implements OnInit {
   }
 
   refreshDevice(onComplete?: any) {
-    this.route.parent.params.subscribe((parentParams) => {
-      this.route.params.subscribe((childParams) => {
-        this.deviceService.getDevice(parentParams.id, childParams.id).subscribe((res) => {
-          this.parentId = parentParams.id;
-          this.childId = childParams.id;
-          this.device = JSON5.parse(res._body).body;
-          this.setUpMode();
-          this.cdRef.detectChanges();
-          if (this.device.setpoint && this.device.setpoint != "NaN") this.temp = parseFloat(this.device.setpoint);
-          this.isLoading = false;
-          this.isSetpointLoading = false;
-          if (onComplete) setTimeout(() => onComplete());
-        }, (err) => {
-          console.log(err);
-          this.isLoading = false;
-          this.isSetpointLoading = false;
-        });
-      });
+    this.deviceService.getDevice(this.parentId, this.childId).subscribe((res) => {
+      this.device = JSON5.parse(res._body).body;
+      this.setUpMode();
+      // this.cdRef.detectChanges();
+      if (this.device.setpoint && this.device.setpoint != "NaN") this.temp = parseFloat(this.device.setpoint);
+      this.isSetpointLoading = false;
+      this.isAddScheduleLoading = false;
+      $("#add-schedule-modal").modal("hide");
+      this.setUpGanttChart();
+      if (onComplete) setTimeout(() => onComplete());
+      else this.isLoading = false;
+    }, (err) => {
+      console.log(err);
+      this.isLoading = false;
+      this.isSetpointLoading = false;
+      this.isAddScheduleLoading = false;
     });
+  }
+
+  removeDevice() {
+    this.isDeletingDevice = true;
+    this.deviceService.deleteDevice(this.parentId, this.childId).subscribe((res) => {
+      this.router.navigate(['../'], { relativeTo: this.route });
+    }, (err) => {
+      this.isDeletingDevice = false;
+      console.log(err);
+    })
+    this.closeEditPopup(event);
   }
 
   setUpMode() {
@@ -230,42 +280,32 @@ export class DeviceComponent implements OnInit {
     });
   }
 
-  updateCharts() {
+  updateChartsAndCurrentTemp() {
     $(".chart-loading").css("display", "flex");
     $(".chart-empty").hide();
     $("chart").css("opacity", 0);
     this.autoUpdateCharts();
+    this.autoUpdateCurrentTemp();
   }
 
   autoUpdateCharts() {
-    this.lastChartUpdate = this.deviceService.getDeviceDatalog(this.childId).subscribe((res) => {
+    let tzoffset = (new Date()).getTimezoneOffset() * 60000;
+    let currentDate = new Date(this.currentDate.getTime() - tzoffset).toISOString().split('T')[0];
+    this.lastChartUpdate = this.deviceService.getDeviceDatalog(this.childId, currentDate).subscribe(res => {
       let tempData = [];
       let humidityData = [];
       let timeArr = JSON5.parse(res._body).body;
-      let maxIndex = -1;
-      let minIndex = 0;
       let currentUnix = moment(this.currentDate).unix();
       let endUnix = currentUnix + 86399;
-      if (timeArr[0].timestamp < currentUnix || timeArr[timeArr.length - 1].timestamp > endUnix) {
+      // Invalid response or No data in range
+      if (!timeArr || !timeArr.length || timeArr[0].timestamp < currentUnix || timeArr[timeArr.length - 1].timestamp > endUnix) {
         $(".chart-empty").css("display", "flex");
         $(".chart-loading").hide();
         $("chart").css("opacity", 0);
-        this.currentTemp = timeArr[0].temperature;
-        this.currentHumidity = timeArr[0].humidity;
         return;
       }
-      for (let i = timeArr.length - 1; i >= 0; i--) {
-        if (timeArr[i].timestamp >= currentUnix) {
-          maxIndex = i;
-          break;
-        }
-      }
-      for (let i = maxIndex; i >= 0; i--) {
-        if (timeArr[i].timestamp > endUnix) {
-          minIndex = i + 1;
-          break;
-        }
-      }
+      let maxIndex = timeArr.length - 1;
+      let minIndex = 0;
       let interval = (timeArr[minIndex].timestamp - timeArr[maxIndex].timestamp) / 20.0;
       let lastTimestamp = 0;
       for (let i = maxIndex; i >= minIndex; i--) {
@@ -280,11 +320,21 @@ export class DeviceComponent implements OnInit {
         $("chart").css("opacity", 1);
       }
       $(".chart-loading").hide();
-      this.currentTemp = timeArr[0].temperature;
-      this.currentHumidity = timeArr[0].humidity;
       this.tempChart.series[0].setData(tempData, true);
       this.humidityChart.series[0].setData(humidityData, true);
-      console.log("updated chart");
+    }, err => {
+      $(".chart-empty").css("display", "flex");
+      $(".chart-loading").hide();
+      $("chart").css("opacity", 0);
+    });
+  }
+
+  autoUpdateCurrentTemp() {
+    this.devicesService.getCurrentDeviceDatalog(this.childId).subscribe(res => {
+      let timeArr = JSON5.parse(res._body).body;
+      if (!timeArr || !timeArr[0]) return;
+      this.currentTemp = timeArr[0].temperature;
+      this.currentHumidity = timeArr[0].humidity;
     });
   }
 
@@ -298,7 +348,7 @@ export class DeviceComponent implements OnInit {
 
   updateMonthYear() {
     if (this.lastChartUpdate) this.lastChartUpdate.unsubscribe();
-    this.updateCharts();
+    this.updateChartsAndCurrentTemp();
     this.currentMonthYear = moment(this.currentDate).format('MMMM YYYY');
     this.currentDateMinus1 = moment(this.currentDate).subtract(1, 'days').date();
     this.currentDateMinus2 = moment(this.currentDate).subtract(2, 'days').date();
@@ -385,6 +435,7 @@ export class DeviceComponent implements OnInit {
 
   /** Edit popup */
   setUpEditPopup() {
+    if (this.ranOnce) return;
     $(document).mouseup(function (e) {
       var container = $(".edit-popup, .action-button-icon");
       // if the target of the click isn't the container nor a descendant of the container
@@ -407,6 +458,7 @@ export class DeviceComponent implements OnInit {
     $(event.target).parent().hide();
   }
   // Add schedul modal
+
   openAddScheduleModal() {
     $("#add-schedule-modal").modal("show");
   }
@@ -461,13 +513,8 @@ export class DeviceComponent implements OnInit {
     else this.endPeriod = "AM";
   }
 
-  setUpWeekday() {
-    $(".weekday").click((event) => {
-      let weekday = $(event.target);
-      weekday.siblings().removeClass("active");
-      weekday.addClass("active");
-      this.weekday = weekday.html();
-    })
+  setScheduleDay(day: string) {
+    this.scheduleDay = day;
   }
 
   decreaseScheduleTemp() {
@@ -478,9 +525,87 @@ export class DeviceComponent implements OnInit {
     this.scheduleTemp = this.scheduleTemp + 0.5;
   }
 
-  addSchedule() {
-    console.log("ADD SCHEDULE");
+  setSchedule() {
+    this.isAddScheduleLoading = true;
+    let data = JSON.parse(JSON.stringify(this.json));
+    if (this.allWeekSwitch) {
+      for (let day of this.daysOfWeek) {
+        let newDay = data.schedule[day.toLowerCase()];
+        newDay.push({
+          start: (this.startPeriod == "AM" ? this.startHour : +this.startHour + 12) + ":" + ("0" + this.startMinute).slice(-2),
+          end: (this.endPeriod == "AM" ? this.endHour : +this.endHour + 12) + ":" + ("0" + this.endMinute).slice(-2),
+          temperature: this.scheduleTemp.toFixed(2)
+        })
+      }
+    } else {
+      let newDay = data.schedule[this.scheduleDay.toLowerCase()];
+      newDay.push({
+        start: (this.startPeriod == "AM" ? this.startHour : +this.startHour + 12) + ":" + ("0" + this.startMinute).slice(-2),
+        end: (this.endPeriod == "AM" ? this.endHour : +this.endHour + 12) + ":" + ("0" + this.endMinute).slice(-2),
+        temperature: this.scheduleTemp.toFixed(2)
+      })
+    }
+    this.deviceService.setSchedule(this.childId, data).subscribe(() => {
+      this.refreshDevice();
+    }, err => {
+      console.log(err);
+      this.isAddScheduleLoading = false;
+    });
   }
 
   // End add schedule modal
+
+  /** Gantt chart */
+
+  setUpGanttChart() {
+    this.clearGanttChart();
+    let schedule = this.device.schedule;
+    let row = null;
+    let col = null;
+    for (let day in schedule) {
+      if (schedule.hasOwnProperty(day)) {
+        switch (day.toUpperCase()) {
+          case "MON":
+            row = 2;
+            break;
+          case "TUE":
+            row = 3;
+            break;
+          case "WED":
+            row = 4;
+            break;
+          case "THU":
+            row = 5;
+            break;
+          case "FRI":
+            row = 6;
+            break;
+          case "SAT":
+            row = 7;
+            break;
+          case "SUN":
+            row = 8;
+            break;
+        }
+      }
+      if (schedule[day]) {
+        for (let i = 0; i < schedule[day].length; i++) {
+          let current = schedule[day][i];
+          let start = +current.start.split(":")[0] + 1;
+          let end = +current.end.split(":")[0] - 1;
+          let cells = $(".schedule-table tr:nth-child(" + row + ") > td:nth-child(n + " + start + "):nth-last-child(n + " + (24 - end) + ") > .hour-cell");
+          cells.addClass("active");
+          cells.eq(0).find(".target").html("TARGET: " + current.temperature + "°");
+          cells.eq(0).find(".time").html(current.start + " - " + current.end);
+        }
+      }
+    }
+  }
+
+  clearGanttChart() {
+    $(".schedule-table .hour-cell").removeClass("active");
+    $(".schedule-table .target, .schedule-table .time").html("");
+  }
+
+  //
 }

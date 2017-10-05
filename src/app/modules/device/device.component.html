@@ -1,7 +1,7 @@
 <div *ngIf="isLoading" class="loading">
   <img src="../assets/images/cube-loading.svg" style="width: 4em">
 </div>
-<div *ngIf="!isLoading" class="device-wrapper">
+<div *ngIf="device" class="device-wrapper">
   <div class="header">
     <div class="left-side">
       <!-- <img src="../assets/images/devices/beacon-icon.png" class="rogo-type-icon"> -->
@@ -10,23 +10,38 @@
       </div>
       <div class="device-info">
         <div class="device-name">
-          AC Salon
-          <div class="rogo-type">AIR</div>
+          {{device.name}}
+          <div class="rogo-type">
+            <span [ngSwitch]="device.type">
+              <span *ngSwitchCase="'Air'">AIR</span>
+              <span *ngSwitchCase="'Sensor'">Sensor</span>
+              <span *ngSwitchCase="'Alfa'">ALFA</span>
+            </span>
+          </div>
+          <img *ngIf="isDeletingDevice" class="device-deleting-icon" src="../assets/images/device/loading-icon.svg">
         </div>
         <div class="device-id">
-          <span class="id-header">ID: </span> 1CED0000B1AC0000CAFE000000C405AC
+          <span class="id-header">ID: </span> {{device.id}}
         </div>
         <div class="device-status">
-          <div *ngIf="true == true" style="color: #3eb54a"><img class="active-icon" src="../assets/images/devices/active-icon.png"> Active</div>
-          <div *ngIf="device.status == false"><img class="disconnected-icon" src="../assets/images/devices/disconnected-icon.png"> Disconnected</div>
+          <div *ngIf="device.status == true" style="color: #3eb54a">
+            <img class="active-icon" src="../assets/images/devices/active-icon.png"> Active
+          </div>
+          <div *ngIf="device.status == false">
+            <img class="disconnected-icon" src="../assets/images/devices/disconnected-icon.png"> Disconnected
+          </div>
+        </div>
+        <div class="device-power-source" [ngSwitch]="device.type">
+          <div *ngSwitchCase="'Sensor'">
+            <img class="plugged-in-icon" src="../assets/images/device/plugged-in-icon.png"> Nguồn điện
+          </div>
+          <div *ngSwitchCase="'Air'">
+            <img class="battery-icon" src="../assets/images/device/battery-icon.png"> 52%
+          </div>
         </div>
       </div>
-      <span class="rogo-type-text" [ngSwitch]="device.type">
-          <span *ngSwitchCase="'RogoAir'">AIR</span>
-      <span *ngSwitchCase="'RogoSalon'">SALON</span>
-      </span>
     </div>
-    <div class="tabs">
+    <div *ngIf="device.type != 'Sensor'" class="tabs">
       <div class="history-tab active" (click)="switchToHistory()">
         {{'device-history-tab' | translate}}
       </div>
@@ -36,7 +51,7 @@
       <img class="action-button-icon" src="../assets/images/device/action-button-icon.png" (click)="toggleEditPopup($event)">
       <div class="edit-popup">
         <div class="edit-button" (click)="closeEditPopup($event)">{{'devices-edit' | translate}}</div>
-        <div class="remove-button">{{'devices-remove' | translate}}</div>
+        <div class="remove-button" (click)="removeDevice()">{{'devices-remove' | translate}}</div>
       </div>
     </div>
   </div>
@@ -84,8 +99,7 @@
         </div>
         <chart [options]="humidityOptions" (load)="saveHumidityInstance($event.context)"></chart>
         <div class="current-humidity">
-          <img class="humidity-icon" src="../assets/images/device/humidity-icon.png"> {{ currentHumidity | number : '2.1-1'
-          }} %
+          <img class="humidity-icon" src="../assets/images/device/humidity-icon.png"> {{ currentHumidity | number : '2.1-1' }} %
         </div>
       </div>
     </div>
@@ -132,30 +146,35 @@
           <div class="degree">°</div>
           <div class="plus-icon" (click)="increaseTemp()">+</div>
         </div>
-        <div style="margin-top: 3em; border-top: 0.08em solid #d9dde7; padding-top: 1em">
+        <div [class.opaque]="device.mode != 'SCHEDULE'" style="margin-top: 3em; border-top: 0.08em solid #d9dde7; padding-top: 1em">
           <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-schedule' | translate}}
         </div>
-        <div class="schedule-wrapper">
+        <div [class.opaque]="device.mode != 'SCHEDULE'" class="schedule-wrapper">
+          <div class="day-header-wrapper">
+            <div class="day-header" *ngFor="let day of daysOfWeek" [class.red]="day == 'SUN'">
+              {{day}}
+            </div>
+          </div>
+          <table class="schedule-table" cellpadding="0">
+            <tr>
+              <th *ngFor="let hour of hoursOfDay">
+                <div class="hour-header">{{hour}}</div>
+              </th>
+            </tr>
+            <tr *ngFor="let day of daysOfWeek">
+              <td *ngFor="let hour of hoursOfDay">
+                <div class="hour-cell">
+                  <div class="hour-content-group">
+                    <div class="target"></div>
+                    <div class="time"></div>
+                  </div>
+                </div>
+              </td>
+              <tr>
+          </table>
           <div class="add-schedule" (click)="openAddScheduleModal()">
             <div class="add-schedule-icon">+</div>
-            Thêm lịch
-          </div>
-          <div class="add-wrapper">
-            <img class="add-icon" src="../assets/images/device/add-icon.png">
-            <div class="add-text">{{'device-add-schedule' | translate}}</div>
-          </div>
-          <div *ngFor="let schedule of schedules" class="schedule-box">
-            <div class="from-group">
-              {{'device-from' | translate}}
-              <div style="font-size: 1.4em">06:20</div>
-            </div>
-            <div class="to-group">
-              {{'device-to' | translate}}
-              <div style="font-size: 1.4em">19:00</div>
-            </div>
-            <div class="target-group">
-              {{'device-target' | translate}}: 26.5°
-            </div>
+            {{'schedule-modal-add-button' | translate}}
           </div>
         </div>
       </div>
@@ -164,85 +183,80 @@
 </div>
 
 <div class="modal fade" id="add-schedule-modal" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-body">
-          <div class="add-modal-title">
-            ĐẶT LỊCH
-            <div class="add-schedule-cancel" (click)="closeAddScheduleModal()">
-              Cancel
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="add-modal-title">
+          {{'schedule-modal-title' | translate}}
+          <img *ngIf="isAddScheduleLoading" class="add-schedule-loading-icon" src="../assets/images/devices/loading-icon.svg">
+          <div class="add-schedule-cancel" (click)="closeAddScheduleModal()">
+             {{'schedule-modal-cancel' | translate}}
+          </div>
+        </div>
+        <img class="white-bullet-icon" src="../assets/images/location-settings/white-bullet-icon.png"> {{'schedule-modal-set-time' | translate}}
+        <div class="time-picker-group">
+          <div class="start-time">
+            <div class="time-title">{{'schedule-modal-start' | translate}}</div>
+            <div class="time-dial">
+              <img class="dial-up" src="../assets/images/location-settings/dial-up.png" (click)="plusStartHour()">
+              <div class="dial-content">{{startHour | number : '2.0-0'}}</div>
+              <img class="dial-down" src="../assets/images/location-settings/dial-down.png" (click)="minusStartHour()">
+            </div>
+            <div class="dial-colon">:</div>
+            <div class="time-dial">
+              <img class="dial-up" src="../assets/images/location-settings/dial-up.png" (click)="plusStartMinute()">
+              <div class="dial-content">{{startMinute | number : '2.0-0'}}</div>
+              <img class="dial-down" src="../assets/images/location-settings/dial-down.png" (click)="minusStartMinute()">
+            </div>
+            <div class="dial-colon">:</div>
+            <div class="time-dial">
+              <img class="dial-up" src="../assets/images/location-settings/dial-up.png" (click)="toggleStartPeriod()">
+              <div class="dial-content">{{startPeriod}}</div>
+              <img class="dial-down" src="../assets/images/location-settings/dial-down.png" (click)="toggleStartPeriod()">
             </div>
           </div>
-          <img class="white-bullet-icon" src="../assets/images/location-settings/white-bullet-icon.png"> Đặt lịch giờ
-          <div class="time-picker-group">
-            <div class="start-time">
-              <div class="time-title">START</div>
-              <div class="time-dial">
-                <img class="dial-up" src="../assets/images/location-settings/dial-up.png" (click)="plusStartHour()">
-                <div class="dial-content">{{startHour | number : '2.0-0'}}</div>
-                <img class="dial-down" src="../assets/images/location-settings/dial-down.png" (click)="minusStartHour()">
-              </div>
-              <div class="dial-colon">:</div>
-              <div class="time-dial">
-                <img class="dial-up" src="../assets/images/location-settings/dial-up.png" (click)="plusStartMinute()">
-                <div class="dial-content">{{startMinute | number : '2.0-0'}}</div>
-                <img class="dial-down" src="../assets/images/location-settings/dial-down.png" (click)="minusStartMinute()">
-              </div>
-              <div class="dial-colon">:</div>
-              <div class="time-dial">
-                <img class="dial-up" src="../assets/images/location-settings/dial-up.png" (click)="toggleStartPeriod()">
-                <div class="dial-content">{{startPeriod}}</div>
-                <img class="dial-down" src="../assets/images/location-settings/dial-down.png" (click)="toggleStartPeriod()">
-              </div>
+          <div class="end-time">
+            <div class="time-title">{{'schedule-modal-end' | translate}}</div>
+            <div class="time-dial">
+              <img class="dial-up" src="../assets/images/location-settings/dial-up.png" (click)="plusEndHour()">
+              <div class="dial-content">{{endHour | number : '2.0-0'}}</div>
+              <img class="dial-down" src="../assets/images/location-settings/dial-down.png" (click)="minusEndHour()">
             </div>
-            <div class="end-time">
-              <div class="time-title">END</div>
-              <div class="time-dial">
-                <img class="dial-up" src="../assets/images/location-settings/dial-up.png" (click)="plusEndHour()">
-                <div class="dial-content">{{endHour | number : '2.0-0'}}</div>
-                <img class="dial-down" src="../assets/images/location-settings/dial-down.png" (click)="minusEndHour()">
-              </div>
-              <div class="dial-colon">:</div>
-              <div class="time-dial">
-                <img class="dial-up" src="../assets/images/location-settings/dial-up.png" (click)="plusEndMinute()">
-                <div class="dial-content">{{endMinute | number : '2.0-0'}}</div>
-                <img class="dial-down" src="../assets/images/location-settings/dial-down.png" (click)="minusEndMinute()">
-              </div>
-              <div class="dial-colon">:</div>
-              <div class="time-dial">
-                <img class="dial-up" src="../assets/images/location-settings/dial-up.png" (click)="toggleEndPeriod()">
-                <div class="dial-content">{{endPeriod}}</div>
-                <img class="dial-down" src="../assets/images/location-settings/dial-down.png" (click)="toggleEndPeriod()">
-              </div>
+            <div class="dial-colon">:</div>
+            <div class="time-dial">
+              <img class="dial-up" src="../assets/images/location-settings/dial-up.png" (click)="plusEndMinute()">
+              <div class="dial-content">{{endMinute | number : '2.0-0'}}</div>
+              <img class="dial-down" src="../assets/images/location-settings/dial-down.png" (click)="minusEndMinute()">
+            </div>
+            <div class="dial-colon">:</div>
+            <div class="time-dial">
+              <img class="dial-up" src="../assets/images/location-settings/dial-up.png" (click)="toggleEndPeriod()">
+              <div class="dial-content">{{endPeriod}}</div>
+              <img class="dial-down" src="../assets/images/location-settings/dial-down.png" (click)="toggleEndPeriod()">
             </div>
           </div>
-          <img class="white-bullet-icon" src="../assets/images/location-settings/white-bullet-icon.png"> Đặt lịch trong tuần
-          <div class="all-week-switch">
-            Tất cả các ngày trong tuần
-            <ui-switch size="small" [(ngModel)]="allWeekSwitch"></ui-switch>
+        </div>
+        <img class="white-bullet-icon" src="../assets/images/location-settings/white-bullet-icon.png"> {{'schedule-modal-set-day' | translate}}
+        <div class="all-week-switch">
+          {{'schedule-modal-every-day' | translate}}
+          <ui-switch size="small" [(ngModel)]="allWeekSwitch"></ui-switch>
+        </div>
+        <div class="weekday-group">
+          <div class="weekday-wrapper">
+            <div class="weekday" *ngFor="let day of daysOfWeek" [class.active]="day == scheduleDay" (click)="setScheduleDay(day)">{{day}}</div>
           </div>
-          <div class="weekday-group">
-            <div class="weekday-wrapper">
-              <div class="weekday">MON</div>
-              <div class="weekday">TUE</div>
-              <div class="weekday">WED</div>
-              <div class="weekday active">THU</div>
-              <div class="weekday">FRI</div>
-              <div class="weekday">SAT</div>
-              <div class="weekday">SUN</div>
-            </div>
-          </div>
-          <img class="white-bullet-icon" src="../assets/images/location-settings/white-bullet-icon.png"> Setpoint
-          <div class="no-select" style="margin-top: 1em; margin-left: 2em">
-            <div class="minus-icon" (click)="decreaseScheduleTemp()">-</div>
-            <div class="temp2">{{scheduleTemp | number:'2.1-1'}}</div>
-            <div class="degree">°</div>
-            <div class="plus-icon" (click)="increaseScheduleTemp()">+</div>
-          </div>
-          <div class="set-schedule-button" (click)="addSchedule()">
-            Đặt lịch
-          </div>
+        </div>
+        <img class="white-bullet-icon" src="../assets/images/location-settings/white-bullet-icon.png"> Setpoint
+        <div class="no-select" style="margin-top: 1em; margin-left: 2em">
+          <div class="minus-icon" (click)="decreaseScheduleTemp()">-</div>
+          <div class="temp2">{{scheduleTemp | number:'2.1-1'}}</div>
+          <div class="degree">°</div>
+          <div class="plus-icon" (click)="increaseScheduleTemp()">+</div>
+        </div>
+        <div class="set-schedule-button" (click)="setSchedule()">
+          {{'schedule-modal-set' | translate}}
         </div>
       </div>
     </div>
   </div>
+</div>

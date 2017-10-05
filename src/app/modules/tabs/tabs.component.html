@@ -1,21 +1,21 @@
 <div class="tabs-wrapper">
   <div class="sidebar">
     <a routerLinkActive="active">
-      <div class="tab-group" style="padding-left: 1em">
+      <div class="tab-group">
         <img class="tabs-icon active" src="../assets/images/tabs/dashboard-icon-active.png">
-        <img class="tabs-icon" src="../assets/images/tabs/dashboard-icon.png"> Dashboard
+        <img class="tabs-icon" src="../assets/images/tabs/dashboard-icon.png"> {{ 'tab-dashboard' | translate }}
       </div>
     </a>
     <a routerLink="locations" routerLinkActive="active">
       <div class="tab-group">
         <img class="tabs-icon active" src="../assets/images/tabs/locations-icon-active.png">
-        <img class="tabs-icon" src="../assets/images/tabs/locations-icon.png"> Location
+        <img class="tabs-icon" src="../assets/images/tabs/locations-icon.png"> {{ 'tab-location' | translate }}
       </div>
     </a>
     <a routerLink="settings" routerLinkActive="active">
       <div class="tab-group">
         <img class="tabs-icon active" src="../assets/images/tabs/settings-icon-active.png">
-        <img class="tabs-icon" src="../assets/images/tabs/settings-icon.png"> Settings
+        <img class="tabs-icon" src="../assets/images/tabs/settings-icon.png"> {{ 'tab-settings' | translate }}
       </div>
     </a>
   </div>

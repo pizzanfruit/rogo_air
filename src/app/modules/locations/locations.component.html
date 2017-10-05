@@ -9,25 +9,25 @@
       <img class="logo-icon" src="../assets/images/locations/logo-icon.png">
       <div class="left-side-content">
         <img class="map-icon" src="../assets/images/locations/map-icon.png">
-        <span class="location-text">ĐỊA ĐIỂM</span>
+        <span class="location-text">{{'locations-location' | translate}}</span>
         <div class="seach-and-filter-group">
           <div class="search-group">
             <input id="search-input" type="text" class="search-input" placeholder="{{'locations-search-hint' | translate}}" (input)="filter()">
             <img class="search-icon" src="../assets/images/locations/search-icon.png">
           </div>
           <div class="filter-group">
-            <div class="filter-label">Lọc theo thành phố</div>
+            <div class="filter-label">{{'locations-filter-by-city' | translate}}</div>
             <div class="rogo-select">
               <select id="city-select" name="city" [(ngModel)]="selectedCity" (change)="filter()">
-                    <option value="none">{{'locations-all-cities' | translate}}</option>
-                    <option *ngFor="let city of cities" [value]="city.name">{{city.name}}</option>
-                </select>
+                <option value="none">{{'locations-all-cities' | translate}}</option>
+                <option *ngFor="let city of cities" [value]="city.name">{{city.name}}</option>
+              </select>
             </div>
             <div class="rogo-select" style="margin-left: 2em">
               <select id="district-select" name="district" [(ngModel)]="selectedDistrict" (change)="filter()">
-                    <option value="none">{{'locations-all-districts' | translate}}</option>
-                      <option *ngFor="let district of districts" [value]="district">{{district}}</option>
-                  </select>
+                <option value="none">{{'locations-all-districts' | translate}}</option>
+                <option *ngFor="let district of districts" [value]="district">{{district}}</option>
+              </select>
             </div>
           </div>
         </div>
@@ -36,11 +36,14 @@
     <div class="right-side">
       <div class="profile">
         <img class="avatar-icon" src="../assets/images/locations/avatar-icon.png">
-        <span class="hello-text">Hello Lucas</span>
+        <span class="hello-text" (click)="toggleEditPopup($event)">{{'locations-hello' | translate}}Lucas</span>
+        <div class="profile-popup">
+          <div class="edit-button" (click)="logout()">{{'common-sign-out' | translate}}</div>
+        </div>
       </div>
-      <div class="add-location-button" (click)="openAddLocationModal()">+ Thêm địa điểm</div>
+      <div class="add-location-button" (click)="openAddLocationModal()">+ {{'locations-add-location' | translate}}</div>
       <div class="view-select">
-        <div class="view-select-text">VIEW BY</div>
+        <div class="view-select-text">{{'locations-view-select' | translate}}</div>
         <img class="list-type-icon active" src="../assets/images/locations/list-type-icon.png" (click)="switchToListMode()">
         <img class="map-type-icon" src="../assets/images/locations/map-type-icon.png" (click)="switchToMapMode()">
       </div>
@@ -60,7 +63,8 @@
           <div [id]="item.id" class="remove-button" (click)="removeDevice(item.id, $event)">{{'devices-remove' | translate}}</div>
         </div>
         <div class="created-by">
-          Created by: <span class="author">Lucas Tony</span>
+          {{'locations-created-by' | translate}}
+          <span class="author">Lucas Tony</span>
         </div>
       </div>
     </div>
@@ -79,58 +83,66 @@
     <div class="modal-content">
       <div class="modal-body">
         <div class="add-modal-title">
-          ĐỊA ĐIỂM MỚI
+          {{'locations-new-location' | translate}}
+          <img *ngIf="isAddLocationLoading" class="add-location-loading-icon" src="../assets/images/devices/loading-icon.svg">
         </div>
         <div class="row">
           <div class="col-xs-6">
             <div class="new-text-group">
-              <img class="blue-bullet-icon" src="../assets/images/locations/blue-bullet-icon.png"> <span class="blue-text">Tên địa điểm</span>
+              <img class="blue-bullet-icon" src="../assets/images/locations/blue-bullet-icon.png">
+              <span class="blue-text">{{'locations-location-name' | translate}}</span>
               <div style="position: relative">
-                <input type="text" class="add-location-input" [(ngModel)]="newLocationName" placeholder="Thêm địa điểm">
+                <input type="text" class="add-location-input" [(ngModel)]="newLocationName" placeholder="{{'locations-location-name-hint' | translate}}">
                 <span class="underline"></span>
               </div>
             </div>
             <div class="new-text-group">
-              <img class="blue-bullet-icon" src="../assets/images/locations/blue-bullet-icon.png"> <span class="blue-text">Latitude</span>
+              <img class="blue-bullet-icon" src="../assets/images/locations/blue-bullet-icon.png">
+              <span class="blue-text">{{'locations-latitude' | translate}}</span>
               <div style="position: relative">
-                <input type="text" class="add-location-input" [(ngModel)]="newLatitude" placeholder="Thêm kinh tuyến">
+                <input type="text" class="add-location-input" [(ngModel)]="newLatitude" placeholder="{{'locations-latitude-hint' | translate}}">
                 <span class="underline"></span>
               </div>
             </div>
             <div class="new-text-group">
-              <img class="blue-bullet-icon" src="../assets/images/locations/blue-bullet-icon.png"> <span class="blue-text">Longtitude</span>
+              <img class="blue-bullet-icon" src="../assets/images/locations/blue-bullet-icon.png">
+              <span class="blue-text">{{'locations-longtitude' | translate}}</span>
               <div style="position: relative">
-                <input type="text" class="add-location-input" [(ngModel)]="newLongitude" placeholder="Thêm vĩ tuyến">
+                <input type="text" class="add-location-input" [(ngModel)]="newLongtitude" placeholder="{{'locations-longtitude-hint' | translate}}">
                 <span class="underline"></span>
               </div>
             </div>
           </div>
           <div class="col-xs-6">
             <div class="new-text-group" style="margin-top: 1em">
-              <img class="blue-map-icon" src="../assets/images/locations/blue-map-icon.png"> <span class="blue-text">Địa chỉ</span>
+              <img class="blue-map-icon" src="../assets/images/locations/blue-map-icon.png">
+              <span class="blue-text">{{'locations-location-address' | translate}}</span>
               <div style="position: relative">
-                <input type="text" class="add-location-input" [(ngModel)]="newLongitude" placeholder="Thêm địa chỉ">
+                <input type="text" class="add-location-input" [(ngModel)]="newLocationAddress" placeholder="{{'locations-location-address-hint' | translate}}">
                 <span class="underline"></span>
               </div>
             </div>
             <div class="address-group">
               <div class="add-location-rogo-select">
                 <select id="new-city-select" name="city" [(ngModel)]="selectedNewCity" (change)="updateDistricts()">
-                          <option value="none">{{'locations-all-cities' | translate}}</option>
-                          <option *ngFor="let city of cities" [value]="city.name">{{city.name}}</option>
-                      </select>
+                  <option value="none">{{'locations-all-cities' | translate}}</option>
+                  <option *ngFor="let city of cities" [value]="city.name">{{city.name}}</option>
+                </select>
               </div>
               <div class="add-location-rogo-select">
                 <select id="new-district-select" name="district" [(ngModel)]="selectedNewDistrict">
-                      <option value="none">{{'locations-all-districts' | translate}}</option>
-                        <option *ngFor="let district of newDistricts" [value]="district">{{district}}</option>
-                    </select>
+                  <option value="none">{{'locations-all-districts' | translate}}</option>
+                  <option *ngFor="let district of newDistricts" [value]="district">{{district}}</option>
+                </select>
               </div>
             </div>
           </div>
         </div>
+        <div *ngIf=addLocationFormError class="set-location-error">
+          {{'locations-required-error' | translate}}
+        </div>
         <div class="set-location-button" (click)="addLocation()">
-          Thêm Mới
+          {{'locations-new-location-button' | translate}}
         </div>
       </div>
     </div>

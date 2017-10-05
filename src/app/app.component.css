@@ -1,0 +1,22 @@
+#message-modal .modal-body {
+  padding: 3em 5em 3em 5em;
+  background-color: #2e3036;
+  color: #bebcbd;
+}
+
+.message-modal-button {
+  margin-top: 3em;
+  margin-left: auto;
+  margin-right: 0;
+  background-color: #1cbbb4;
+  width: 15em;
+  color: #ffffff;
+  padding: 0.7em 1.5em 0.7em 1.5em;
+  text-align: center;
+  cursor: pointer;
+  font-size: 0.8em;
+}
+
+.message-content {
+  font-size: 1.2em;
+}

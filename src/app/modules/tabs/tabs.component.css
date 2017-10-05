@@ -28,7 +28,7 @@
   margin-bottom: 3.5em;
   color: #939393;
   cursor: pointer;
-  margin-left: -1em;
+  /* margin-left: -1em; */
 }
 
 .active .tab-group {
@@ -39,7 +39,7 @@
   color: #939393;
   width: 1.6em;
   cursor: pointer;
-  margin-right: 0.5em;
+  margin-right: 0.3em;
   margin-bottom: 0.5em;
 }
 

@@ -220,3 +220,34 @@
 		transform: translate3d(0, -40%, 0);
 	}
 }
+
+/* Loader */
+
+.loader {
+	position: absolute;
+	top: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  overflow: hidden;
+  background-color: #2e343c;
+}
+.loader:before{
+  display: block;
+  position: absolute;
+  content: "";
+  left: -200px;
+  width: 200px;
+  height: 8px;
+  background-color: #49c6e3;
+  animation: loading 2s linear infinite;
+}
+
+@keyframes loading {
+    from {left: -200px; width: 30%;}
+    50% {width: 30%;}
+    70% {width: 70%;}
+    80% { left: 50%;}
+    95% {left: 120%;}
+    to {left: 100%;}
+}

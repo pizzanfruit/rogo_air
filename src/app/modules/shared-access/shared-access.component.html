@@ -1,0 +1,41 @@
+<div *ngIf="isLoading" class="loading">
+  <img src="../assets/images/cube-loading.svg" style="width: 4em">
+</div>
+<div *ngIf="!isLoading" class="shared-access-wrapper">
+  <div class="content">
+    <div class="header">
+
+    </div>
+    <!-- Header -->
+    <div class="user-header">
+      <div class="full-name">{{'shared-access-user' | translate}}</div>
+      <div class="email">{{'shared-access-email' | translate}}</div>
+      <div class="roles">{{'shared-access-roles' | translate}}</div>
+    </div>
+    <div class="user-wrapper">
+      <!-- Rows -->
+      <div class="user" *ngFor="let user of users">
+        <div class="circle-bullet"></div>
+        <div class="avatar">
+          <span style="font-size: 1.4em">{{user.name | slice:0:1}}</span>
+        </div>
+        <div class="full-name">{{user.name}}</div>
+        <div class="email">{{user.email}}</div>
+        <div class="roles">
+          <div class="role-select">
+            <select id="role-select" name="role" [(ngModel)]="user.role" (change)="selectRole()">
+              <option *ngFor="let role of roles" [value]="role">{{role}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="options">
+          <img class="action-button-icon" src="../assets/images/shared-access/action-button-icon.png" (click)="toggleEditPopup($event)">
+          <div class="edit-popup">
+            <div class="edit-button" (click)="closeEditPopup($event)">{{'devices-edit' | translate}}</div>
+            <div class="remove-button">{{'devices-remove' | translate}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

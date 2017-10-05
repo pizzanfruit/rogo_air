@@ -1,5 +1,63 @@
 .location-settings-wrapper, .content {
   height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 9em;
+  background-color: #f7f6f8;
+}
+
+.location-settings-content {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 9em;
+  right: 0;
+  padding-left: 5em;
+  padding-right: 5em;
+}
+
+.opaque {
+  opacity: 0.5;
+}
+
+/** Tabs */
+
+.tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2em 2em 2em 2em;
+  border-bottom: 0.13em solid #d7d7d7;
+  opacity: 0.4;
+  white-space: nowrap;
+  cursor: not-allowed;
+}
+
+.tab.active {
+  background-color: #ffffff;
+  opacity: 1;
+  cursor: pointer;
+}
+
+.rogo-air-icon, .rogo-sensor-icon, .rogo-hub-icon  {
+  width: 2.5em;
+  display: block;
+  margin-bottom: 0.6em;
+}
+
+
+/** Location settings content*/
+
+.content {
+  overflow-y: scroll;
+  flex: 1;
 }
 
 .no-select {
@@ -12,7 +70,7 @@
 }
 
 .header {
-  padding: 2em 0em 0 5em;
+  padding: 1.7em 0 1.7em 0;
   background-color: #ffffff;
   border-bottom: 0.13em solid #d7d7d7;
 }
@@ -24,47 +82,17 @@
   margin-right: 1em;
 }
 
-.header-right {
-  display: inline-block;
-}
-
 .title {
-  font-size: 2em;
-  color: #2e3036;
-}
-
-.subtitle {
-  margin-top: 0.2em;
-  color: #7f7f7f;
-}
-
-.tabs {
-  margin-top: 1.5em;
-  margin-left: -2em;
-  margin-bottom: -0.1em;
-}
-
-.rogo-air-tab, .rogo-hub-tab, .rogo-sensor-tab {
-  display: inline-block;
-  padding: 1em 3em 1em 3em;
-  cursor: pointer;
-}
-
-.rogo-air-tab.active, .rogo-hub-tab.active, .rogo-sensor-tab.active {
-  border-bottom: 0.35em solid #4b66b0;
-}
-
-.rogo-hub-tab.disable, .rogo-sensor-tab.disable {
-  color: #989ba5;
-  cursor: not-allowed;
-}
-
-.rogo-air-conten {
   font-size: 1.5em;
+  color: #477099;
+}
+
+.rogo-air-content {
+  font-size: 1.25em;
   background-color: #ffffff;
   height: 100%;
   overflow-y: scroll;
-  padding: 1em 2.5em 10em 2em;
+  padding: 2em 0 5em 1em;
   display: block;
 }
 
@@ -75,7 +103,7 @@
 }
 
 .bullet-text {
-  margin-top: 1.4em;
+  margin-top: 0.9em;
   list-style: none;
   line-height: 2em;
   color: #707070;
@@ -96,7 +124,7 @@
 .switch-icon {
   position: absolute;
   width: 0.85em;
-  top: 0.66em;
+  top: 0.657em;
   left: 2.18em;
   opacity: 0;
   cursor: pointer;
@@ -107,7 +135,7 @@
 }
 
 .switch-icon.c {
-  left: 17.36em;
+  left: 17.35em;
 }
 
 .switch-icon.d {
@@ -176,9 +204,6 @@
   vertical-align: top;
 }
 
-.schedule-wrapper {
-  position: relative;
-}
 /* Add schedule modal begin */
 .add-schedule {
   position: absolute;
@@ -199,7 +224,6 @@
   padding: 3em 5em 3em 5em;
   background-color: #2e3036;
   color: #bebcbd;
-  width: 50em;
 }
 
 .add-modal-title {
@@ -346,63 +370,13 @@ ui-switch {
   cursor: pointer;
 }
 
+.add-schedule-loading-icon {
+  width: 1.5em;
+  margin-left: 0.3em;
+  margin-bottom: 0.15em;
+}
+
 /* Add schedule modal end */
-
-
-
-/* .add-wrapper {
-  display: inline-flex;
-  margin-top: 2em;
-  margin-left: 3em;
-  margin-right: 2em;
-  flex-direction: column;
-  vertical-align: top;
-  align-items: center;
-}
-
-.add-icon {
-  width: 3em;
-  margin-bottom: 0.5em;
-  cursor: pointer;
-}
-
-.add-text {
-  font-size: 0.7em;
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: lighter;
-}
-
-.schedule-box {
-  display: inline-block;
-  background-color: #005b7f;
-  height: 6em;
-  width: 8em;
-  margin-top: 1em;
-  margin-left: 2em;
-  color: #ffffff;
-  position: relative;
-  font-weight: lighter;
-}
-
-.from-group {
-  position: absolute;
-  left: 1.5em;
-  top: 1.5em;
-  font-size: 0.5em;
-}
-
-.to-group {
-  position: absolute;
-  top: 1.5em;
-  right: 1.5em;
-  font-size: 0.5em;
-}
-
-.target-group {
-  position: absolute;
-  bottom: 0.7em;
-  left: 0.7em;
-} */
 
 .list-inline li {
   display: inline-block;
@@ -432,3 +406,91 @@ ui-switch {
   margin-left: 0.3em;
   margin-bottom: 0.15em;
 }
+
+/** Gannt chart */
+
+.schedule-wrapper {
+  position: relative;
+  display: flex;
+  padding-top: 3em;
+}
+
+.day-header-wrapper {
+  display: inline-block;
+  width: 5em;
+  padding-left: 1em;
+  font-size: 0.8em;
+  margin-top: 5em;
+}
+
+.day-header {
+  height: 4em;
+  width: 7em;
+  font-weight: bold;
+}
+
+.day-header.red {
+  color: #f26d7d;
+}
+
+.schedule-table {
+  border-collapse: collapse;
+  display: inline-block;
+  overflow-x: scroll;
+  white-space: nowrap;
+  table-layout:fixed;
+  font-size: 0.8em;
+}
+
+.schedule-table .hour-cell {
+  height: 4em;
+  width: 10em;
+  position: relative;
+}
+
+.schedule-table .hour-cell.active::before {
+  content: "";
+  position: absolute;
+  left: -0.1em;
+  right: -0.1em;
+  top: 1.7em;
+  bottom: -1.3em;
+  background-color: #5074b9;
+}
+.schedule-table .hour-cell > .hour-content-group {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 1.7em;
+  bottom: -1.3em;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding-left: 2em;
+}
+
+.hour-content-group > .time {
+  font-size: 0.9em;
+  font-style: italic;
+}
+
+
+.schedule-table td:nth-child(1), .schedule-table th:nth-child(1) {
+  border-left: 0.1em solid #e1e1e1;
+}
+
+.schedule-table td, .schedule-table th {
+  border-right: 0.1em solid #e1e1e1;
+  padding: 0;
+}
+
+.schedule-table .hour-header {
+  font-size: 1.3em;
+  color:#6f7081;
+  font-weight: normal;
+  padding-left: 1em;
+}
+
+/** End of Gantt chart */

@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   height: 18em;
-  background-color: #ffffff;
+  background-color: #ffffff;e
   color: #696c7b;
   padding-top: 1.5em;
   border-bottom: 0.1em solid #d7dae7;
@@ -48,13 +48,22 @@
 
 /** Right side */
 
+.profile {
+  position: relative;
+}
+
 .avatar-icon {
   width: 2.5em;
 }
 
 .hello-text {
   font-weight: bold;
-  margin-left: 1em;
+  margin-left: 0.4em;
+  cursor: pointer;
+}
+
+.hello-text:hover {
+  text-decoration: underline;
 }
 
 .add-location-button {
@@ -349,7 +358,7 @@
   cursor: pointer;
 }
 
-.edit-popup {
+.edit-popup, .profile-popup {
   position: absolute;
   right: 3em;
   top: 3.5em;
@@ -359,7 +368,13 @@
   display: none;
 }
 
-.edit-popup:before {
+.profile-popup {
+  white-space: nowrap;
+  right: 10em;
+  top: 3.1em;
+}
+
+.edit-popup:before, .profile-popup:before {
   border: 0.6em solid;
   border-color: transparent transparent white;
   content: "";
@@ -377,7 +392,6 @@
   margin-top: -1px;
   right: 2em;
 }
-
 
 .edit-button {
   padding: 1em 6em 1em 6em;
@@ -494,4 +508,17 @@
   padding: 0.7em 1.5em 0.7em 1.5em;
   text-align: center;
   cursor: pointer;
+}
+
+.set-location-error {
+  position: absolute;
+  left: 5em;
+  bottom: 3.8em;
+  color: #e42b71;
+}
+
+.add-location-loading-icon {
+  width: 1.5em;
+  margin-left: 0.3em;
+  margin-bottom: 0.4em;
 }

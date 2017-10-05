@@ -23,7 +23,6 @@ export class DevicesComponent implements OnInit {
   //
   isLoading: boolean = true;
   isAddLoading: boolean = false;
-  isRemoveLoading: boolean = false;
   filteredItems: any[] = [];
 
   //
@@ -33,10 +32,14 @@ export class DevicesComponent implements OnInit {
 
   filters: any[] = [
     { name: "Rogo Air", value: 1 },
-    { name: "Rogo Salon", value: 2 }
+    { name: "Rogo Sensor", value: 2 },
+    { name: "Rogo Alfa", value: 3 }
   ]
 
   selectedFilter: number = 0;
+
+  // Auto update temp
+  intervals: any[] = [];
 
   constructor(
     private title: Title,
@@ -49,25 +52,38 @@ export class DevicesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.setUpParentId();
     this.title.setTitle("Devices");
     this.refreshDevices();
     this.setUpEditPopup();
   }
 
-  refreshDevices() {
+  ngOnDestroy() {
+    for (let i = 0; i < this.intervals.length; i++) {
+      let interval = this.intervals[i];
+      clearInterval(interval);
+    }
+  }
+
+  setUpParentId() {
     this.route.parent.params.subscribe((params) => {
       this.parentId = params['id'];
-      this.devicesService.getDevices(this.parentId).subscribe((res) => {
-        this.devices = JSON5.parse(res._body).body;
-        this.assignCopy();
-        this.isLoading = false;
-        this.isAddLoading = false;
-      }, (err) => {
-        console.log(err);
-        this.isLoading = false;
-        this.isAddLoading = false;
-      });
     });
+  }
+
+  refreshDevices() {
+    this.devicesService.getDevices(this.parentId).subscribe((res) => {
+      this.devices = JSON5.parse(res._body).body;
+      this.assignCopy();
+      this.isLoading = false;
+      this.isAddLoading = false;
+      this.setUpAutoUpdateTemp();
+    }, (err) => {
+      console.log(err);
+      this.isLoading = false;
+      this.isAddLoading = false;
+    });
+
   }
 
   setUpEditPopup() {
@@ -88,18 +104,6 @@ export class DevicesComponent implements OnInit {
 
   closeEditPopup(event) {
     $(event.target).parent().hide();
-  }
-
-  removeDevice(id, event) {
-    setTimeout(() => {
-      $(".remove-loading-icon[id='" + id + "']").show();
-    })
-    this.devicesService.deleteDevice(this.parentId, id).subscribe((res) => {
-      this.refreshDevices();
-    }, (err) => {
-      console.log(err);
-    })
-    this.closeEditPopup(event);
   }
 
   openAddDeviceModal() {
@@ -131,20 +135,23 @@ export class DevicesComponent implements OnInit {
 
   filterItem() {
     let value = $("#filter-select").val();
-    console.log(value);
     switch (value) {
       case "0":
         this.filteredItems = Object.assign([], this.devices);
         break;
       case "1":
         this.filteredItems = Object.assign([], this.devices).filter(
-          item => item.type.toLowerCase().indexOf("rogoair") > -1
+          item => item.type.toLowerCase().indexOf("air") > -1
         )
         break;
       case "2":
-        console.log("JJKLJLKJKL");
         this.filteredItems = Object.assign([], this.devices).filter(
-          item => item.type.toLowerCase().indexOf("rogosalon") > -1
+          item => item.type.toLowerCase().indexOf("sensor") > -1
+        )
+        break;
+      case "3":
+        this.filteredItems = Object.assign([], this.devices).filter(
+          item => item.type.toLowerCase().indexOf("alfa") > -1
         )
         break;
     }
@@ -168,7 +175,6 @@ export class DevicesComponent implements OnInit {
     $(".device-not-found").hide();
     let deviceId = $("#device-search-input").val();
     this.devicesService.searchDevice(deviceId).catch((error) => {
-      console.log($(".device-not-found"));
       $(".device-not-found").show();
       console.error(error.message || error);
       return Observable.throw(error.message || error);
@@ -178,12 +184,41 @@ export class DevicesComponent implements OnInit {
         $(".device-found").css("display", "flex");
         $(".device-found-add").show();
       } else {
-        console.log("asjdlka");
-        console.log($(".device-not-found"));
         $(".device-not-found").show();
       }
     }, (err) => {
       console.log(err);
+    });
+  }
+
+  /** Auto update temp */
+
+  setUpAutoUpdateTemp() {
+    for (let i = 0; i < this.intervals.length; i++) {
+      let interval = this.intervals[i];
+      clearInterval(interval);
+    }
+    this.intervals = [];
+    for (let i = 0; i < this.devices.length; i++) {
+      let device = this.devices[i];
+      // Run once
+      if (device.lastUpdate) device.lastUpdate.unsubscribe();
+      this.updateTemp(device);
+      // Run every 5 seconds
+      if (device.interval) clearInterval(device.interval);
+      device.interval = setInterval(() => {
+        if (device.lastUpdate) device.lastUpdate.unsubscribe();
+        this.updateTemp(device);
+      }, 5 * 60 * 1000);
+      this.intervals.push(device.interval);
+    }
+  }
+
+  updateTemp(device: any) {
+    device.lastUpdate = this.devicesService.getCurrentDeviceDatalog(device.id).subscribe((res) => {
+      let timeArr = JSON5.parse(res._body).body;
+      if (!timeArr || !timeArr[0]) return;
+      device.currentStats = timeArr[0].temperature;
     });
   }
 }

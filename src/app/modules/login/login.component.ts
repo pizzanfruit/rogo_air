@@ -17,6 +17,7 @@ declare var classie: any;
 
 export class LoginComponent implements OnInit {
 
+  isLoading: boolean = false;
   //
   userName: any;
   password: any;
@@ -41,9 +42,26 @@ export class LoginComponent implements OnInit {
   }
 
   authenticate() {
-    if (this.userName === "rogoair" && this.password === "123456") {
-      this.router.navigate(["/tabs"]);
-    }
+    // if (this.userName === "rogoair" && this.password === "123456") {
+    //   this.router.navigate(["/tabs"]);
+    // }
+    if (!this.userName || !this.password) return;
+    this.isLoading = true;
+    this.disableLogin();
+    this.loginService.login(this.userName, this.password, () => {
+      this.isLoading = false;
+      this.enableLogin();
+    });
+  }
+
+  disableLogin() {
+    $(".login-button").addClass("disabled");
+    $(".login-button").attr("disabled", true);
+  }
+
+  enableLogin() {
+    $(".login-button").removeClass("disabled");
+    $(".login-button").attr("disabled", false);
   }
 
   setUpInput() {
