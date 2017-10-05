@@ -270,7 +270,7 @@
 }
 
 .schedule-wrapper {
-  /* white-space: nowrap; */
+  position: relative;
 }
 
 .add-wrapper {
@@ -425,7 +425,6 @@ chart {
 }
 
 /** Edit popup */
-
 .action-button-icon {
   width: 0.3em;
   margin-left: 3em;
@@ -481,3 +480,169 @@ chart {
 }
 
 /** */
+/* Add schedule modal begin */
+.add-schedule {
+  position: absolute;
+  top: -1.5em;
+  right: 0;
+  cursor: pointer;
+}
+
+.add-schedule-icon {
+  color: #ee3458;
+  font-size: 1.5em;
+  display: inline-block;
+  vertical-align: top;
+  margin-top: -0.27em;
+}
+
+#add-schedule-modal .modal-body {
+  padding: 3em 5em 3em 5em;
+  background-color: #2e3036;
+  color: #bebcbd;
+  width: 50em;
+}
+
+.add-modal-title {
+  position: relative;
+  font-size: 1.4em;
+  margin-bottom: 2em;
+  color: #ffffff;
+}
+
+.add-modal-subtitle {
+  margin-top: 0.5em;
+  font-size: 1em;
+  color: #76787b;
+  font-style: italic;
+}
+
+.add-schedule-cancel {
+  position: absolute;
+  color: #ee3458;
+  top: 0;
+  right: 0;
+  border: 0.1em dotted #000000;
+  font-size: 0.7em;
+  padding: 0.25em 1.5em 0.25em 1.5em;
+  cursor: pointer;
+}
+
+.white-bullet-icon {
+  width: 0.5em;
+  margin-right: 0.4em;
+  margin-bottom: 0.1em;
+}
+
+.time-picker-group {
+  display: flex;
+  align-items: center;
+  margin-top: 2em;
+  margin-bottom: 3em;
+}
+
+.start-time, .end-time {
+  text-align: center;
+  flex: 1;
+}
+
+.time-title {
+  margin-bottom: 1em;
+}
+
+.time-dial {
+  display: inline-flex;
+  width: 4em;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dial-up, .dial-down {
+  width: 1.5em;
+  cursor: pointer;
+}
+
+.dial-content {
+  padding: 0 0.7em 0.1em 0.7em;
+  border-top: 0.12em solid #212329;
+  border-bottom: 0.12em solid #212329;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  font-size: 1.7em;
+  color: #979797;
+}
+
+.dial-colon {
+  display: inline-block;
+  vertical-align: top;
+  font-size: 1.6em;
+  -webkit-transform: scale(1.2,1);
+  transform: scale(1.2,1);
+  margin-top: 1.9em;
+  margin-left: 0.2em;
+  margin-right: 0.2em;
+}
+
+.all-week-switch {
+  text-align: right;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 2em;
+  color: #9a9a9a;
+}
+
+ui-switch {
+  margin-left: 0.6em;
+  font-size: 1.3em;
+}
+
+.weekday-group {
+  display: flex;
+  align-items: center;
+  margin-top: 2.5em;
+  margin-bottom: 2.5em;
+}
+
+.weekday-wrapper {
+  flex: 1;
+  text-align: center;
+}
+
+.weekday {
+  display: inline-block;
+  height: 4em;
+  width: 4em;
+  border-radius: 4em;
+  border: 0.2em dotted #000000;
+  line-height: 3.8em;
+  font-size: 0.8em;
+  margin-left: 0.7em;
+  margin-right: 0.7em;
+  cursor: pointer;
+}
+
+.weekday.active {
+  border: 0.2em solid #1cbbb4;
+  background-color: #1cbbb4;
+  color: #ffffff;
+}
+
+#add-schedule-modal .minus-icon {
+  margin-right: 7em;
+}
+
+#add-schedule-modal .plus-icon {
+  margin-left: 3em;
+}
+
+.set-schedule-button {
+  margin-top: 2em;
+  margin-left: auto;
+  margin-right: 0;
+  background-color: #db5538;
+  width: 15em;
+  color: #ffffff;
+  padding: 0.7em 1.5em 0.7em 1.5em;
+  text-align: center;
+  cursor: pointer;
+}

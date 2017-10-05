@@ -136,6 +136,10 @@
           <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-schedule' | translate}}
         </div>
         <div class="schedule-wrapper">
+          <div class="add-schedule" (click)="openAddScheduleModal()">
+            <div class="add-schedule-icon">+</div>
+            Thêm lịch
+          </div>
           <div class="add-wrapper">
             <img class="add-icon" src="../assets/images/device/add-icon.png">
             <div class="add-text">{{'device-add-schedule' | translate}}</div>
@@ -158,3 +162,87 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="add-schedule-modal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="add-modal-title">
+            ĐẶT LỊCH
+            <div class="add-schedule-cancel" (click)="closeAddScheduleModal()">
+              Cancel
+            </div>
+          </div>
+          <img class="white-bullet-icon" src="../assets/images/location-settings/white-bullet-icon.png"> Đặt lịch giờ
+          <div class="time-picker-group">
+            <div class="start-time">
+              <div class="time-title">START</div>
+              <div class="time-dial">
+                <img class="dial-up" src="../assets/images/location-settings/dial-up.png" (click)="plusStartHour()">
+                <div class="dial-content">{{startHour | number : '2.0-0'}}</div>
+                <img class="dial-down" src="../assets/images/location-settings/dial-down.png" (click)="minusStartHour()">
+              </div>
+              <div class="dial-colon">:</div>
+              <div class="time-dial">
+                <img class="dial-up" src="../assets/images/location-settings/dial-up.png" (click)="plusStartMinute()">
+                <div class="dial-content">{{startMinute | number : '2.0-0'}}</div>
+                <img class="dial-down" src="../assets/images/location-settings/dial-down.png" (click)="minusStartMinute()">
+              </div>
+              <div class="dial-colon">:</div>
+              <div class="time-dial">
+                <img class="dial-up" src="../assets/images/location-settings/dial-up.png" (click)="toggleStartPeriod()">
+                <div class="dial-content">{{startPeriod}}</div>
+                <img class="dial-down" src="../assets/images/location-settings/dial-down.png" (click)="toggleStartPeriod()">
+              </div>
+            </div>
+            <div class="end-time">
+              <div class="time-title">END</div>
+              <div class="time-dial">
+                <img class="dial-up" src="../assets/images/location-settings/dial-up.png" (click)="plusEndHour()">
+                <div class="dial-content">{{endHour | number : '2.0-0'}}</div>
+                <img class="dial-down" src="../assets/images/location-settings/dial-down.png" (click)="minusEndHour()">
+              </div>
+              <div class="dial-colon">:</div>
+              <div class="time-dial">
+                <img class="dial-up" src="../assets/images/location-settings/dial-up.png" (click)="plusEndMinute()">
+                <div class="dial-content">{{endMinute | number : '2.0-0'}}</div>
+                <img class="dial-down" src="../assets/images/location-settings/dial-down.png" (click)="minusEndMinute()">
+              </div>
+              <div class="dial-colon">:</div>
+              <div class="time-dial">
+                <img class="dial-up" src="../assets/images/location-settings/dial-up.png" (click)="toggleEndPeriod()">
+                <div class="dial-content">{{endPeriod}}</div>
+                <img class="dial-down" src="../assets/images/location-settings/dial-down.png" (click)="toggleEndPeriod()">
+              </div>
+            </div>
+          </div>
+          <img class="white-bullet-icon" src="../assets/images/location-settings/white-bullet-icon.png"> Đặt lịch trong tuần
+          <div class="all-week-switch">
+            Tất cả các ngày trong tuần
+            <ui-switch size="small" [(ngModel)]="allWeekSwitch"></ui-switch>
+          </div>
+          <div class="weekday-group">
+            <div class="weekday-wrapper">
+              <div class="weekday">MON</div>
+              <div class="weekday">TUE</div>
+              <div class="weekday">WED</div>
+              <div class="weekday active">THU</div>
+              <div class="weekday">FRI</div>
+              <div class="weekday">SAT</div>
+              <div class="weekday">SUN</div>
+            </div>
+          </div>
+          <img class="white-bullet-icon" src="../assets/images/location-settings/white-bullet-icon.png"> Setpoint
+          <div class="no-select" style="margin-top: 1em; margin-left: 2em">
+            <div class="minus-icon" (click)="decreaseScheduleTemp()">-</div>
+            <div class="temp2">{{scheduleTemp | number:'2.1-1'}}</div>
+            <div class="degree">°</div>
+            <div class="plus-icon" (click)="increaseScheduleTemp()">+</div>
+          </div>
+          <div class="set-schedule-button" (click)="addSchedule()">
+            Đặt lịch
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
