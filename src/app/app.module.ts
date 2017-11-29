@@ -16,6 +16,7 @@ import { DeviceComponent } from './modules/device/device.component'
 import { SettingsComponent } from './modules/settings/settings.component'
 
 import { LoginService } from './services/login.service'
+import { SignUpService } from './services/sign-up.service'
 import { LocationsService } from './services/locations.service'
 import { SharedAccessService } from './services/shared-access.service'
 import { DeviceService } from './services/device.service'
@@ -35,6 +36,7 @@ import { CookieModule } from 'ngx-cookie';
 import { ChartModule } from 'angular2-highcharts';
 import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
 import * as highcharts from 'highcharts';
+import { SignUpComponent } from './modules/sign-up/sign-up.component';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -49,6 +51,7 @@ export function highchartsFactory() {
   declarations: [
     AppComponent,
     LoginComponent,
+    SignUpComponent,
     TabsComponent,
     LocationsComponent,
     SharedAccessComponent,
@@ -82,7 +85,7 @@ export function highchartsFactory() {
     ChartModule,
     CookieModule.forRoot()
   ],
-  providers: [AuthGuard, AuthService, LoginService, LocationsService, DeviceService, DevicesService, SharedAccessService, {
+  providers: [AuthGuard, AuthService, LoginService, SignUpService, LocationsService, DeviceService, DevicesService, SharedAccessService, {
     provide: HighchartsStatic,
     useFactory: highchartsFactory
   }],

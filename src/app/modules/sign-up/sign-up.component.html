@@ -1,0 +1,61 @@
+<div *ngIf="isLoading" class="loader"></div>
+<div class="sign-up-wrap" (keydown)="keyDownFunction($event)">
+  <div class="sign-up-title" [ngSwitch]="stepCode">
+    <span *ngSwitchCase="0">{{ 'sign-up-title' | translate }}</span>
+    <span *ngSwitchCase="1">{{ 'sign-up-confirm-title' | translate }}</span>
+    <span *ngSwitchCase="2"></span>
+  </div>
+  <div *ngIf="stepCode == 0" class="sign-up-group">
+    <div class="left-side">
+      <div class="input-group">
+        <input id="username" class="sign-up-input" type="text" spellcheck="false" [(ngModel)]="username" required/>
+        <span class="floating-label">{{ 'sign-up-username' | translate }}</span>
+        <span class="underline"></span>
+        <span class="text-error"></span>
+      </div>
+      <div class="input-group">
+        <input id="email" class="sign-up-input" type="email" spellcheck="false" [(ngModel)]="email" required/>
+        <span class="floating-label">{{ 'sign-up-email' | translate }}</span>
+        <span class="underline"></span>
+        <span class="text-error"></span>
+      </div>
+      <div class="input-group">
+        <input id="password" class="sign-up-input" type="password" spellcheck="false" [(ngModel)]="password" required/>
+        <span class="floating-label">{{ 'sign-up-password' | translate }}</span>
+        <span class="underline"></span>
+        <span class="text-error"></span>
+      </div>
+    </div>
+    <div class="right-side">
+      <div class="input-group">
+        <input id="firstName" class="sign-up-input" type="text" spellcheck="false" [(ngModel)]="firstName" required/>
+        <span class="floating-label">{{ 'sign-up-first-name' | translate }}</span>
+        <span class="underline"></span>
+        <span class="text-error"></span>
+      </div>
+      <div class="input-group">
+        <input id="lastName" class="sign-up-input" type="text" spellcheck="false" [(ngModel)]="lastName" required/>
+        <span class="floating-label">{{ 'sign-up-last-name' | translate }}</span>
+        <span class="underline"></span>
+        <span class="text-error"></span>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="stepCode == 1" class="confirm-group">
+    <div class="input-group">
+      <input id="code" class="sign-up-input" type="text" spellcheck="false" [(ngModel)]="code" required/>
+      <span class="floating-label">{{ 'sign-up-code' | translate }}</span>
+      <span class="underline"></span>
+      <span class="text-error"></span>
+    </div>
+  </div>
+  <div *ngIf="stepCode == 2" class="result-group">
+    <img class="confirm-success-icon" src="../assets/images/sign-up/confirm-success-icon.png">
+    <div class="result-text">{{ 'sign-up-success' | translate }}</div>
+  </div>
+  <button class="sign-up-button" type="submit" (click)="handleSubmitEvent()" [ngSwitch]="stepCode">
+    <span *ngSwitchCase="0">{{ 'sign-up-button' | translate }}</span>
+    <span *ngSwitchCase="1">{{ 'sign-up-confirm-button' | translate }}</span>
+    <span *ngSwitchCase="2">{{ 'sign-up-login-button' | translate }}</span>
+  </button>
+</div>

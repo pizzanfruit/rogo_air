@@ -15,11 +15,6 @@ export class LoginService {
     private authService: AuthService
   ) { }
 
-  // Do something
-  doSomething(data): Observable<any> {
-    return this._http.get(data).map(this.extractData).catch(this.handleError);
-  }
-
   login(username: string, password: string, callback?: any) {
     this.authService.authenticate(username, password, callback);
   }

@@ -508,12 +508,7 @@ chart {
   background-color: #ffffff;
 }
 
-.remove-button {
-  padding: 1em 6em 1em 6em;
-  cursor: pointer;
-}
-
-.edit-button:hover, .remove-button:hover {
+.edit-button:hover {
   color: #f2727e;
 }
 

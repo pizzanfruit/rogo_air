@@ -1,5 +1,19 @@
 {
+	"common-sign-up": "ユーザー登録",
     "common-sign-out": "ログアウト",
+			
+	"sign-up-title": "登録",
+	"sign-up-confirm-title": "確認コード",
+	"sign-up-username": "ユーザー名",
+	"sign-up-email": "Eメール",
+	"sign-up-password": "パスワード",
+	"sign-up-first-name": "姓",
+	"sign-up-last-name": "名",
+	"sign-up-success": "登録成功",
+	"sign-up-button": "ユーザー登録",
+	"sign-up-confirm-button": "確認",
+	"sign-up-login-button": "ログイン",
+	"sign-up-code": "Eメールから取得した確認コードを入力してください",
 
     "login-username": "ユーザー名",
     "login-password": "パスワード",
@@ -15,6 +29,7 @@
     "locations-location": "店舗",
     "locations-add-location": "店舗追加",
     "locations-new-location": "新規店舗",
+	"locations-new-location-button": "追加",
     "locations-location-name": "店舗名",
     "locations-location-name-hint": "店舗名をご入力ください",
     "locations-latitude": "緯度",

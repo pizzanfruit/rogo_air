@@ -9,8 +9,9 @@
     <img class="logo-icon" src="../assets/images/locations/logo-icon.png">
     <div class="profile">
       <img class="avatar-icon" src="../assets/images/locations/avatar-icon.png">
-      <span class="hello-text" (click)="toggleEditPopup($event)">{{'locations-hello' | translate}}Lucas</span>
+      <span class="hello-text" (click)="toggleProfilePopup()">{{'locations-hello' | translate}}Lucas</span>
       <div class="profile-popup">
+        <div class="edit-button" (click)="signup()">{{'common-sign-up' | translate}}</div>
         <div class="edit-button" (click)="logout()">{{'common-sign-out' | translate}}</div>
       </div>
     </div>

@@ -1,5 +1,19 @@
 {
-    "common-sign-out": "Sign out",
+    "common-sign-up": "Sign up",
+	"common-sign-out": "Sign out",
+		
+	"sign-up-title": "Sign up",
+	"sign-up-confirm-title": "Confirmation code",
+	"sign-up-username": "Username",
+	"sign-up-email": "Email",
+	"sign-up-password": "Password",
+	"sign-up-first-name": "Last name",
+	"sign-up-last-name": "First name",
+	"sign-up-success": "Successfully registered",
+	"sign-up-button": "Sign up",
+	"sign-up-confirm-button": "Confirm",
+	"sign-up-login-button": "Log in",
+	"sign-up-code": "Enter confirmation code from your email",
 
     "login-username": "Username",
     "login-password": "Password",
@@ -15,6 +29,7 @@
     "locations-location": "LOCATION",
     "locations-add-location": "Add new location",
     "locations-new-location": "NEW LOCATION",
+	"locations-new-location-button": "Add location",
     "locations-location-name": "Location's name",
     "locations-location-name-hint": "Please enter a new name",
     "locations-latitude": "Latitude",

@@ -195,7 +195,6 @@ export class DeviceComponent implements OnInit {
       this.autoUpdateCharts();
       this.autoUpdateCurrentTemp();
     }, 5 * 60 * 1000);
-    this.ranOnce = true;
   }
 
   setUpChildAndParentId() {
@@ -215,10 +214,6 @@ export class DeviceComponent implements OnInit {
     this.setUpEditPopup();
     this.isLoading = false;
   }
-
-  ngAfterViewInit() {
-  }
-
 
   ngOnDestroy() {
     clearInterval(this.interval);
@@ -434,8 +429,10 @@ export class DeviceComponent implements OnInit {
   }
 
   /** Edit popup */
-  setUpEditPopup() {
+  setUpEditPopup() {    
     if (this.ranOnce) return;
+    this.ranOnce = true;
+    $(document).unbind();
     $(document).mouseup(function (e) {
       var container = $(".edit-popup, .action-button-icon");
       // if the target of the click isn't the container nor a descendant of the container

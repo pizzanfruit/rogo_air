@@ -1,5 +1,19 @@
 {
-    "common-sign-out": "Đăng xuất",
+    "common-sign-up": "Thiết lập tài khoản",
+	"common-sign-out": "Thoát",
+	
+	"sign-up-title": "Đăng ký",
+	"sign-up-confirm-title": "Xác nhận",
+	"sign-up-username": "Tên tài khoản",
+	"sign-up-email": "Email",
+	"sign-up-password": "Mật khẩu",
+	"sign-up-first-name": "Tên",
+	"sign-up-last-name": "Họ",
+	"sign-up-success": "Đăng ký thành công",
+	"sign-up-button": "Đăng ký",
+	"sign-up-confirm-button": "Xác nhận",
+	"sign-up-login-button": "Nhập mã xác nhận trong mail của bạn",
+	
     
     "login-username": "Tài khoản",
     "login-password": "Mật khẩu",
@@ -15,6 +29,7 @@
     "locations-location": "ĐỊA ĐIẺM",
     "locations-add-location": "Thêm địa điểm",
     "locations-new-location": "ĐỊA ĐIỂM MỚI",
+	"locations-new-location-button": "Thêm mới",
     "locations-location-name": "Tên địa điểm",
     "locations-location-name-hint": "Hãy nhập tên địa điểm",
     "locations-latitude": "Vĩ tuyến",

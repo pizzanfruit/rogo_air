@@ -1,19 +1,24 @@
-import { Headers, RequestOptions } from '@angular/http';
-import { Http, Response } from '@angular/http';
-import { Injectable } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Headers, RequestOptions } from "@angular/http";
+import { Http, Response } from "@angular/http";
+import { Injectable } from "@angular/core";
+import { Router, ActivatedRoute } from "@angular/router";
 
-import { CookieService } from 'ngx-cookie';
-import { AuthenticationDetails, CognitoUser, CognitoUserAttribute, CognitoUserPool } from 'amazon-cognito-identity-js';
+import { CookieService } from "ngx-cookie";
+import {
+  AuthenticationDetails,
+  CognitoUser,
+  CognitoUserAttribute,
+  CognitoUserPool
+} from "amazon-cognito-identity-js";
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/delay';
+import { Observable } from "rxjs/Observable";
+import "rxjs/add/observable/of";
+import "rxjs/add/operator/do";
+import "rxjs/add/operator/delay";
 
 const PoolData = {
-  UserPoolId: 'us-east-1_LYlCaEWjH',
-  ClientId: '75cp5nc8b9rnvm2fija1feu47o'
+  UserPoolId: "us-east-1_LYlCaEWjH",
+  ClientId: "75cp5nc8b9rnvm2fija1feu47o"
 };
 
 const userPool = new CognitoUserPool(PoolData);
@@ -24,7 +29,7 @@ export class AuthService {
   idToken: string;
   accessToken: string;
   // store the URL so we can redirect after logging in
-  redirectUrl: string = "";;
+  redirectUrl: string = "";
 
   //use @angular HTTP
   constructor(
@@ -34,6 +39,42 @@ export class AuthService {
   ) {
     this.idToken = localStorage.getItem("id_token");
     this.accessToken = localStorage.getItem("access_token");
+  }
+
+  register(username: string, password: string, email: string, callback?: any) {
+    let dataEmail = {
+      Name: "email",
+      Value: email
+    };
+    let attributeEmail = new CognitoUserAttribute(dataEmail);
+    let attributeList = [].concat(attributeEmail);
+    userPool.signUp(username, password, attributeList, null, (err, result) => {
+      if (err) {
+        console.error(err);
+        if (callback) callback(null);
+        return;
+      }
+      let cognitoUser = result.user;
+      console.log("user name is " + cognitoUser.getUsername());
+      if (callback) callback(cognitoUser);
+    });
+  }
+
+  confirm(username: string, code: string, callback?: any) {
+    let userData = {
+      Username: username,
+      Pool: userPool
+    };
+    let cognitoUser = new CognitoUser(userData);
+    cognitoUser.confirmRegistration(code, true, (err, result) => {
+      if (err) {
+        console.error(err);
+        if (callback) callback(null);
+        return;
+      }
+      console.log("call result: " + result);
+      if (callback) callback(result);
+    });
   }
 
   authenticate(username: string, password: string, callback?: any) {
@@ -53,7 +94,7 @@ export class AuthService {
     const cognitoUser = new CognitoUser(userData);
 
     cognitoUser.authenticateUser(authDetails, {
-      onSuccess: (result) => {
+      onSuccess: result => {
         this.cookieService.put("remember", "true", {
           expires: ""
         });
@@ -68,14 +109,17 @@ export class AuthService {
         this.router.navigate([this.redirectUrl]);
         if (callback) callback();
       },
-      onFailure: (err) => {
-        console.log('There was an error during login, please try again -> ', err)
+      onFailure: err => {
+        console.log(
+          "There was an error during login, please try again -> ",
+          err
+        );
         if (callback) callback();
       },
       newPasswordRequired: (userAtributes, requiredAttributes) => {
         console.log("New password required");
       }
-    })
+    });
   }
 
   logout() {
@@ -86,5 +130,4 @@ export class AuthService {
     localStorage.removeItem("access_token");
     this.router.navigate(["login"]);
   }
-
 }

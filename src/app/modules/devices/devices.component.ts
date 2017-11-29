@@ -55,7 +55,6 @@ export class DevicesComponent implements OnInit {
     this.setUpParentId();
     this.title.setTitle("Devices");
     this.refreshDevices();
-    this.setUpEditPopup();
   }
 
   ngOnDestroy() {
@@ -84,26 +83,6 @@ export class DevicesComponent implements OnInit {
       this.isAddLoading = false;
     });
 
-  }
-
-  setUpEditPopup() {
-    $(document).mouseup(function (e) {
-      var container = $(".edit-popup");
-      // if the target of the click isn't the container nor a descendant of the container
-      if (!container.is(e.target) && container.has(e.target).length === 0) {
-        container.hide();
-      }
-    });
-  }
-
-  openEditPopup(event) {
-    $(".edit-popup").hide();
-    $(event.target).next().show();
-    $(event.target).next().focus();
-  }
-
-  closeEditPopup(event) {
-    $(event.target).parent().hide();
   }
 
   openAddDeviceModal() {

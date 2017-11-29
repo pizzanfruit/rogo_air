@@ -3,38 +3,52 @@
 @import url(https://fonts.googleapis.com/css?family=Saira+Semi+Condensed:200,500,700,800);
 
 @font-face {
-	font-weight: normal;
-	font-style: normal;
-	font-family: 'codropsicons';
-	src:url('../fonts/codropsicons/codropsicons.eot');
-	src:url('../fonts/codropsicons/codropsicons.eot?#iefix') format('embedded-opentype'),
-		url('../fonts/codropsicons/codropsicons.woff') format('woff'),
-		url('../fonts/codropsicons/codropsicons.ttf') format('truetype'),
-		url('../fonts/codropsicons/codropsicons.svg#codropsicons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-family: "codropsicons";
+  src: url("../fonts/codropsicons/codropsicons.eot");
+  src: url("../fonts/codropsicons/codropsicons.eot?#iefix")
+      format("embedded-opentype"),
+    url("../fonts/codropsicons/codropsicons.woff") format("woff"),
+    url("../fonts/codropsicons/codropsicons.ttf") format("truetype"),
+    url("../fonts/codropsicons/codropsicons.svg#codropsicons") format("svg");
 }
 
 @font-face {
   font-family: UTMAlterGothic;
-  src: local("UTM Alter Gothic"),
-       local("UTMAlter-Gothic"),
-       url("../fonts/UTMAlterGothic.ttf");
+  src: local("UTM Alter Gothic"), local("UTMAlter-Gothic"),
+    url("../fonts/UTMAlterGothic.ttf");
 }
 
-*, *:after, *:before { -webkit-box-sizing: border-box; box-sizing: border-box; }
-.clearfix:before, .clearfix:after { content: ''; display: table; }
-.clearfix:after { clear: both; }
+*,
+*:after,
+*:before {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.clearfix:before,
+.clearfix:after {
+  content: "";
+  display: table;
+}
+.clearfix:after {
+  clear: both;
+}
 
-html { font-size: 62.5%; overflow: hidden }
+html {
+  font-size: 62.5%;
+  overflow: hidden;
+}
 
 body {
-	color: #404d5b;
-	font-weight: 500;
-	font-size: 1.05em;
-	font-family: 'Raleway', Arial, sans-serif;
+  color: #404d5b;
+  font-weight: 500;
+  font-size: 1.05em;
+  font-family: "Raleway", Arial, sans-serif;
 }
 
 .content {
-	position: relative;
+  position: relative;
 }
 
 .mat-calendar-body-selected {
@@ -42,41 +56,40 @@ body {
 }
 
 .highcharts-credits {
-	display: none;
+  display: none;
 }
 
 .switch-small {
   width: 3.1em !important;
-	height: 1.3em !important;
-	border-radius: 0 !important;
+  height: 1.3em !important;
+  border-radius: 0 !important;
 }
 
 .switch-small small {
-	width: 1.5em !important;
-	height: 1.55em !important;
-	border-radius: 0 !important;
+  width: 1.5em !important;
+  height: 1.55em !important;
+  border-radius: 0 !important;
 }
 
 .switch-small.checked small {
-	left: 2.2em !important;
+  left: 2.2em !important;
 }
 
 .all-week-switch .switch {
-	border-color: #1b1e25 !important;
-	vertical-align: bottom;
-	background-color: #1b1e25 !important;
-	height: 1em !important;
+  border-color: #1b1e25 !important;
+  vertical-align: bottom;
+  background-color: #1b1e25 !important;
+  height: 1em !important;
 }
 
 .all-week-switch .switch small {
-	height: 1.3em !important;
-	margin-top: -0.1em;
+  height: 1.3em !important;
+  margin-top: -0.1em;
 }
 
-
 .all-week-switch .switch.checked {
-	border-color: #4CAF50 !important;
-	background-color: #4CAF50 !important;
+  border-color: #4caf50 !important;
+  background-color: #4caf50 !important;
 }
 
 .loading {
@@ -94,3 +107,46 @@ body {
   transition: opacity 0.8s;
 }
 
+/* Loader */
+
+.loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  overflow: hidden;
+  background-color: #2e343c;
+}
+.loader:before {
+  display: block;
+  position: absolute;
+  content: "";
+  left: -200px;
+  width: 200px;
+  height: 8px;
+  background-color: #49c6e3;
+  animation: loading 2s linear infinite;
+}
+
+@keyframes loading {
+  from {
+    left: -200px;
+    width: 30%;
+  }
+  50% {
+    width: 30%;
+  }
+  70% {
+    width: 70%;
+  }
+  80% {
+    left: 50%;
+  }
+  95% {
+    left: 120%;
+  }
+  to {
+    left: 100%;
+  }
+}
