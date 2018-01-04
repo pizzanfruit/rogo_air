@@ -65,9 +65,10 @@ export class DevicesService {
     return this._http.get("https://tyu7xxj099.execute-api.us-east-1.amazonaws.com/release/device/" + id, options);
   }
 
-  registerDeviceToLocation(locationId, userId): Observable<any> {
+  registerDeviceToLocation(locationId, userId, label): Observable<any> {
     let data = {
-      "userid": "9dc9496c7bf111e7bb31be2e44b06b34"
+      "userid": "9dc9496c7bf111e7bb31be2e44b06b34",
+      "label": label
     }
     let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': this.authService.idToken });
     let options = new RequestOptions({ headers });

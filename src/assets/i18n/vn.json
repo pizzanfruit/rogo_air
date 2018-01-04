@@ -78,6 +78,7 @@
 
     "device-history-tab": "Lịch sử",
     "device-settings-tab": "Thiết lập",
+    "device-control-tab": "Điều khiển",
     "device-temp": "Nhiệt độ",
     "device-humidity": "Độ ẩm",
     "device-settings-explain-1": "Chế độ chạy",
@@ -94,6 +95,15 @@
     "device-target": "Mục tiêu",
     "device-no-data": "Không có dữ liệu",
     "device-override-subtitle": "Cho phép thiết bị chạy độc lập với các thiết lập của location",
+    "device-simulate-subtitle": "Cho phép thiết bị này sử dụng các cảm biến nhiệt độ độ ẩm và thiết bị trung tâm để điều khiển điều hòa trung tâm",
+    "device-hub-none": "Chưa chọn",
+	"device-select-sensor": "CHỌN THIẾT BỊ CẢM BIẾN",
+	"device-select-sensor-subtitle": "Chọn các cảm biến để làm tham chiếu cho điều khiển thông minh",
+	"device-select-hub": "CHỌN THIẾT BỊ ĐIỀU KHIỂN TRUNG TÂM",
+	"device-select-hub-subtitle": "Chọn thiết bị trung tâm để làm cầu nối với các cảm biến nhiệt độ",
+	"device-rogo-air-simulation": "GIẢ LẬP ROGOAIR",
+	"device-no-alfa-settings-text": "Bạn chưa có thiết lập nào cho thiết bị này",
+	"device-alfa-settings": "Thiết lập",
 
     "schedule-modal-add-button": "Thêm lịch",
     "schedule-modal-title": "Đặt lịch",

@@ -33,7 +33,8 @@ export class DevicesComponent implements OnInit {
   filters: any[] = [
     { name: "Rogo Air", value: 1 },
     { name: "Rogo Sensor", value: 2 },
-    { name: "Rogo Alfa", value: 3 }
+    { name: "Rogo Hub", value: 3 },
+    { name: "Rogo Alfa", value: 4 }
   ]
 
   selectedFilter: number = 0;
@@ -130,6 +131,11 @@ export class DevicesComponent implements OnInit {
         break;
       case "3":
         this.filteredItems = Object.assign([], this.devices).filter(
+          item => item.type.toLowerCase().indexOf("hub") > -1
+        )
+        break;
+      case "4":
+        this.filteredItems = Object.assign([], this.devices).filter(
           item => item.type.toLowerCase().indexOf("alfa") > -1
         )
         break;
@@ -139,7 +145,8 @@ export class DevicesComponent implements OnInit {
   addDevice() {
     this.isAddLoading = true;
     let deviceId = $("#device-search-input").val();
-    this.devicesService.registerDeviceToLocation(this.parentId, deviceId).subscribe((res) => {
+    let deviceLabel = $("#device-label-input").val();
+    this.devicesService.registerDeviceToLocation(this.parentId, deviceId, deviceLabel).subscribe((res) => {
       this.refreshDevices();
       $("#add-device-modal").modal("hide");
     }, (err) => {

@@ -78,6 +78,7 @@
 
     "device-history-tab": "History",
     "device-settings-tab": "Settings",
+	"device-control-tab": "Control",
     "device-temp": "Temperature",
     "device-humidity": "Humidity",
     "device-settings-explain-1": "Operation modes",
@@ -94,6 +95,15 @@
     "device-target": "Target",
     "device-no-data": "No data",
     "device-override-subtitle": "Allow device to have independent settings from others in the same location",
+	"device-simulate-subtitle": "Cho phép thiết bị này sử dụng các cảm biến nhiệt độ độ ẩm và thiết bị trung tâm để điều khiển điều hòa trung tâm",
+    "device-hub-none": "None selected",
+	"device-select-sensor": "SELECT SENSOR DEVICES",
+	"device-select-sensor-subtitle": "Chọn các cảm biến để làm tham chiếu cho điều khiển thông minh",
+	"device-select-hub": "SELECT CENTRAL CONTROL DEVICE",
+	"device-select-hub-subtitle": "Chọn thiết bị trung tâm để làm cầu nối với các cảm biến nhiệt độ",
+	"device-rogo-air-simulation": "ROGOAIR EMULATION",
+	"device-no-alfa-settings-text": "You haven't setup the device yet",
+	"device-alfa-settings": "Settings",
 
     "schedule-modal-add-button": "Add schedule",
     "schedule-modal-title": "Set schedule",

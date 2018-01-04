@@ -6,10 +6,10 @@
     <div class="header">
       <span class="weak-text">{{'devices-filter' | translate}}:</span>
       <div class="filter-select">
-        <select id="filter-select" name="city" [(ngModel)]="selectedFilter" (change)="filterItem()">
-                  <option [value]="0">{{'devices-filter-all' | translate}}</option>
-                  <option *ngFor="let filter of filters" [value]="filter.value">{{filter.name}}</option>
-                </select>
+        <select id="filter-select" name="filter" [(ngModel)]="selectedFilter" (change)="filterItem()">
+          <option [value]="0">{{'devices-filter-all' | translate}}</option>
+          <option *ngFor="let filter of filters" [value]="filter.value">{{filter.name}}</option>
+        </select>
       </div>
       <div class="add-device-button" (click)="openAddDeviceModal()">
         {{'devices-add-device' | translate}}
@@ -33,6 +33,7 @@
         <div class="rogo-type-text" [ngSwitch]="device.type">
           <span *ngSwitchCase="'Air'">AIR</span>
           <span *ngSwitchCase="'Sensor'">SENSOR</span>
+          <span *ngSwitchCase="'Hub'">HUB</span>
           <span *ngSwitchCase="'Alfa'">ALFA</span>
         </div>
       </div>
@@ -67,7 +68,7 @@
           <div class="rogo-air-text">ROGO AIR</div>
         </div>
         <div class="device-found-add">
-          <input type="text" class="search-input" style="width: 17em" placeholder="{{'devices-device-label' | translate}}">
+          <input id="device-label-input" type="text" class="search-input" style="width: 17em" placeholder="{{'devices-device-label' | translate}}">
           <span class="underline" style="width: 18em"></span>
           <button type="button" class="add-label-button" (click)="addDevice()">{{'devices-add' | translate}}</button>
         </div>

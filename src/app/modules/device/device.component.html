@@ -42,8 +42,8 @@
       </div>
     </div>
     <div *ngIf="device.type != 'Sensor'" class="tabs">
-      <div class="history-tab active" (click)="switchToHistory()">
-        {{'device-history-tab' | translate}}
+      <div class="first-tab active" (click)="switchToFirst()">
+        {{ (device.type == 'Alfa' ? 'device-control-tab' : 'device-history-tab') | translate}}
       </div>
       <div class="settings-tab" (click)="switchToSettings()">
         {{'device-settings-tab' | translate}}
@@ -56,125 +56,247 @@
     </div>
   </div>
   <div class="content">
-    <div class="history-content">
-      <div class="current-month-year">{{currentMonthYear}}</div>
-      <div class="timeline">
-        <ul class="list-inline" style="list-style: none; padding: 0">
-          <li class="before-today">{{currentDateMinus3}}</li>
-          <li class="before-today">{{currentDateMinus2}}</li>
-          <li class="before-today">{{currentDateMinus1}}</li>
-          <li class="today">{{currentDate.getDate()}}</li>
-          <li class="after-today">{{currentDatePlus1}}</li>
-          <li class="after-today">{{currentDatePlus2}}</li>
-          <li class="after-today">{{currentDatePlus3}}</li>
-        </ul>
-        <img class="calendar-icon" src="../assets/images/device/calendar-icon.png" (click)="openDatepicker()">
-        <input class="datepicker" style="opacity: 0" [mdDatepicker]="myDatepicker" [(ngModel)]="currentDate" (ngModelChange)="updateMonthYear()">
-        <md-datepicker #myDatepicker></md-datepicker>
+    <div class="first-content">
+      <div *ngIf="device.type == 'Alfa' && device.simulate" class="control-content">
+        <div>
+          <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> AIR CONDITIONER TARGET
+        </div>
+        <div *ngIf="device" class="air-conditioners">
+          <div *ngFor="let ac of device.ac" class="ac">{{ac}}</div>
+        </div>
+        <div>
+          <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> OVERRIDE LOCATION SETTINGS
+          <div class="bullet-content">
+            <div class="bullet-subtitle">{{'device-override-subtitle' | translate}}</div>
+            <ui-switch *ngIf="device" size="small" [(ngModel)]="device.forcecontrol" color="#448ccb" (change)="setForcecontrol($event)"></ui-switch>
+          </div>
+        </div>
+        <div class="override-settings">
+          <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-settings-explain-1' | translate}}
+          <ul class="bullet-text">
+            <li>{{'device-settings-explain-2' | translate}}</li>
+            <li>{{'device-settings-explain-3' | translate}}</li>
+            <li>{{'device-settings-explain-4' | translate}}</li>
+            <li>{{'device-settings-explain-5' | translate}}</li>
+          </ul>
+          <div class="switch-wrapper">
+            <img class="switch-bg-icon" src="../assets/images/device/switch-icon.png">
+            <img class="switch-icon a" src="../assets/images/device/switch-active-icon.png">
+            <img class="switch-icon b" src="../assets/images/device/switch-active-icon.png">
+            <img class="switch-icon c" src="../assets/images/device/switch-active-icon.png">
+            <img class="switch-icon d" src="../assets/images/device/switch-active-icon.png">
+            <span class="option-1">{{'device-no-operation' | translate}}</span>
+            <span class="option-2">{{'device-set-point' | translate}}</span>
+            <span class="option-3">{{'device-schedule' | translate}}</span>
+            <span class="option-4">{{'device-power-off' | translate}}</span>
+          </div>
+          <div style="margin-top: 3em; border-top: 0.08em solid #d9dde7; padding-top: 1em">
+            <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-set-point' | translate}}
+            <img *ngIf="isSetpointLoading" class="setpoint-loading-icon" src="../assets/images/device/loading-icon.svg">
+          </div>
+          <div class="no-select" style="margin-top: 2em;">
+            <div class="minus-icon" (click)="decreaseTemp()">-</div>
+            <div class="temp2">{{temp | number:'2.1-1'}}</div>
+            <div class="degree">°</div>
+            <div class="plus-icon" (click)="increaseTemp()">+</div>
+          </div>
+          <div [class.opaque]="device.mode != 'SCHEDULE'" style="margin-top: 3em; border-top: 0.08em solid #d9dde7; padding-top: 1em">
+            <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-schedule' | translate}}
+          </div>
+          <div [class.opaque]="device.mode != 'SCHEDULE'" class="schedule-wrapper">
+            <div class="day-header-wrapper">
+              <div class="day-header" *ngFor="let day of daysOfWeek" [class.red]="day == 'SUN'">
+                {{day}}
+              </div>
+            </div>
+            <table class="schedule-table" cellpadding="0">
+              <tr>
+                <th *ngFor="let hour of hoursOfDay">
+                  <div class="hour-header">{{hour}}</div>
+                </th>
+              </tr>
+              <tr *ngFor="let day of daysOfWeek">
+                <td *ngFor="let hour of hoursOfDay">
+                  <div class="hour-cell">
+                    <div class="hour-content-group">
+                      <div class="target"></div>
+                      <div class="time"></div>
+                    </div>
+                  </div>
+                </td>
+                <tr>
+            </table>
+            <div class="add-schedule" (click)="openAddScheduleModal()">
+              <div class="add-schedule-icon">+</div>
+              {{'schedule-modal-add-button' | translate}}
+            </div>
+          </div>
+        </div>
+
       </div>
-      <div class="temp-chart">
-        <div class="chart-loading">
-          <img class="chart-loading-icon" src="../assets/images/device/loading-icon.svg">
-        </div>
-        <div class="chart-empty">
-          <div>{{'device-no-data' | translate}}</div>
-        </div>
-        <div style="margin-bottom: 1em;">
-          <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-temp' | translate}}
-        </div>
-        <chart [options]="tempOptions" (load)="saveTempInstance($event.context)"></chart>
-        <div class="current-temp">
-          <img class="temp-icon" src="../assets/images/device/temp-icon.png"> {{ currentTemp | number : '2.1-1' }} °
-        </div>
+      <div *ngIf="device.type == 'Alfa' && !device.simulate" class="alfa-center">
+        <div class="alfa-no-settings-text">{{'device-no-alfa-settings-text' | translate}}</div>
+        <div class="alfa-create-settings-button" type="button" (click)="switchToSettings()">{{'device-alfa-settings' | translate}}</div>
       </div>
-      <div class="humidity-chart">
-        <div class="chart-loading">
-          <img class="chart-loading-icon" src="../assets/images/device/loading-icon.svg">
+      <div *ngIf="device.type != 'Alfa'" class="history-content">
+        <div class="current-month-year">{{currentMonthYear}}</div>
+        <div class="timeline">
+          <ul class="list-inline" style="list-style: none; padding: 0">
+            <li class="before-today">{{currentDateMinus3}}</li>
+            <li class="before-today">{{currentDateMinus2}}</li>
+            <li class="before-today">{{currentDateMinus1}}</li>
+            <li class="today">{{currentDate.getDate()}}</li>
+            <li class="after-today">{{currentDatePlus1}}</li>
+            <li class="after-today">{{currentDatePlus2}}</li>
+            <li class="after-today">{{currentDatePlus3}}</li>
+          </ul>
+          <img class="calendar-icon" src="../assets/images/device/calendar-icon.png" (click)="openDatepicker()">
+          <input class="datepicker" style="opacity: 0" [mdDatepicker]="myDatepicker" [(ngModel)]="currentDate" (ngModelChange)="updateMonthYear()">
+          <md-datepicker #myDatepicker></md-datepicker>
         </div>
-        <div class="chart-empty">
-          <div>{{'device-no-data' | translate}}</div>
+        <div class="temp-chart">
+          <div class="chart-loading">
+            <img class="chart-loading-icon" src="../assets/images/device/loading-icon.svg">
+          </div>
+          <div class="chart-empty">
+            <div>{{'device-no-data' | translate}}</div>
+          </div>
+          <div style="margin-bottom: 1em;">
+            <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-temp' | translate}}
+          </div>
+          <chart [options]="tempOptions" (load)="saveTempInstance($event.context)"></chart>
+          <div class="current-temp">
+            <img class="temp-icon" src="../assets/images/device/temp-icon.png"> {{ currentTemp | number : '2.1-1' }} °
+          </div>
         </div>
-        <div style="margin-bottom: 1em;">
-          <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-humidity' | translate}}
-        </div>
-        <chart [options]="humidityOptions" (load)="saveHumidityInstance($event.context)"></chart>
-        <div class="current-humidity">
-          <img class="humidity-icon" src="../assets/images/device/humidity-icon.png"> {{ currentHumidity | number : '2.1-1' }} %
+        <div class="humidity-chart">
+          <div class="chart-loading">
+            <img class="chart-loading-icon" src="../assets/images/device/loading-icon.svg">
+          </div>
+          <div class="chart-empty">
+            <div>{{'device-no-data' | translate}}</div>
+          </div>
+          <div style="margin-bottom: 1em;">
+            <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-humidity' | translate}}
+          </div>
+          <chart [options]="humidityOptions" (load)="saveHumidityInstance($event.context)"></chart>
+          <div class="current-humidity">
+            <img class="humidity-icon" src="../assets/images/device/humidity-icon.png"> {{ currentHumidity | number : '2.1-1' }} %
+          </div>
         </div>
       </div>
     </div>
     <div class="settings-content">
-      <div>
-        <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> AIR CONDITIONER TARGET
-      </div>
-      <div *ngIf="device" class="air-conditioners">
-        <div *ngFor="let ac of device.ac" class="ac">{{ac}}</div>
-      </div>
-      <div>
-        <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> OVERRIDE LOCATION SETTINGS
-        <div style="padding-left: 1.2em; margin-bottom: 1em">
-          <div class="override-subtitle">{{'device-override-subtitle' | translate}}</div>
-          <ui-switch *ngIf="device" size="small" [(ngModel)]="device.forcecontrol" color="#448ccb" (change)="setForcecontrol($event)"></ui-switch>
+      <div *ngIf="device.type == 'Alfa'">
+        <div>
+          <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-rogo-air-simulation' | translate}}
         </div>
-      </div>
-      <div class="override-settings">
-        <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-settings-explain-1' | translate}}
-        <ul class="bullet-text">
-          <li>{{'device-settings-explain-2' | translate}}</li>
-          <li>{{'device-settings-explain-3' | translate}}</li>
-          <li>{{'device-settings-explain-4' | translate}}</li>
-          <li>{{'device-settings-explain-5' | translate}}</li>
-        </ul>
-        <div class="switch-wrapper">
-          <img class="switch-bg-icon" src="../assets/images/device/switch-icon.png">
-          <img class="switch-icon a" src="../assets/images/device/switch-active-icon.png">
-          <img class="switch-icon b" src="../assets/images/device/switch-active-icon.png">
-          <img class="switch-icon c" src="../assets/images/device/switch-active-icon.png">
-          <img class="switch-icon d" src="../assets/images/device/switch-active-icon.png">
-          <span class="option-1">{{'device-no-operation' | translate}}</span>
-          <span class="option-2">{{'device-set-point' | translate}}</span>
-          <span class="option-3">{{'device-schedule' | translate}}</span>
-          <span class="option-4">{{'device-power-off' | translate}}</span>
+        <div class="bullet-content">
+          <div class="bullet-subtitle">{{'device-simulate-subtitle' | translate}}</div>
+          <ui-switch *ngIf="device" size="small" [(ngModel)]="device.simulate" color="#448ccb" (change)="setSimulate($event)"></ui-switch>
         </div>
-        <div style="margin-top: 3em; border-top: 0.08em solid #d9dde7; padding-top: 1em">
-          <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-set-point' | translate}}
-          <img *ngIf="isSetpointLoading" class="setpoint-loading-icon" src="../assets/images/device/loading-icon.svg">
-        </div>
-        <div class="no-select" style="margin-top: 2em;">
-          <div class="minus-icon" (click)="decreaseTemp()">-</div>
-          <div class="temp2">{{temp | number:'2.1-1'}}</div>
-          <div class="degree">°</div>
-          <div class="plus-icon" (click)="increaseTemp()">+</div>
-        </div>
-        <div [class.opaque]="device.mode != 'SCHEDULE'" style="margin-top: 3em; border-top: 0.08em solid #d9dde7; padding-top: 1em">
-          <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-schedule' | translate}}
-        </div>
-        <div [class.opaque]="device.mode != 'SCHEDULE'" class="schedule-wrapper">
-          <div class="day-header-wrapper">
-            <div class="day-header" *ngFor="let day of daysOfWeek" [class.red]="day == 'SUN'">
-              {{day}}
+        <div class="simulate-settings">
+          <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-select-hub' | translate}}
+          <div class="bullet-content">
+            <div class="bullet-subtitle">{{'device-select-hub-subtitle' | translate}}</div>
+            <div class="alfa-select">
+              <select id="alfa-select" name="hub" [(ngModel)]="device.hub" (change)="setHub()">
+                <option [value]="null">{{'device-hub-none' | translate}}</option>
+                <option *ngFor="let device of devices" [value]="device.id">{{device.name}}</option>
+              </select>
             </div>
           </div>
-          <table class="schedule-table" cellpadding="0">
-            <tr>
-              <th *ngFor="let hour of hoursOfDay">
-                <div class="hour-header">{{hour}}</div>
-              </th>
-            </tr>
-            <tr *ngFor="let day of daysOfWeek">
-              <td *ngFor="let hour of hoursOfDay">
-                <div class="hour-cell">
-                  <div class="hour-content-group">
-                    <div class="target"></div>
-                    <div class="time"></div>
+          <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-select-sensor' | translate}}
+          <div class="bullet-content">
+            <div class="bullet-subtitle">{{'device-select-sensor-subtitle' | translate}}</div>
+            <ul class="sensor-list">
+              <div *ngFor="let sensor of devices">
+                <div class="sensor-item" [class.active]="device.sensors.indexOf(sensor.id) >= 0" (click)="toggleSensor(sensor.id)">
+                  <img class="rogo-sensor-icon" src="../assets/images/device/rogo-sensor-icon.png">
+                  <div class="sensor-info">
+                    <div class="sensor-name">{{sensor.name}}</div>
+                    <div class="sensor-id">{{sensor.id}}</div>
                   </div>
+                  <div class="sensor-tick">✓</div>
                 </div>
-              </td>
+              </div>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="device.type != 'Alfa'">
+        <div>
+          <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> AIR CONDITIONER TARGET
+        </div>
+        <div *ngIf="device" class="air-conditioners">
+          <div *ngFor="let ac of device.ac" class="ac">{{ac}}</div>
+        </div>
+        <div>
+          <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> OVERRIDE LOCATION SETTINGS
+          <div class="bullet-content">
+            <div class="bullet-subtitle">{{'device-override-subtitle' | translate}}</div>
+            <ui-switch *ngIf="device" size="small" [(ngModel)]="device.forcecontrol" color="#448ccb" (change)="setForcecontrol($event)"></ui-switch>
+          </div>
+        </div>
+        <div class="override-settings">
+          <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-settings-explain-1' | translate}}
+          <ul class="bullet-text">
+            <li>{{'device-settings-explain-2' | translate}}</li>
+            <li>{{'device-settings-explain-3' | translate}}</li>
+            <li>{{'device-settings-explain-4' | translate}}</li>
+            <li>{{'device-settings-explain-5' | translate}}</li>
+          </ul>
+          <div class="switch-wrapper">
+            <img class="switch-bg-icon" src="../assets/images/device/switch-icon.png">
+            <img class="switch-icon a" src="../assets/images/device/switch-active-icon.png">
+            <img class="switch-icon b" src="../assets/images/device/switch-active-icon.png">
+            <img class="switch-icon c" src="../assets/images/device/switch-active-icon.png">
+            <img class="switch-icon d" src="../assets/images/device/switch-active-icon.png">
+            <span class="option-1">{{'device-no-operation' | translate}}</span>
+            <span class="option-2">{{'device-set-point' | translate}}</span>
+            <span class="option-3">{{'device-schedule' | translate}}</span>
+            <span class="option-4">{{'device-power-off' | translate}}</span>
+          </div>
+          <div style="margin-top: 3em; border-top: 0.08em solid #d9dde7; padding-top: 1em">
+            <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-set-point' | translate}}
+            <img *ngIf="isSetpointLoading" class="setpoint-loading-icon" src="../assets/images/device/loading-icon.svg">
+          </div>
+          <div class="no-select" style="margin-top: 2em;">
+            <div class="minus-icon" (click)="decreaseTemp()">-</div>
+            <div class="temp2">{{temp | number:'2.1-1'}}</div>
+            <div class="degree">°</div>
+            <div class="plus-icon" (click)="increaseTemp()">+</div>
+          </div>
+          <div [class.opaque]="device.mode != 'SCHEDULE'" style="margin-top: 3em; border-top: 0.08em solid #d9dde7; padding-top: 1em">
+            <img class="bullet-icon" src="../assets/images/device/bullet-icon.png"> {{'device-schedule' | translate}}
+          </div>
+          <div [class.opaque]="device.mode != 'SCHEDULE'" class="schedule-wrapper">
+            <div class="day-header-wrapper">
+              <div class="day-header" *ngFor="let day of daysOfWeek" [class.red]="day == 'SUN'">
+                {{day}}
+              </div>
+            </div>
+            <table class="schedule-table" cellpadding="0">
               <tr>
-          </table>
-          <div class="add-schedule" (click)="openAddScheduleModal()">
-            <div class="add-schedule-icon">+</div>
-            {{'schedule-modal-add-button' | translate}}
+                <th *ngFor="let hour of hoursOfDay">
+                  <div class="hour-header">{{hour}}</div>
+                </th>
+              </tr>
+              <tr *ngFor="let day of daysOfWeek">
+                <td *ngFor="let hour of hoursOfDay">
+                  <div class="hour-cell">
+                    <div class="hour-content-group">
+                      <div class="target"></div>
+                      <div class="time"></div>
+                    </div>
+                  </div>
+                </td>
+                <tr>
+            </table>
+            <div class="add-schedule" (click)="openAddScheduleModal()">
+              <div class="add-schedule-icon">+</div>
+              {{'schedule-modal-add-button' | translate}}
+            </div>
           </div>
         </div>
       </div>
@@ -190,7 +312,7 @@
           {{'schedule-modal-title' | translate}}
           <img *ngIf="isAddScheduleLoading" class="add-schedule-loading-icon" src="../assets/images/devices/loading-icon.svg">
           <div class="add-schedule-cancel" (click)="closeAddScheduleModal()">
-             {{'schedule-modal-cancel' | translate}}
+            {{'schedule-modal-cancel' | translate}}
           </div>
         </div>
         <img class="white-bullet-icon" src="../assets/images/location-settings/white-bullet-icon.png"> {{'schedule-modal-set-time' | translate}}
@@ -237,7 +359,7 @@
           </div>
         </div>
         <img class="white-bullet-icon" src="../assets/images/location-settings/white-bullet-icon.png"> {{'schedule-modal-set-day' | translate}}
-        <div class="all-week-switch">
+        <div class="all-week-switch" style="margin-left: 0.5em">
           {{'schedule-modal-every-day' | translate}}
           <ui-switch size="small" [(ngModel)]="allWeekSwitch"></ui-switch>
         </div>
@@ -247,7 +369,7 @@
           </div>
         </div>
         <img class="white-bullet-icon" src="../assets/images/location-settings/white-bullet-icon.png"> Setpoint
-        <div class="no-select" style="margin-top: 1em; margin-left: 2em">
+        <div class="no-select setpoint-area">
           <div class="minus-icon" (click)="decreaseScheduleTemp()">-</div>
           <div class="temp2">{{scheduleTemp | number:'2.1-1'}}</div>
           <div class="degree">°</div>

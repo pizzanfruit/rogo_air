@@ -60,19 +60,19 @@ body {
 }
 
 .switch-small {
-  width: 3.1em !important;
-  height: 1.3em !important;
+  width: 2.4em !important;
+  height: 1em !important;
   border-radius: 0 !important;
 }
 
 .switch-small small {
-  width: 1.5em !important;
-  height: 1.55em !important;
+  width: 1.2em !important;
+  height: 1.18em !important;
   border-radius: 0 !important;
 }
 
 .switch-small.checked small {
-  left: 2.2em !important;
+  left: 1.62em !important;
 }
 
 .all-week-switch .switch {

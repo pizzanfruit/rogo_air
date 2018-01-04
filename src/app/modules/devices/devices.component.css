@@ -7,6 +7,11 @@
   border-right: 0.11em solid #d7dae7;
 }
 
+.left-bar .devices {
+  height: 100%;
+  overflow-y: auto;
+}
+
 .content {
   position: absolute;
   top: 0;

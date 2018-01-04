@@ -41,6 +41,10 @@ export class AuthService {
     this.accessToken = localStorage.getItem("access_token");
   }
 
+  getClientId() {
+    return userPool.getClientId();
+  }
+
   register(username: string, password: string, email: string, callback?: any) {
     let dataEmail = {
       Name: "email",

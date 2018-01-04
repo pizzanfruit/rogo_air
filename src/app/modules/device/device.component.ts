@@ -6,6 +6,7 @@ import { DeviceService } from '../../services/device.service';
 import { DevicesService } from '../../services/devices.service';
 import { MdDatepicker } from '@angular/material'
 import * as moment from 'moment';
+import { AuthService } from '../../services/auth.service';
 
 //Jquery
 declare var $: any;
@@ -34,12 +35,14 @@ export class DeviceComponent implements OnInit {
 
   // Variables to unsubscribe
   setForcecontrolSub: any;
+  setSimulateSub: any;
 
   //
   parentId: any;
   childId: any;
 
   //
+  devices: any[];
   device: any;
 
   temp: number = 26.5;
@@ -113,7 +116,8 @@ export class DeviceComponent implements OnInit {
     private route: ActivatedRoute,
     private deviceService: DeviceService,
     private devicesService: DevicesService,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private authService: AuthService
   ) {
     this.isLoading = true;
     this.isSetpointLoading = false;
@@ -209,7 +213,7 @@ export class DeviceComponent implements OnInit {
   }
 
   init() {
-    this.switchToHistory();
+    this.switchToFirst();
     this.updateChartsAndCurrentTemp();
     this.setUpEditPopup();
     this.isLoading = false;
@@ -222,6 +226,16 @@ export class DeviceComponent implements OnInit {
   refreshDevice(onComplete?: any) {
     this.deviceService.getDevice(this.parentId, this.childId).subscribe((res) => {
       this.device = JSON5.parse(res._body).body;
+      if (this.device.type == "Alfa") {
+        if (!this.device.sensors) this.device.sensors = [];
+        console.log(this.device.sensors);
+        this.isLoading = true;
+        this.devicesService.getDevices(this.parentId).subscribe((res) => {
+          this.devices = JSON5.parse(res._body).body;
+        }, (err) => {
+          console.log(err);
+        });
+      }
       this.setUpMode();
       // this.cdRef.detectChanges();
       if (this.device.setpoint && this.device.setpoint != "NaN") this.temp = parseFloat(this.device.setpoint);
@@ -284,6 +298,7 @@ export class DeviceComponent implements OnInit {
   }
 
   autoUpdateCharts() {
+    if (!this.device.type || this.device.type == "Alfa") return;
     let tzoffset = (new Date()).getTimezoneOffset() * 60000;
     let currentDate = new Date(this.currentDate.getTime() - tzoffset).toISOString().split('T')[0];
     this.lastChartUpdate = this.deviceService.getDeviceDatalog(this.childId, currentDate).subscribe(res => {
@@ -384,9 +399,9 @@ export class DeviceComponent implements OnInit {
     });
   }
 
-  switchToHistory() {
-    $(".history-tab").addClass("active");
-    $(".history-content").css("display", "flex");
+  switchToFirst() {
+    $(".first-tab").addClass("active");
+    $(".first-content").show();
     $(".settings-tab").removeClass("active");
     $(".settings-content").hide();
   }
@@ -395,8 +410,8 @@ export class DeviceComponent implements OnInit {
     this.setUpSwitch();
     $(".settings-tab").addClass("active");
     $(".settings-content").show();
-    $(".history-tab").removeClass("active");
-    $(".history-content").hide();
+    $(".first-tab").removeClass("active");
+    $(".first-content").hide();
   }
 
   backToDevices() {
@@ -428,8 +443,20 @@ export class DeviceComponent implements OnInit {
     });
   }
 
+  setSimulate(event) {
+    let data = {
+      "simulate": event
+    }
+    if (this.setSimulateSub) this.setSimulateSub.unsubscribe();
+    this.setSimulateSub = this.deviceService.setSimulate(this.childId, data).subscribe((res) => {
+      this.refreshDevice();
+    }, (err) => {
+      console.log(err);
+    });
+  }
+
   /** Edit popup */
-  setUpEditPopup() {    
+  setUpEditPopup() {
     if (this.ranOnce) return;
     this.ranOnce = true;
     $(document).unbind();
@@ -604,5 +631,32 @@ export class DeviceComponent implements OnInit {
     $(".schedule-table .target, .schedule-table .time").html("");
   }
 
+  setHub() {
+    console.log(this.authService.getClientId());
+    let data = {
+      "hub": this.device.hub
+    }
+    this.deviceService.setHub(this.childId, data).subscribe(() => {
+      this.refreshDevice();
+    }, err => {
+      console.log(err);
+      this.isAddScheduleLoading = false;
+    });
+  }
+
+  toggleSensor(id) {
+    let index = this.device.sensors.indexOf(id);
+    if (index >= 0) this.device.sensors.splice(index, 1);
+    else this.device.sensors.push(id);
+    let data = {
+      "sensors": this.device.sensors
+    }
+    this.deviceService.setSensors(this.childId, data).subscribe(() => {
+      this.refreshDevice();
+    }, err => {
+      console.log(err);
+      this.isAddScheduleLoading = false;
+    });
+  }
   //
 }

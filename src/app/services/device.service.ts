@@ -73,6 +73,12 @@ export class DeviceService {
     return this._http.post("https://tyu7xxj099.execute-api.us-east-1.amazonaws.com/release/device/" + id + "/forcecontrol", data, options).map(this.dataSuccess).catch(this.handleError);
   }
 
+  setSimulate(id, data: any): Observable<any> {
+    let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': this.authService.idToken });
+    let options = new RequestOptions({ headers });
+    return this._http.post("https://tyu7xxj099.execute-api.us-east-1.amazonaws.com/release/device/" + id + "/alfa/simulateair", data, options).map(this.dataSuccess).catch(this.handleError);
+  }
+
   setMode(id, data: any): Observable<any> {
     let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': this.authService.idToken });
     let options = new RequestOptions({ headers });
@@ -83,6 +89,18 @@ export class DeviceService {
     let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': this.authService.idToken });
     let options = new RequestOptions({ headers });
     return this._http.post("https://tyu7xxj099.execute-api.us-east-1.amazonaws.com/release/device/" + id + "/schedule", data, options).map(this.dataSuccess).catch(this.handleError);
+  }
+
+  setHub(id, data: any): Observable<any> {
+    let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': this.authService.idToken });
+    let options = new RequestOptions({ headers });
+    return this._http.post("https://tyu7xxj099.execute-api.us-east-1.amazonaws.com/release/device/" + id + "/alfa/selecthub", data, options).map(this.dataSuccess).catch(this.handleError);
+  }
+
+  setSensors(id, data: any): Observable<any> {
+    let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': this.authService.idToken });
+    let options = new RequestOptions({ headers });
+    return this._http.post("https://tyu7xxj099.execute-api.us-east-1.amazonaws.com/release/device/" + id + "/alfa/selectsensors", data, options).map(this.dataSuccess).catch(this.handleError);
   }
 
   private dataSuccess(res: Response) {
