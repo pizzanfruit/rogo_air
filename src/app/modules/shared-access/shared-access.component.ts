@@ -66,7 +66,7 @@ export class SharedAccessComponent implements OnInit {
   /** Edit popup */
 
   setUpEditPopup() {
-    $(document).mouseup(function (e) {      
+    $(document).mouseup(function (e) {
       var container = $(".edit-popup, .action-button-icon");
       // if the target of the click isn't the container nor a descendant of the container
       if (!container.is(e.target) && container.has(e.target).length === 0) {

@@ -228,7 +228,6 @@ export class DeviceComponent implements OnInit {
       this.device = JSON5.parse(res._body).body;
       if (this.device.type == "Alfa") {
         if (!this.device.sensors) this.device.sensors = [];
-        console.log(this.device.sensors);
         this.isLoading = true;
         this.devicesService.getDevices(this.parentId).subscribe((res) => {
           this.devices = JSON5.parse(res._body).body;
@@ -632,7 +631,6 @@ export class DeviceComponent implements OnInit {
   }
 
   setHub() {
-    console.log(this.authService.getClientId());
     let data = {
       "hub": this.device.hub
     }

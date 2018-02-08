@@ -39,7 +39,7 @@ export class DeviceService {
     // return Observable.of(device);
     let headers = new Headers({ 'Authorization': this.authService.idToken });
     let options = new RequestOptions({ headers });
-    return this._http.get("https://tyu7xxj099.execute-api.us-east-1.amazonaws.com/release/location/" + locationId + "/mapdevicewithlocaiton/" + deviceId, options).catch(this.handleError);
+    return this._http.get("https://tyu7xxj099.execute-api.us-east-1.amazonaws.com/release/location/" + locationId + "/mapdevicewithlocaiton/" + deviceId + "?userId=" + this.authService.getClientId()  , options).catch(this.handleError);
   }
 
   deleteDevice(locationId, userId): Observable<any> {

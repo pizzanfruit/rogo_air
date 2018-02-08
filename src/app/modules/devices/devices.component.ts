@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { NgSwitch } from '@angular/common';
 
@@ -42,6 +42,8 @@ export class DevicesComponent implements OnInit {
   // Auto update temp
   intervals: any[] = [];
 
+  routerSub: any;
+
   constructor(
     private title: Title,
     private router: Router,
@@ -53,6 +55,14 @@ export class DevicesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.routerSub = this.router.events
+      .filter(e => e instanceof NavigationEnd)
+      .subscribe((e: any) => {
+        let url = e.url;
+        if (url.endsWith("devices")) {
+          this.refreshDevices();
+        };
+      });
     this.setUpParentId();
     this.title.setTitle("Devices");
     this.refreshDevices();
@@ -63,6 +73,7 @@ export class DevicesComponent implements OnInit {
       let interval = this.intervals[i];
       clearInterval(interval);
     }
+    this.routerSub.unsubscribe();
   }
 
   setUpParentId() {
